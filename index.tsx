@@ -1,1 +1,1 @@
-// This file is intentionally left empty. The app runs on Vanilla JS in index.html.
+// The application logic is handled in index.html to ensure stability on GitHub Pages.

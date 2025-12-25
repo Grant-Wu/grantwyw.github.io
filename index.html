@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -41,10 +40,6 @@
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
         
-        .chat-open {
-            display: flex !important;
-        }
-
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -67,6 +62,8 @@
 </script>
 </head>
 <body class="selection:bg-orange-100 selection:text-orange-900">
+    <!-- Dummy root to prevent mounting errors -->
+    <div id="root" style="display:none"></div>
 
     <nav class="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-orange-50/50">
         <div class="flex flex-col">
@@ -111,6 +108,7 @@
             </div>
         </section>
 
+        <!-- Main Content with 110% Font Size -->
         <div style="font-size: 1.1rem;">
             <section id="about" class="relative bg-stone-50/50 py-10 px-6 md:px-24 border-y border-stone-100/60">
                 <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -190,15 +188,9 @@
                                 grantwyw@mail.cpu.edu.tw
                             </a>
                         </div>
-                        <div class="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-stone-500">
-                            <a href="#" class="hover:text-amber-400 transition-colors">Scholar</a>
-                            <a href="#" class="hover:text-amber-400 transition-colors">ResearchGate</a>
-                            <a href="#" class="hover:text-amber-400 transition-colors">ORCID</a>
-                        </div>
                     </div>
                     <div class="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center text-stone-600 text-[10px] uppercase tracking-[0.4em]">
                         <span>© 2024 Dr. Yuan-Wei Wu | 中央警察大學</span>
-                        <span class="mt-4 md:mt-0">Precision Investigative Science Unit</span>
                     </div>
                 </div>
             </footer>
@@ -213,11 +205,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                 </button>
             </div>
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-5">
-                <div class="text-center py-12 px-4" id="empty-state">
-                    <p class="text-stone-400 text-xs leading-relaxed font-medium">詢問關於交通事故分析、<br />人工智慧應用或特定研究計畫。</p>
-                </div>
-            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-5"></div>
             <div class="p-5 bg-white border-t border-stone-100">
                 <div class="relative">
                     <input id="chat-input" type="text" placeholder="Ask me anything..." class="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-5 pr-12 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:bg-white transition-all">
@@ -263,14 +251,62 @@
             government: ["桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"]
         };
 
-        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Expertise: Traffic Policing, Accident Investigation, AI in Transportation. Philosophy: "Safety is a result of deliberate engineering and empirical accountability." Be academic and precise.`;
+        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Be academic and precise. Expertise: Traffic Safety, AI.`;
 
-        // --- Utils ---
-        const safeEnv = (key) => {
-            try { return process.env[key] || ''; } catch { return ''; }
-        };
+        // --- Render Logic (Prioritize this to prevent empty sections if AI fails) ---
+        function renderUI() {
+            const safeSet = (id, html) => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = html;
+            };
 
-        // --- Canvas ---
+            safeSet('expertise-container', EXPERTISE.map(item => `
+                <div class="flex items-center gap-2 text-sm text-stone-600"><div class="w-1.5 h-1.5 bg-amber-600 rounded-full"></div>${item}</div>
+            `).join(''));
+
+            safeSet('interests-container', RESEARCH_INTERESTS.map((interest, idx) => `
+                <div class="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl hover:border-amber-300 transition-all hover:bg-white">
+                    <span class="w-10 h-10 flex items-center justify-center bg-white border border-stone-100 rounded-lg text-amber-700 font-mono text-sm font-bold">0${idx + 1}</span>
+                    <span class="text-base font-bold text-stone-800">${interest}</span>
+                </div>
+            `).join(''));
+
+            safeSet('projects-container', RESEARCH_PROJECTS.map(p => `
+                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-lg hover:bg-white transition-all">
+                    <span class="md:w-32 text-[12px] font-mono text-stone-400 font-bold uppercase shrink-0">${p.period}</span>
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-stone-800">${p.title}</h3>
+                        <div class="flex gap-4 text-[11px] uppercase text-stone-400 mt-1"><span class="text-amber-600 font-semibold">${p.org}</span>${p.role ? `<span>| ${p.role}</span>` : ''}</div>
+                    </div>
+                </div>
+            `).join(''));
+
+            safeSet('journals-container', PUBLICATIONS.map(pub => `
+                <div class="py-2 border-b border-stone-50 last:border-0">
+                    <div class="flex gap-3 items-center mb-1">
+                        <span class="px-2 py-0.5 bg-orange-100 text-orange-800 text-[10px] font-bold rounded-full">${pub.year}</span>
+                        <span class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">${pub.journal}</span>
+                    </div>
+                    <a href="${pub.link || '#'}" target="_blank" class="hover:text-amber-800 transition-colors"><h5 class="text-xl font-bold text-stone-900 leading-snug">${pub.title}</h5></a>
+                    <p class="text-sm text-stone-500 font-medium">${pub.authors}</p>
+                </div>
+            `).join(''));
+
+            safeSet('conferences-container', CONFERENCES.map(conf => `
+                <div class="border-l-2 border-stone-100 pl-6 pb-2 hover:border-amber-300 transition-colors">
+                    <span class="text-[11px] font-bold text-amber-600 uppercase">${conf.year}</span>
+                    <h5 class="text-base font-bold text-stone-800 leading-snug">${conf.title}</h5>
+                    <p class="text-[11px] text-stone-500 italic">${conf.authors}</p>
+                </div>
+            `).join(''));
+
+            const sList = (items) => items.map(item => `<li class="text-[13px] text-stone-600 flex items-start gap-3"><span class="text-amber-500 mt-1.5 shrink-0"><svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg></span>${item}</li>`).join('');
+            safeSet('service-journals', sList(SERVICE.journals));
+            safeSet('service-university', sList(SERVICE.university));
+            safeSet('service-government', sList(SERVICE.government));
+        }
+
+        // --- Canvas Animation ---
         function initCanvas() {
             const canvas = document.getElementById('hero-canvas');
             if (!canvas) return;
@@ -279,8 +315,9 @@
             const mouse = { x: -2000, y: -2000, radius: 250 };
 
             function resize() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
                 initParticles();
             }
 
@@ -302,6 +339,7 @@
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const rect = canvas.getBoundingClientRect();
+                // Handle scrolling: rect.left/top are viewport relative
                 const mx = mouse.x - rect.left;
                 const my = mouse.y - rect.top;
 
@@ -317,9 +355,7 @@
                         p.vy -= Math.sin(angle) * force * 0.3;
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(245, 158, 11, ${(1 - dist / mouse.radius) * 0.15})`;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mx, my);
-                        ctx.stroke();
+                        ctx.moveTo(p.x, p.y); ctx.lineTo(mx, my); ctx.stroke();
                     } else {
                         p.vx += (p.baseVx - p.vx) * 0.05;
                         p.vy += (p.baseVy - p.vy) * 0.05;
@@ -348,122 +384,86 @@
             }
 
             window.addEventListener('resize', resize);
-            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            window.addEventListener('mousemove', (e) => { 
+                mouse.x = e.clientX; 
+                mouse.y = e.clientY; 
+            });
             resize(); draw();
         }
 
-        // --- Render UI ---
-        function renderUI() {
-            try {
-                document.getElementById('expertise-container').innerHTML = EXPERTISE.map(item => `
-                    <div class="flex items-center gap-2 text-sm text-stone-600"><div class="w-1.5 h-1.5 bg-amber-600 rounded-full"></div>${item}</div>
-                `).join('');
-
-                document.getElementById('interests-container').innerHTML = RESEARCH_INTERESTS.map((interest, idx) => `
-                    <div class="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl hover:border-amber-300 transition-all hover:bg-white">
-                        <span class="w-10 h-10 flex items-center justify-center bg-white border border-stone-100 rounded-lg text-amber-700 font-mono text-sm font-bold">0${idx + 1}</span>
-                        <span class="text-base font-bold text-stone-800">${interest}</span>
-                    </div>
-                `).join('');
-
-                document.getElementById('projects-container').innerHTML = RESEARCH_PROJECTS.map(p => `
-                    <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-lg hover:bg-white transition-all">
-                        <span class="md:w-32 text-[12px] font-mono text-stone-400 font-bold uppercase">${p.period}</span>
-                        <div class="flex-1">
-                            <h3 class="text-base font-bold text-stone-800">${p.title}</h3>
-                            <div class="flex gap-4 text-[11px] uppercase text-stone-400 mt-1"><span class="text-amber-600">${p.org}</span>${p.role ? `<span>| ${p.role}</span>` : ''}</div>
-                        </div>
-                    </div>
-                `).join('');
-
-                document.getElementById('journals-container').innerHTML = PUBLICATIONS.map(pub => `
-                    <div class="py-2 border-b border-stone-50 last:border-0">
-                        <div class="flex gap-3 items-center mb-1">
-                            <span class="px-2 py-0.5 bg-orange-100 text-orange-800 text-[10px] font-bold rounded-full">${pub.year}</span>
-                            <span class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">${pub.journal}</span>
-                        </div>
-                        <a href="${pub.link || '#'}" target="_blank" class="hover:text-amber-800 transition-colors"><h5 class="text-xl font-bold text-stone-900 leading-snug">${pub.title}</h5></a>
-                        <p class="text-sm text-stone-500 font-medium">${pub.authors}</p>
-                    </div>
-                `).join('');
-
-                document.getElementById('conferences-container').innerHTML = CONFERENCES.map(conf => `
-                    <div class="border-l-2 border-stone-100 pl-6 pb-2 hover:border-amber-300 transition-colors">
-                        <span class="text-[11px] font-bold text-amber-600 uppercase">${conf.year}</span>
-                        <h5 class="text-base font-bold text-stone-800 leading-snug">${conf.title}</h5>
-                        <p class="text-[11px] text-stone-500 italic">${conf.authors}</p>
-                    </div>
-                `).join('');
-
-                const sList = (items) => items.map(item => `<li class="text-[13px] text-stone-600 flex items-start gap-3"><span class="text-amber-500 mt-1.5 shrink-0"><svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg></span>${item}</li>`).join('');
-                document.getElementById('service-journals').innerHTML = sList(SERVICE.journals);
-                document.getElementById('service-university').innerHTML = sList(SERVICE.university);
-                document.getElementById('service-government').innerHTML = sList(SERVICE.government);
-            } catch (e) { console.error("Render Error:", e); }
-        }
-
-        // --- Chat ---
+        // --- Chat Helper ---
         window.toggleChat = (open) => {
-            document.getElementById('chat-window').style.display = open ? 'flex' : 'none';
-            document.getElementById('chat-toggle').style.display = open ? 'none' : 'flex';
+            const win = document.getElementById('chat-window');
+            const toggle = document.getElementById('chat-toggle');
+            if (win) win.style.display = open ? 'flex' : 'none';
+            if (toggle) toggle.style.display = open ? 'none' : 'flex';
         };
 
-        let aiClient = null;
-        async function getAI() {
-            if (aiClient) return aiClient;
-            const key = safeEnv('API_KEY');
-            if (!key) return null;
-            aiClient = new GoogleGenAI({ apiKey: key });
-            return aiClient;
-        }
-
-        async function handleSend() {
-            const input = document.getElementById('chat-input');
-            const messages = document.getElementById('chat-messages');
-            const text = input.value.trim();
-            if (!text) return;
-            document.getElementById('empty-state')?.remove();
-            
-            const uBox = document.createElement('div');
-            uBox.className = 'flex justify-end';
-            uBox.innerHTML = `<div class="bg-amber-700 text-white p-3 rounded-2xl text-[13px] font-medium max-w-[85%]">${text}</div>`;
-            messages.appendChild(uBox);
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
-
-            const lBox = document.createElement('div');
-            lBox.className = 'flex justify-start';
-            lBox.innerHTML = `<div class="bg-stone-50 p-3 rounded-2xl border border-stone-100 text-[13px] text-stone-400">Thinking...</div>`;
-            messages.appendChild(lBox);
-
-            try {
-                const ai = await getAI();
-                if (!ai) throw new Error("Key missing");
-                const res = await ai.models.generateContent({
-                    model: 'gemini-3-flash-preview',
-                    contents: text,
-                    config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.7, maxOutputTokens: 200 }
-                });
-                lBox.remove();
-                const aBox = document.createElement('div');
-                aBox.className = 'flex justify-start';
-                aBox.innerHTML = `<div class="bg-stone-100 text-stone-800 p-3 rounded-2xl text-[13px] border border-stone-200/50 max-w-[85%]">${res.text}</div>`;
-                messages.appendChild(aBox);
-            } catch (e) {
-                lBox.remove();
-                const eBox = document.createElement('div');
-                eBox.className = 'text-center text-[10px] text-red-400';
-                eBox.innerText = "Connection lost. Please try later.";
-                messages.appendChild(eBox);
-            }
-            messages.scrollTop = messages.scrollHeight;
-        }
-
+        // --- App Lifecycle ---
         document.addEventListener('DOMContentLoaded', () => {
-            initCanvas();
+            // 1. Render data first
             renderUI();
-            document.getElementById('send-btn').onclick = handleSend;
-            document.getElementById('chat-input').onkeydown = (e) => e.key === 'Enter' && handleSend();
+            // 2. Start animation
+            initCanvas();
+
+            // 3. AI logic (Wrapped in try-catch to prevent crashing the whole page)
+            try {
+                const getApiKey = () => {
+                    try { return typeof process !== 'undefined' ? process.env.API_KEY : ''; } catch { return ''; }
+                };
+                const key = getApiKey();
+                const ai = key ? new GoogleGenAI({ apiKey: key }) : null;
+
+                const sendBtn = document.getElementById('send-btn');
+                const chatInput = document.getElementById('chat-input');
+                const messages = document.getElementById('chat-messages');
+
+                const handleSend = async () => {
+                    const text = chatInput.value.trim();
+                    if (!text || !ai) return;
+
+                    const uBox = document.createElement('div');
+                    uBox.className = 'flex justify-end';
+                    uBox.innerHTML = `<div class="bg-amber-700 text-white p-3 rounded-2xl text-[13px] font-medium max-w-[85%] shadow-sm">${text}</div>`;
+                    messages.appendChild(uBox);
+                    chatInput.value = '';
+                    messages.scrollTop = messages.scrollHeight;
+
+                    const lBox = document.createElement('div');
+                    lBox.className = 'flex justify-start';
+                    lBox.innerHTML = `<div class="bg-stone-50 p-3 rounded-2xl border border-stone-100 text-[13px] text-stone-400">Thinking...</div>`;
+                    messages.appendChild(lBox);
+
+                    try {
+                        const res = await ai.models.generateContent({
+                            model: 'gemini-3-flash-preview',
+                            contents: text,
+                            config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.7, maxOutputTokens: 200 }
+                        });
+                        lBox.remove();
+                        const aBox = document.createElement('div');
+                        aBox.className = 'flex justify-start';
+                        aBox.innerHTML = `<div class="bg-stone-100 text-stone-800 p-3 rounded-2xl text-[13px] border border-stone-200/50 max-w-[85%] shadow-sm">${res.text}</div>`;
+                        messages.appendChild(aBox);
+                    } catch (e) {
+                        lBox.innerHTML = `<div class="text-[10px] text-red-400">Connection error. Check API Key.</div>`;
+                    }
+                    messages.scrollTop = messages.scrollHeight;
+                };
+
+                if (sendBtn) sendBtn.onclick = handleSend;
+                if (chatInput) chatInput.onkeydown = (e) => e.key === 'Enter' && handleSend();
+                
+                if (!ai) {
+                    const info = document.createElement('div');
+                    info.className = 'text-center p-4 text-[10px] text-stone-300 uppercase tracking-widest';
+                    info.innerText = "AI Offline: API Key Missing";
+                    messages.appendChild(info);
+                }
+
+            } catch (error) {
+                console.warn("AI Module Failed to load:", error);
+            }
         });
     </script>
 </body>
