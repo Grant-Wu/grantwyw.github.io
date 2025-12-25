@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -10,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel for on-the-fly TSX transpilation -->
+    <!-- Babel Standalone: 關鍵在於讓它在瀏覽器端將 TSX 轉換成 JS -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -48,38 +47,44 @@
     </style>
 
     <script>
-        // Pre-define process for Gemini SDK and other libraries
+        // 設定全域環境變數墊片
         window.process = { env: { API_KEY: "" } };
         
-        // Error Logger
-        window.addEventListener('error', function(e) {
-            console.error("Initialization Error:", e);
+        // 詳細的錯誤日誌系統，幫助我們在手機或遠端排錯
+        window.onerror = function(message, source, lineno, colno, error) {
             const display = document.getElementById('error-display');
             if (display) {
                 display.style.display = 'block';
-                display.innerHTML += `<div style="color:#ef4444; margin-bottom:5px;">[Error] ${e.message}</div>`;
+                display.innerHTML += `
+                    <div style="margin-bottom: 10px; border-bottom: 1px solid #fecaca; padding-bottom: 5px;">
+                        <strong>[Runtime Error]</strong><br/>
+                        <span style="color:#b91c1c">${message}</span><br/>
+                        <small>at ${source}:${lineno}:${colno}</small>
+                    </div>`;
             }
-        });
+            return false;
+        };
 
-        // Remove loader when app is rendered
-        const checkAppReady = setInterval(() => {
-            if (document.querySelector('#root > div')) {
+        // 當根節點有內容時自動隱藏 Loading 畫面
+        const checkAppLoaded = setInterval(() => {
+            const root = document.getElementById('root');
+            if (root && root.children.length > 0) {
                 const loader = document.getElementById('loader');
                 if (loader) {
                     loader.style.opacity = '0';
                     setTimeout(() => loader.remove(), 500);
                 }
-                clearInterval(checkAppReady);
+                clearInterval(checkAppLoaded);
             }
-        }, 200);
+        }, 300);
     </script>
 
     <script type="importmap">
 {
   "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
     "react": "https://esm.sh/react@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"
   }
@@ -89,19 +94,17 @@
 <body>
     <div id="loader">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: #A8A29E; text-transform: uppercase; font-weight: bold;">SafetyLab Rendering</p>
+        <p style="margin-top: 20px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: #A8A29E; text-transform: uppercase; font-weight: bold;">SafetyLab Initialization</p>
     </div>
     
     <div id="root"></div>
     
-    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; background:#fef2f2; border:1px solid #fecaca; padding:15px; border-radius:12px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
-        <strong style="display:block; margin-bottom:10px; color:#991b1b;">Runtime / Transpilation Error:</strong>
+    <!-- 錯誤顯示區塊 -->
+    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fef2f2; border:2px solid #fecaca; padding:15px; border-radius:12px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <strong style="display:block; margin-bottom:10px; color:#991b1b; text-transform: uppercase; letter-spacing: 0.1em;">System Error Log:</strong>
     </div>
 
-    <!-- 
-      Critical: data-type="module" tells Babel to use its internal loader 
-      to fetch and transpile referenced .tsx files. 
-    -->
+    <!-- 關鍵：data-type="module" 讓 Babel 處理其下的 import 路徑 -->
     <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import HeroCanvas from './components/HeroCanvas.tsx';
 import ChatWidget from './components/ChatWidget.tsx';
