@@ -1,7 +1,7 @@
 
 import React from 'react';
-import HeroCanvas from './components/HeroCanvas';
-import ChatWidget from './components/ChatWidget';
+import HeroCanvas from './components/HeroCanvas.tsx';
+import ChatWidget from './components/ChatWidget.tsx';
 import { 
   PUBLICATIONS, 
   CONFERENCES, 
@@ -12,7 +12,7 @@ import {
   RESEARCH_INTERESTS,
   TEACHING_DATA,
   SERVICE 
-} from './constants';
+} from './constants.tsx';
 
 const App: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -75,12 +75,10 @@ const App: React.FC = () => {
           <HeroCanvas />
           <div className="max-w-6xl relative z-10 w-full">
             <div className="animate-[fadeIn_1s_ease-out_forwards]">
-              {/* 姓名縮小版 */}
               <h1 className="text-4xl md:text-7xl font-bold tracking-tighter text-stone-900 font-heading leading-[0.9] mb-6">
                 吳元維 <br />
                 <span className="text-amber-800/80 font-light text-xl md:text-4xl tracking-tight">Yuan-Wei Wu</span>
               </h1>
-              {/* 單位與職稱合併展示 */}
               <div className="flex flex-col border-l-8 border-amber-600 pl-8 py-2">
                 <p className="text-stone-800 text-lg font-medium tracking-wide font-serif-tc">{AFFILIATION}</p>
                 <p className="text-stone-400 text-[10px] font-light uppercase tracking-widest mt-1 font-heading">{AFFILIATION_EN}</p>
@@ -96,10 +94,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* 內容區域 */}
         <div className="px-6 md:px-24 py-12 space-y-16 bg-white/50 backdrop-blur-3xl">
-          
-          {/* About Section */}
           <section id="about" className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Profile & Affiliation</h2>
@@ -129,7 +124,6 @@ const App: React.FC = () => {
              </div>
           </section>
 
-          {/* 1. Research Interests */}
           <section id="research-interests" className="max-w-5xl mx-auto scroll-mt-32">
             <div className="flex items-center gap-6 mb-8">
               <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Interests</h2>
@@ -145,7 +139,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 2. Teaching */}
           <section id="teaching-section" className="max-w-6xl mx-auto scroll-mt-32">
             <div className="mb-10">
               <h2 className="text-3xl font-bold text-stone-950 font-heading">Teaching</h2>
@@ -157,9 +150,7 @@ const App: React.FC = () => {
                  <span className="w-1.5 h-8 bg-amber-600 rounded-full"></span>
                  {TEACHING_DATA.current.title}
                </h3>
-               {/* 三欄佈局：大學部、研究所、進修訓練 */}
                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-                  {/* Undergraduate */}
                   <div className="space-y-4">
                      <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Undergraduate</h4>
                      <div className="space-y-3">
@@ -171,8 +162,6 @@ const App: React.FC = () => {
                        ))}
                      </div>
                   </div>
-                  
-                  {/* Graduate */}
                   <div className="space-y-4">
                      <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Graduate</h4>
                      <div className="space-y-3">
@@ -184,8 +173,6 @@ const App: React.FC = () => {
                        ))}
                      </div>
                   </div>
-
-                  {/* Continuing Professional Ed. */}
                   <div className="space-y-4 border-l border-stone-50 pl-6 h-full">
                      <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Continuing Professional Ed.</h4>
                      <div className="space-y-5 pt-2">
@@ -201,7 +188,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 3. Publications */}
           <section id="publications-section" className="max-w-5xl mx-auto scroll-mt-32">
             <div className="text-center mb-12">
                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-2">Selected Publications</h2>
@@ -249,7 +235,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 4. Research Projects */}
           <section id="projects-section" className="max-w-5xl mx-auto scroll-mt-32">
              <div className="mb-10 flex items-center justify-between">
                 <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Projects</h2>
@@ -271,7 +256,6 @@ const App: React.FC = () => {
              </div>
           </section>
 
-          {/* 5. Academic Service */}
           <section id="service" className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100 space-y-6 group hover:shadow-lg transition-all">
@@ -301,7 +285,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Footer */}
           <footer id="contact" className="max-w-6xl mx-auto pt-16 pb-8 border-t border-stone-200">
             <div className="flex flex-col md:flex-row justify-between gap-12">
               <div className="space-y-6">

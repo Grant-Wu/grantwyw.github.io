@@ -30,12 +30,14 @@
             background: #FFEDD5;
             color: #9A3412;
         }
-        
-        /* 滾動條優化 */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #E7E5E4; border-radius: 10px; }
     </style>
+    <script>
+        // GitHub Pages 兼容性墊片：確保 process.env 存在
+        window.process = { env: { API_KEY: "" } };
+    </script>
     <script type="importmap">
 {
   "imports": {
@@ -49,7 +51,6 @@
 </script>
 </head>
 <body class="selection:bg-amber-100 selection:text-orange-900">
-    <!-- 確保 root 是空的且可見 -->
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
 </body>
