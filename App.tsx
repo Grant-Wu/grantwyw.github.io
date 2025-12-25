@@ -177,7 +177,7 @@ const App: React.FC = () => {
           {/* Academic Service */}
           <section id="service" className="relative py-20 px-6 md:px-24 bg-stone-50/60">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span className="text-stone-300 ml-3">服務項目</span></h2>
+              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span className="text-stone-300 ml-3">學術服務</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   { title: "Journal Review 審查", items: SERVICE.journals },
