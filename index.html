@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel Standalone: 關鍵在於讓它在瀏覽器端將 TSX 轉換成 JS -->
+    <!-- Babel Standalone for in-browser TSX transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -47,26 +47,28 @@
     </style>
 
     <script>
-        // 設定全域環境變數墊片
+        // Global process shim for libraries
         window.process = { env: { API_KEY: "" } };
         
-        // 詳細的錯誤日誌系統，幫助我們在手機或遠端排錯
+        // Detailed error catching to debug white screen / loading issues
         window.onerror = function(message, source, lineno, colno, error) {
             const display = document.getElementById('error-display');
             if (display) {
                 display.style.display = 'block';
                 display.innerHTML += `
-                    <div style="margin-bottom: 10px; border-bottom: 1px solid #fecaca; padding-bottom: 5px;">
-                        <strong>[Runtime Error]</strong><br/>
-                        <span style="color:#b91c1c">${message}</span><br/>
-                        <small>at ${source}:${lineno}:${colno}</small>
+                    <div style="margin-bottom: 12px; border-bottom: 1px solid #fecaca; padding-bottom: 8px;">
+                        <strong style="color:#b91c1c">[System Error]</strong><br/>
+                        <span>${message}</span><br/>
+                        <small style="opacity:0.7">File: ${source}:${lineno}</small>
                     </div>`;
             }
             return false;
         };
 
-        // 當根節點有內容時自動隱藏 Loading 畫面
+        // Auto-remove loader once React finishes rendering
+        let renderCheckCount = 0;
         const checkAppLoaded = setInterval(() => {
+            renderCheckCount++;
             const root = document.getElementById('root');
             if (root && root.children.length > 0) {
                 const loader = document.getElementById('loader');
@@ -76,7 +78,15 @@
                 }
                 clearInterval(checkAppLoaded);
             }
-        }, 300);
+            // If it takes more than 15 seconds, show a warning
+            if (renderCheckCount > 75) {
+                const display = document.getElementById('error-display');
+                if (display && display.style.display === 'none') {
+                  display.style.display = 'block';
+                  display.innerHTML += `<div style="color:#854d0e">Initialization is taking longer than usual... Please check console for network errors.</div>`;
+                }
+            }
+        }, 200);
     </script>
 
     <script type="importmap">
@@ -94,17 +104,16 @@
 <body>
     <div id="loader">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: #A8A29E; text-transform: uppercase; font-weight: bold;">SafetyLab Initialization</p>
+        <p style="margin-top: 20px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: #A8A29E; text-transform: uppercase; font-weight: bold;">SafetyLab Initializing</p>
     </div>
     
     <div id="root"></div>
     
-    <!-- 錯誤顯示區塊 -->
-    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fef2f2; border:2px solid #fecaca; padding:15px; border-radius:12px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
-        <strong style="display:block; margin-bottom:10px; color:#991b1b; text-transform: uppercase; letter-spacing: 0.1em;">System Error Log:</strong>
+    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 50vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+        <strong style="display:block; margin-bottom:12px; color:#991b1b; text-transform: uppercase;">Initialization Diagnostics:</strong>
     </div>
 
-    <!-- 關鍵：data-type="module" 讓 Babel 處理其下的 import 路徑 -->
+    <!-- The entry point -->
     <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>

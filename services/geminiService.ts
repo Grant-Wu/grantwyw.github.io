@@ -1,6 +1,5 @@
-
 import { GoogleGenAI } from "@google/genai";
-import { SYSTEM_PROMPT } from "../constants";
+import { SYSTEM_PROMPT } from "../constants.tsx";
 
 export class GeminiService {
   // Use a fresh instance right before each call to ensure the latest API key is utilized.
@@ -14,8 +13,6 @@ export class GeminiService {
         config: {
           systemInstruction: SYSTEM_PROMPT,
           temperature: 0.7,
-          // Guidelines: Avoid setting maxOutputTokens without a thinkingBudget to prevent empty/blocked responses.
-          // Removed maxOutputTokens to allow the model more flexibility in generating quality responses.
         },
       });
       
