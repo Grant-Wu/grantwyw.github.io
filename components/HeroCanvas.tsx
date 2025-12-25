@@ -23,9 +23,9 @@ const HeroCanvas: React.FC = () => {
 
     let animationFrameId: number;
     let particles: Particle[] = [];
-    const particleCount = 80; 
-    const connectionDistance = 180;
-    const mouse = { x: -2000, y: -2000, radius: 300 };
+    const particleCount = 100; // Increased density for "richer" feel
+    const connectionDistance = 200;
+    const mouse = { x: -2000, y: -2000, radius: 350 };
 
     const resize = () => {
       const parent = canvas.parentElement;
@@ -39,8 +39,8 @@ const HeroCanvas: React.FC = () => {
     const initParticles = () => {
       particles = [];
       for (let i = 0; i < particleCount; i++) {
-        const vx = (Math.random() - 0.5) * 0.3;
-        const vy = (Math.random() - 0.5) * 0.3;
+        const vx = (Math.random() - 0.5) * 0.25;
+        const vy = (Math.random() - 0.5) * 0.25;
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
@@ -48,7 +48,7 @@ const HeroCanvas: React.FC = () => {
           vy: vy,
           baseVx: vx,
           baseVy: vy,
-          size: Math.random() * 1.5 + 0.5,
+          size: Math.random() * 1.5 + 0.8,
         });
       }
     };
@@ -59,7 +59,6 @@ const HeroCanvas: React.FC = () => {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         
-        // 取得滑鼠在 Canvas 內的相對位置
         const rect = canvas.getBoundingClientRect();
         const mouseRelX = mouse.x - rect.left;
         const mouseRelY = mouse.y - rect.top;
@@ -72,24 +71,23 @@ const HeroCanvas: React.FC = () => {
           const force = (mouse.radius - distToMouse) / mouse.radius;
           const angle = Math.atan2(dy, dx);
           
-          p.vx -= Math.cos(angle) * force * 0.4;
-          p.vy -= Math.sin(angle) * force * 0.4;
+          p.vx -= Math.cos(angle) * force * 0.3;
+          p.vy -= Math.sin(angle) * force * 0.3;
           
-          // 極淡的互動連線
-          const mouseLineOpacity = (1 - distToMouse / mouse.radius) * 0.2;
+          const mouseLineOpacity = (1 - distToMouse / mouse.radius) * 0.15;
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(245, 158, 11, ${mouseLineOpacity})`;
-          ctx.lineWidth = mouseLineOpacity * 2;
+          ctx.strokeStyle = `rgba(217, 119, 6, ${mouseLineOpacity})`;
+          ctx.lineWidth = 0.5;
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouseRelX, mouseRelY);
           ctx.stroke();
         } else {
-          p.vx += (p.baseVx - p.vx) * 0.02;
-          p.vy += (p.baseVy - p.vy) * 0.02;
+          p.vx += (p.baseVx - p.vx) * 0.01;
+          p.vy += (p.baseVy - p.vy) * 0.01;
         }
 
-        p.vx *= 0.99;
-        p.vy *= 0.99;
+        p.vx *= 0.98;
+        p.vy *= 0.98;
         p.x += p.vx;
         p.y += p.vy;
 
@@ -101,8 +99,8 @@ const HeroCanvas: React.FC = () => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = distToMouse < mouse.radius 
-          ? `rgba(180, 83, 9, ${0.2 + (1 - distToMouse/mouse.radius) * 0.2})` 
-          : `rgba(120, 113, 108, 0.1)`;
+          ? `rgba(180, 83, 9, 0.3)` 
+          : `rgba(168, 162, 158, 0.15)`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -110,12 +108,9 @@ const HeroCanvas: React.FC = () => {
           const distNodes = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
 
           if (distNodes < connectionDistance) {
-            const opacity = (1 - distNodes / connectionDistance) * 0.25;
+            const opacity = (1 - distNodes / connectionDistance) * 0.2;
             ctx.beginPath();
-            const isNearMouse = (distToMouse < mouse.radius);
-            ctx.strokeStyle = isNearMouse 
-              ? `rgba(217, 119, 6, ${opacity * 0.3})` 
-              : `rgba(120, 113, 108, ${opacity * 0.15})`;
+            ctx.strokeStyle = `rgba(168, 162, 158, ${opacity * 0.4})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -147,7 +142,7 @@ const HeroCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 z-0 pointer-events-none opacity-60"
+      className="absolute inset-0 z-0 pointer-events-none opacity-80"
     />
   );
 };

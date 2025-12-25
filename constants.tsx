@@ -1,8 +1,8 @@
 
 import { Project } from './types';
 
-export const AFFILIATION = "中央警察大學 交通學系";
-export const AFFILIATION_EN = "Department of Traffic Science, Central Police University";
+export const AFFILIATION = "中央警察大學 交通學系 助理教授";
+export const AFFILIATION_EN = "Assistant Professor, Department of Traffic Science, Central Police University";
 
 export const EXPERTISE = [
   "Traffic Policing 交通警察實務",
