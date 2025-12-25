@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel Standalone for in-browser TSX transpilation -->
+    <!-- Babel Standalone: 負責在瀏覽器端處理 TSX 轉譯 -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -47,43 +47,45 @@
     </style>
 
     <script>
-        // Global process shim for libraries
+        // 設定環境變數墊片
         window.process = { env: { API_KEY: "" } };
         
-        // Detailed error catching to debug white screen / loading issues
+        // 全域錯誤捕捉器
         window.onerror = function(message, source, lineno, colno, error) {
             const display = document.getElementById('error-display');
             if (display) {
                 display.style.display = 'block';
                 display.innerHTML += `
-                    <div style="margin-bottom: 12px; border-bottom: 1px solid #fecaca; padding-bottom: 8px;">
-                        <strong style="color:#b91c1c">[System Error]</strong><br/>
-                        <span>${message}</span><br/>
-                        <small style="opacity:0.7">File: ${source}:${lineno}</small>
+                    <div style="margin-bottom: 8px; border-bottom: 1px solid #fecaca; padding-bottom: 4px;">
+                        <strong style="color:#b91c1c">[Error]</strong> ${message}<br/>
+                        <small style="color:#666">Line: ${lineno} in ${source}</small>
                     </div>`;
             }
+            console.error("Critical Error:", message, "at", source, lineno);
             return false;
         };
 
-        // Auto-remove loader once React finishes rendering
-        let renderCheckCount = 0;
-        const checkAppLoaded = setInterval(() => {
-            renderCheckCount++;
+        // 監測 React 是否成功渲染並移除 Loading 畫面
+        let checkCount = 0;
+        const checkAppReady = setInterval(() => {
+            checkCount++;
             const root = document.getElementById('root');
+            // 如果 root 下有子節點，代表 React 已經渲染成功
             if (root && root.children.length > 0) {
                 const loader = document.getElementById('loader');
                 if (loader) {
                     loader.style.opacity = '0';
                     setTimeout(() => loader.remove(), 500);
                 }
-                clearInterval(checkAppLoaded);
+                clearInterval(checkAppReady);
             }
-            // If it takes more than 15 seconds, show a warning
-            if (renderCheckCount > 75) {
+            
+            // 如果超過 10 秒還在轉圈，顯示診斷訊息
+            if (checkCount > 50) {
                 const display = document.getElementById('error-display');
                 if (display && display.style.display === 'none') {
-                  display.style.display = 'block';
-                  display.innerHTML += `<div style="color:#854d0e">Initialization is taking longer than usual... Please check console for network errors.</div>`;
+                    display.style.display = 'block';
+                    display.innerHTML += `<p style="color:#854d0e">系統啟動較慢，可能原因：網路延遲或 JavaScript 轉譯錯誤。請檢查開發者工具 (F12) 的 Console。</p>`;
                 }
             }
         }, 200);
@@ -109,11 +111,11 @@
     
     <div id="root"></div>
     
-    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 50vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <strong style="display:block; margin-bottom:12px; color:#991b1b; text-transform: uppercase;">Initialization Diagnostics:</strong>
+    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <strong style="display:block; margin-bottom:12px; color:#991b1b; text-transform: uppercase; letter-spacing: 0.1em;">Initialization Diagnostics:</strong>
     </div>
 
-    <!-- The entry point -->
+    <!-- 入口點：必須使用 data-type="module" 以支援 ES Modules 語法 -->
     <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
