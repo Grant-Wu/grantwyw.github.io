@@ -1,7 +1,7 @@
 
 import React from 'react';
-import HeroCanvas from './components/HeroCanvas';
-import ChatWidget from './components/ChatWidget';
+import HeroCanvas from './components/HeroCanvas.tsx';
+import ChatWidget from './components/ChatWidget.tsx';
 import { 
   PUBLICATIONS, 
   CONFERENCES, 
@@ -12,7 +12,7 @@ import {
   RESEARCH_INTERESTS,
   TEACHING_DATA, 
   SERVICE 
-} from './constants';
+} from './constants.tsx';
 
 const App: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -117,6 +117,7 @@ const App: React.FC = () => {
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Expertise Fields</h2>
                <div className="flex flex-wrap gap-3">
+                 {/* 字體大小增加 50%：從 13px (text-xs) 或預設值增加到約 19.5px */}
                  {EXPERTISE.map((item, idx) => (
                    <div key={idx} className="px-7 py-4 bg-white/80 border border-stone-200 rounded-[2rem] text-[19.5px] font-semibold text-stone-700 hover:border-amber-400 hover:text-amber-800 transition-all shadow-sm">
                      {item}
@@ -144,32 +145,32 @@ const App: React.FC = () => {
           <section id="teaching-section" className="max-w-5xl mx-auto scroll-mt-32">
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Teaching</h2>
             <div className="space-y-12">
-              <div>
-                <h3 className="text-xl font-bold text-amber-800 mb-6">{TEACHING_DATA.current.title}</h3>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="p-8 bg-white border border-stone-100 rounded-[3rem] shadow-sm">
+                <h3 className="text-xl font-bold text-amber-800 mb-8 border-b border-amber-50 pb-4">{TEACHING_DATA.current.title}</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                   <div className="space-y-4">
                     <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Undergraduate</h4>
                     {TEACHING_DATA.current.undergraduate.map((course, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
-                        <span className="text-sm font-medium">{course.name}</span>
-                        <span className="text-[10px] px-2 py-0.5 bg-stone-100 text-stone-500 rounded uppercase">{course.type}</span>
+                      <div key={idx} className="flex justify-between items-center py-2.5 border-b border-stone-50">
+                        <span className="text-base font-bold text-stone-700">{course.name}</span>
+                        <span className="text-[9px] px-2 py-0.5 bg-stone-100 text-stone-500 rounded uppercase">{course.type}</span>
                       </div>
                     ))}
                   </div>
                   <div className="space-y-4">
                     <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Graduate</h4>
                     {TEACHING_DATA.current.graduate.map((course, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
-                        <span className="text-sm font-medium">{course.name}</span>
+                      <div key={idx} className="flex justify-between items-center py-2.5 border-b border-stone-50">
+                        <span className="text-base font-bold text-stone-700">{course.name}</span>
                       </div>
                     ))}
                   </div>
                   <div className="space-y-4">
                     <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Professional</h4>
                     {TEACHING_DATA.current.professional.map((course, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
-                        <span className="text-sm font-medium">{course.name}</span>
-                        <span className="text-[10px] text-stone-400">{course.group}</span>
+                      <div key={idx} className="flex flex-col py-2 border-b border-stone-50">
+                        <span className="text-base font-bold text-stone-700">{course.name}</span>
+                        <span className="text-[9px] text-amber-600 font-bold uppercase mt-1 tracking-widest">{course.group}</span>
                       </div>
                     ))}
                   </div>
@@ -213,9 +214,6 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {RESEARCH_PROJECTS.map((project, idx) => (
                 <div key={idx} className="p-8 bg-stone-900 text-stone-100 rounded-3xl border border-white/5 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                     <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 14h-2v-2h2v2m3.3-6c-.3.4-.6.8-1 1.1l-1.1 1c-.3.3-.4.5-.4.9h-2c0-1 .3-1.5.7-2l1.2-1.1c.3-.3.5-.6.5-1 0-.6-.4-1-1-1s-1 .4-1 1H8c0-1.7 1.3-3 3-3s3 1.3 3 3c0 .7-.3 1.3-.7 1.8z"/></svg>
-                  </div>
                   <span className="text-[10px] font-bold text-amber-500/80 uppercase tracking-widest mb-4 block">{project.period}</span>
                   <h3 className="text-lg font-bold mb-4 leading-tight">{project.title}</h3>
                   <div className="space-y-1">
@@ -291,13 +289,17 @@ const App: React.FC = () => {
          </div>
          <div className="max-w-6xl mx-auto mt-20 pt-8 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-[10px] font-bold text-stone-400 tracking-[0.2em] uppercase">© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED.</p>
-            <div className="flex gap-6 text-[10px] font-bold text-stone-400 tracking-widest">
-               <span>DESIGNED FOR ACADEMIC EXCELLENCE</span>
-            </div>
          </div>
       </footer>
 
       <ChatWidget />
+      
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

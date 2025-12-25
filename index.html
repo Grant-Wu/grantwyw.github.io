@@ -9,49 +9,85 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Babel for on-the-fly TSX transpilation on GitHub Pages -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <style>
-        html {
-            font-size: 18px;
-            scroll-behavior: smooth;
-        }
+        html { font-size: 18px; scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #FDFCF8;
             color: #1C1917;
+            margin: 0;
             overflow-x: hidden;
         }
-        h1, h2, h3, .font-heading {
-            font-family: 'Space Grotesk', sans-serif;
+        h1, h2, h3, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+        .font-serif-tc { font-family: 'Noto Serif TC', serif; }
+        
+        /* Initial Loading State */
+        #loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #FDFCF8;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
-        .font-serif-tc {
-            font-family: 'Noto Serif TC', serif;
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #E7E5E4;
+            border-top-color: #B45309;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        ::selection {
-            background: #FFEDD5;
-            color: #9A3412;
-        }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #E7E5E4; border-radius: 10px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+
     <script>
-        // GitHub Pages 兼容性墊片：確保 process.env 存在
+        // Global process shim
         window.process = { env: { API_KEY: "" } };
+        
+        // Remove loader when app is ready
+        window.addEventListener('load', () => {
+            const check = setInterval(() => {
+                if (document.querySelector('#root > div')) {
+                    const loader = document.getElementById('loader');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.remove(), 500);
+                    }
+                    clearInterval(check);
+                }
+            }, 100);
+        });
     </script>
+
     <script type="importmap">
 {
   "imports": {
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
-<body class="selection:bg-amber-100 selection:text-orange-900">
+<body>
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: #78716C; text-transform: uppercase; font-weight: bold;">SafetyLab Initializing</p>
+    </div>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; background:#fef2f2; border:1px solid #fecaca; padding:15px; border-radius:10px; z-index:10000; font-family:monospace;"></div>
+
+    <!-- Use Babel to transpile TSX directly in the browser -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
