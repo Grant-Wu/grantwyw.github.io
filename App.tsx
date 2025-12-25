@@ -117,7 +117,6 @@ const App: React.FC = () => {
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Expertise Fields</h2>
                <div className="flex flex-wrap gap-3">
-                 {/* 字體大小增加 50%：從 13px (text-xs) 或預設值增加到約 19.5px */}
                  {EXPERTISE.map((item, idx) => (
                    <div key={idx} className="px-7 py-4 bg-white/80 border border-stone-200 rounded-[2rem] text-[19.5px] font-semibold text-stone-700 hover:border-amber-400 hover:text-amber-800 transition-all shadow-sm">
                      {item}

@@ -13,11 +13,7 @@ if (container) {
       </React.StrictMode>
     );
   } catch (err) {
-    console.error("Critical Render Error:", err);
-    const display = document.getElementById('error-display');
-    if (display) {
-        display.style.display = 'block';
-        display.innerHTML = '<h3 style="color:#ef4444;margin-bottom:8px">Render Error</h3><pre style="font-size:10px;overflow:auto">' + err + '</pre>';
-    }
+    console.error("React Render Error:", err);
+    throw err; // Let the window error listener handle it
   }
 }
