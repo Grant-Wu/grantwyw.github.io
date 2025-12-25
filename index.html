@@ -1,25 +1,17 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafetyLab | Dr. Yuan-Wei Wu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    darkMode: 'class', // 強制改成手動模式，避免系統誤判
-    theme: {
-      extend: {},
-    },
-  }
-</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         html {
-            font-size: 18px; /* 設定適中的基礎字體大小 */
+            font-size: 18px;
             scroll-behavior: smooth;
             scroll-padding-top: 80px; 
         }
@@ -30,7 +22,7 @@
             overflow-x: hidden;
         }
         h1, h2, h3, .font-heading {
-            font-family: 'Space+Grotesk', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
         canvas {
             touch-action: none;
@@ -39,11 +31,26 @@
             background: #FFEDD5;
             color: #9A3412;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        
+        .chat-open {
+            display: flex !important;
+        }
+
+        /* 隱藏預設捲軸，使介面更乾淨 */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
-            background: #FAF9F6;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
             background: #E7E5E4;
@@ -56,15 +63,503 @@
 <script type="importmap">
 {
   "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
   }
 }
 </script>
 </head>
 <body class="selection:bg-orange-100 selection:text-orange-900">
-    <div id="root"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-orange-50/50">
+        <div class="flex flex-col">
+            <div class="text-base font-bold tracking-tighter uppercase font-heading text-stone-900">
+                Safety<span class="text-amber-700">Lab</span>
+            </div>
+            <div class="text-[8px] font-bold tracking-[0.4em] text-stone-400 uppercase">
+                Yuan-Wei Wu
+            </div>
+        </div>
+        <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+            <a href="#research-interests" class="hover:text-amber-700 transition-colors">INTERESTS</a>
+            <a href="#research-projects" class="hover:text-amber-700 transition-colors">PROJECTS</a>
+            <a href="#publications" class="hover:text-amber-700 transition-colors">PUBLICATIONS</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-12">
+        <!-- Hero Section -->
+        <section id="hero" class="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[50vh] flex items-center">
+            <canvas id="hero-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-60"></canvas>
+            <div class="max-w-6xl relative z-10 w-full">
+                <div class="mb-4 opacity-0 animate-fade-in">
+                    <div class="inline-block px-3 py-0.5 bg-orange-50 text-orange-800 text-[9px] font-bold uppercase tracking-[0.4em] mb-2 rounded-full border border-orange-100">
+                        Assistant Professor
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-stone-900 font-heading leading-[1.05] mb-2">
+                        吳元維 <br />
+                        <span class="text-amber-800/80 font-light text-2xl md:text-4xl tracking-tight">Yuan-Wei Wu</span>
+                    </h1>
+                    <div class="flex flex-col border-l-4 border-amber-500 pl-4">
+                        <p class="text-stone-800 text-sm font-medium tracking-wide">中央警察大學 交通學系</p>
+                        <p class="text-stone-400 text-[10px] font-light uppercase tracking-wider">Department of Traffic Science, Central Police University</p>
+                    </div>
+                </div>
+
+                <h2 class="text-lg md:text-2xl font-bold leading-tight mb-4 tracking-tighter text-stone-300 opacity-0 animate-fade-in delay-1 uppercase">
+                    Engineering <span class="text-stone-900">Empirical</span> <br />
+                    Accountability in <span class="text-amber-700">Traffic</span>
+                </h2>
+                
+                <p class="text-base text-stone-500 max-w-lg leading-relaxed opacity-0 animate-fade-in delay-2">
+                    透過 <span class="text-amber-900 font-semibold border-b border-amber-50">AI</span> 與 <span class="text-amber-900 font-semibold border-b border-amber-50">資料科學</span>，重構交通安全分析的精準度。
+                </p>
+            </div>
+        </section>
+
+        <!-- Content Wrapper with 1.1rem Font Size (110%) -->
+        <div style="font-size: 1.1rem;">
+            
+            <!-- Academic Background -->
+            <section id="about" class="relative bg-stone-50/50 py-10 px-6 md:px-24 border-y border-stone-100/60">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <div class="group">
+                            <p class="text-base font-bold text-stone-900">中央警察大學 交通學系</p>
+                            <p class="text-sm text-stone-500">助理教授</p>
+                        </div>
+                        <div class="pt-2 border-t border-stone-200 group">
+                            <p class="text-base font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
+                            <p class="text-sm text-stone-500 italic">Ph.D., Civil Engineering, NTU</p>
+                        </div>
+                        <div class="pt-2 flex flex-wrap gap-x-6 gap-y-2" id="expertise-container">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                    <div class="bg-white/90 p-8 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden">
+                        <p class="text-lg font-light text-stone-800 leading-relaxed italic">
+                            「交通安全並非設計的偶然，而是精準工程與實證當責的結果。」
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Interests -->
+            <section id="research-interests" class="relative py-12 px-6 md:px-24 bg-white">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-8 border-b-2 border-amber-50 inline-block">Research Interest <span class="text-stone-300 ml-3">研究興趣</span></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="interests-container">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Projects -->
+            <section id="research-projects" class="relative py-12 px-6 md:px-24 bg-stone-50/30">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold font-heading mb-8 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span class="text-stone-300 ml-3">研究計畫</span></h2>
+                    <div class="space-y-3" id="projects-container">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications -->
+            <section id="publications" class="relative py-12 px-6 md:px-24 bg-white">
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-12">
+                        <h2 class="text-3xl font-bold text-stone-950 font-heading mb-8 border-l-4 border-amber-600 pl-4">Journal Papers <span class="text-stone-200 ml-3">期刊論文</span></h2>
+                        <div class="space-y-8" id="journals-container">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pt-10 border-t border-stone-100">
+                        <h2 class="text-2xl font-bold text-stone-950 font-heading mb-8">Conference Papers <span class="text-stone-300 ml-3">研討會論文</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" id="conferences-container">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service Section - 3 columns layout -->
+            <section id="service" class="relative py-16 px-6 md:px-24 bg-stone-50/60">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 text-center">Academic Service <span class="text-stone-300 ml-3">服務項目</span></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Journal Review -->
+                        <div class="bg-white p-8 rounded-3xl border border-stone-200/50 shadow-sm flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="text-lg font-bold text-stone-900 mb-6 pb-2 border-b border-stone-50">Journal Review 審查</h3>
+                            <ul class="space-y-3 flex-1" id="service-journals"></ul>
+                        </div>
+                        <!-- Administration -->
+                        <div class="bg-white p-8 rounded-3xl border border-stone-200/50 shadow-sm flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="text-lg font-bold text-stone-900 mb-6 pb-2 border-b border-stone-50">Administration 行政</h3>
+                            <ul class="space-y-3 flex-1" id="service-university"></ul>
+                        </div>
+                        <!-- Advisory -->
+                        <div class="bg-white p-8 rounded-3xl border border-stone-200/50 shadow-sm flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="text-lg font-bold text-stone-900 mb-6 pb-2 border-b border-stone-50">Advisory 政府</h3>
+                            <ul class="space-y-3 flex-1" id="service-government"></ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer id="contact" class="relative py-12 px-6 md:px-24 bg-stone-900 text-stone-100">
+                <div class="max-w-6xl mx-auto">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 font-heading">吳元維 <span class="text-stone-500 font-light text-xl ml-2">Yuan-Wei Wu</span></h3>
+                            <p class="text-[13px] text-stone-400 mb-6">中央警察大學 交通學系</p>
+                            <a href="mailto:grantwyw@mail.cpu.edu.tw" class="text-xl font-bold text-amber-500 hover:text-amber-400 transition-all underline decoration-stone-700 underline-offset-8">
+                                grantwyw@mail.cpu.edu.tw
+                            </a>
+                        </div>
+                        <div class="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-stone-500">
+                            <a href="#" class="hover:text-amber-400 transition-colors">Scholar</a>
+                            <a href="#" class="hover:text-amber-400 transition-colors">ResearchGate</a>
+                            <a href="#" class="hover:text-amber-400 transition-colors">ORCID</a>
+                        </div>
+                    </div>
+                    <div class="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center text-stone-600 text-[10px] uppercase tracking-[0.4em]">
+                        <span>© 2024 Dr. Yuan-Wei Wu | 中央警察大學</span>
+                        <span class="mt-4 md:mt-0">Precision Investigative Science Unit</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Chat Widget -->
+    <div class="fixed bottom-10 right-10 z-50">
+        <div id="chat-window" class="hidden w-80 h-[32rem] bg-white border border-orange-100 rounded-3xl flex-col shadow-2xl overflow-hidden">
+            <div class="p-5 border-b border-orange-50 flex justify-between items-center bg-orange-50/20">
+                <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900">AI Associate</span>
+                <button onclick="toggleChat(false)" class="text-stone-400 hover:text-amber-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-5">
+                <div class="text-center py-12 px-4" id="empty-state">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <p class="text-stone-400 text-xs leading-relaxed font-medium">
+                        詢問關於交通事故分析、<br />人工智慧應用或特定研究計畫。
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-5 bg-white border-t border-stone-100">
+                <div class="relative">
+                    <input id="chat-input" type="text" placeholder="Ask me anything..." class="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-5 pr-12 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:bg-white transition-all">
+                    <button onclick="handleSendMessage()" class="absolute right-3 top-3 text-amber-600 hover:text-amber-800 transition-colors p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button id="chat-toggle" onclick="toggleChat(true)" class="w-16 h-16 bg-amber-700 text-white rounded-full shadow-[0_10px_30px_rgba(180,83,9,0.3)] flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script type="module">
+        import { GoogleGenAI } from "@google/genai";
+
+        // --- Data ---
+        const EXPERTISE = [
+            "Traffic Policing 交通警察實務",
+            "Road Safety & Crash Investigation 交通安全與事故調查",
+            "AI & Data Science 應用人工智慧與資料科學",
+            "Transportation Engineering 運輸工程",
+            "Mathematical Planning 數學規劃"
+        ];
+
+        const RESEARCH_INTERESTS = [
+            "交通執法成效分析",
+            "交通衝突之在地化探討",
+            "交通事故調查與重建技術",
+            "交通安全政策與專業能力發展"
+        ];
+
+        const RESEARCH_PROJECTS = [
+            { title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction", org: "國家科學及技術委員會", period: "2025.08 ~ 2026.07" },
+            { title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫", role: "協同主持人", org: "交通部運輸研究所", period: "民國 114 年迄今" },
+            { title: "道安專業人力培訓暨知識平台策略內容研析", org: "交通部運輸研究所", period: "民國 114 年迄今" },
+            { title: "道安改善專業能力建構", org: "交通部運輸研究所", period: "民國 113 年" },
+            { title: "道路交通安全資料整合與分析平台建置學術研究", org: "交通部", period: "民國 108 年" }
+        ];
+
+        const PUBLICATIONS = [
+            { year: '2024', journal: '交通學報', title: '道路交通安全從業人員專業培訓需求分析之初探', authors: '吳元維*、楊馥榕', link: 'https://ts.cpu.edu.tw/p/406-1020-44159,r647.php' },
+            { year: '2023', journal: '交通學報', title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析', authors: '盧冠仁、吳元維*', link: 'https://ts.cpu.edu.tw/p/406-1020-42081,r647.php' },
+            { year: '2022', journal: 'Accident Analysis and Prevention (SSCI)', title: 'Temporal stability of associations between crash characteristics: A multiple correspondence analysis.', authors: 'Hsu, T.P., Wu, Y.W.*, Chen, A.Y.', link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457522000264' },
+            { year: '2021', journal: 'Accident Analysis and Prevention (SSCI)', title: 'Mid-term prediction of at-fault crash driver frequency using fusion deep learning with city-level traffic violation data.', authors: 'Wu, Y.W.*, Hsu, T.P.', link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457520317309' }
+        ];
+
+        const CONFERENCES = [
+            { year: '2025', event: '道路交通安全與執法研討會', title: '應用遙測技術於交通事故現場重建之探討', authors: '游薛武、吳元維*、李旻晃、潘啟文' },
+            { year: '2024', event: '道路交通安全與執法研討會', title: '道路交通安全從業人員專業培訓需求分析之初探', authors: '吳元維*、周文生、楊馥榕、曾群明' },
+            { year: '2023', event: '道路交通安全與執法研討會', title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析', authors: '盧冠仁、吳元維*' },
+            { year: '2019', event: '13th EASTS Conference', title: 'Mining characteristics of speeding and red light running violations.', authors: 'Wu, Y.W.*, Hsu, T.P.' }
+        ];
+
+        const SERVICE = {
+            journals: ["Accident Analysis and Prevention (SSCI)", "Engineering Application of Artificial Intelligence (SCI)", "Scientific Reports (SCI)"],
+            university: ["鑑識科學委員會委員 (2025 迄今)", "交通學報編輯委員 (2025 迄今)", "智慧科技執法研究中心執行秘書 (2025 迄今)", "警察科技學院 助理教授 (2024 ~ 2025)"],
+            government: ["桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"]
+        };
+
+        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Expertise: Traffic Policing, Accident Investigation, AI in Transportation. Philosophy: "Safety is a result of deliberate engineering and empirical accountability." Be academic and precise.`;
+
+        // --- Canvas Animation ---
+        function initCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 80;
+            const mouse = { x: -2000, y: -2000, radius: 300 };
+
+            function resize() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+                initParticles();
+            }
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        baseVx: (Math.random() - 0.5) * 0.3,
+                        baseVy: (Math.random() - 0.5) * 0.3,
+                        size: Math.random() * 1.5 + 0.5
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = mouse.x - rect.left;
+                const mouseY = mouse.y - rect.top;
+
+                particles.forEach((p, i) => {
+                    const dx = p.x - mouseX;
+                    const dy = p.y - mouseY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < mouse.radius) {
+                        const force = (mouse.radius - dist) / mouse.radius;
+                        const angle = Math.atan2(dy, dx);
+                        p.vx -= Math.cos(angle) * force * 0.4;
+                        p.vy -= Math.sin(angle) * force * 0.4;
+
+                        // 淡色的互動連線
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(245, 158, 11, ${(1 - dist / mouse.radius) * 0.2})`;
+                        ctx.lineWidth = (1 - dist / mouse.radius) * 2;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouseX, mouseY);
+                        ctx.stroke();
+                    } else {
+                        p.vx += (p.baseVx - p.vx) * 0.02;
+                        p.vy += (p.baseVy - p.vy) * 0.02;
+                    }
+
+                    p.vx *= 0.99; p.vy *= 0.99;
+                    p.x += p.vx; p.y += p.vy;
+
+                    // 無縫邊界
+                    if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = dist < mouse.radius ? `rgba(180, 83, 9, 0.3)` : `rgba(120, 113, 108, 0.1)`;
+                    ctx.fill();
+
+                    // 節點連線
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const d = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
+                        if (d < 180) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(120, 113, 108, ${(1 - d / 180) * 0.15})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resize);
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+            resize();
+            draw();
+        }
+
+        // --- DOM Rendering ---
+        function renderUI() {
+            document.getElementById('expertise-container').innerHTML = EXPERTISE.map(item => `
+                <div class="flex items-center gap-2 text-sm text-stone-600">
+                    <div class="w-1.5 h-1.5 bg-amber-600 rounded-full"></div>
+                    ${item}
+                </div>
+            `).join('');
+
+            document.getElementById('interests-container').innerHTML = RESEARCH_INTERESTS.map((interest, idx) => `
+                <div class="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl group hover:border-amber-300 transition-all hover:bg-white">
+                    <span class="w-10 h-10 flex items-center justify-center bg-white border border-stone-100 rounded-lg text-amber-700 font-mono text-sm font-bold group-hover:bg-amber-700 group-hover:text-white transition-all">0${idx + 1}</span>
+                    <span class="text-base font-bold text-stone-800 leading-tight">${interest}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('projects-container').innerHTML = RESEARCH_PROJECTS.map(project => `
+                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 hover:bg-white transition-all p-4 rounded-lg group">
+                    <span class="md:w-32 text-[12px] font-mono text-stone-400 shrink-0 font-bold uppercase">${project.period}</span>
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-stone-800 group-hover:text-amber-800 transition-colors leading-snug">${project.title}</h3>
+                        <div class="flex gap-4 text-[11px] uppercase tracking-wider font-semibold text-stone-400 mt-1">
+                            <span class="text-amber-600/70">${project.org}</span>
+                            ${project.role ? `<span>| ${project.role}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('journals-container').innerHTML = PUBLICATIONS.map(pub => `
+                <div class="group py-2 border-b border-stone-50 last:border-0">
+                    <div class="flex gap-3 items-center mb-1">
+                        <span class="px-2 py-0.5 bg-orange-100 text-orange-800 text-[10px] font-bold uppercase tracking-wider rounded-full">${pub.year}</span>
+                        <span class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">${pub.journal}</span>
+                    </div>
+                    ${pub.link ? `<a href="${pub.link}" target="_blank" class="block hover:text-amber-800 transition-colors"><h5 class="text-xl font-bold text-stone-900 leading-snug mb-1">${pub.title}</h5></a>` 
+                    : `<h5 class="text-xl font-bold text-stone-900 leading-snug mb-1">${pub.title}</h5>`}
+                    <p class="text-sm text-stone-500 font-medium">${pub.authors}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('conferences-container').innerHTML = CONFERENCES.map(conf => `
+                <div class="border-l-2 border-stone-100 pl-6 pb-2 hover:border-amber-300 transition-colors">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-[11px] font-bold text-amber-600 uppercase">${conf.year}</span>
+                        <span class="text-[9px] text-stone-400 uppercase tracking-tighter">${conf.event}</span>
+                    </div>
+                    <h5 class="text-base font-bold text-stone-800 mb-1 leading-snug">${conf.title}</h5>
+                    <p class="text-[11px] text-stone-500 italic font-medium">${conf.authors}</p>
+                </div>
+            `).join('');
+
+            const serviceList = (items) => items.map(item => `
+                <li class="text-[13px] text-stone-600 leading-snug flex items-start gap-3">
+                    <span class="text-amber-500 mt-1.5 shrink-0">
+                        <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg>
+                    </span>
+                    ${item}
+                </li>
+            `).join('');
+
+            document.getElementById('service-journals').innerHTML = serviceList(SERVICE.journals);
+            document.getElementById('service-university').innerHTML = serviceList(SERVICE.university);
+            document.getElementById('service-government').innerHTML = serviceList(SERVICE.government);
+        }
+
+        // --- Chat Widget Logic ---
+        window.toggleChat = (open) => {
+            const win = document.getElementById('chat-window');
+            const toggle = document.getElementById('chat-toggle');
+            if (open) {
+                win.classList.add('chat-open');
+                toggle.style.display = 'none';
+            } else {
+                win.classList.remove('chat-open');
+                toggle.style.display = 'flex';
+            }
+        };
+
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+
+        window.handleSendMessage = async () => {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('chat-messages');
+            const emptyState = document.getElementById('empty-state');
+            const text = input.value.trim();
+            if (!text) return;
+
+            if (emptyState) emptyState.remove();
+
+            // User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'flex justify-end';
+            userDiv.innerHTML = `<div class="max-w-[85%] px-5 py-3 rounded-2xl text-[13px] leading-relaxed shadow-sm bg-amber-700 text-white font-medium">${text}</div>`;
+            messages.appendChild(userDiv);
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+
+            // Loading state
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'flex justify-start';
+            loadingDiv.innerHTML = `<div class="bg-stone-50 p-4 rounded-2xl border border-stone-100"><div class="flex gap-2"><div class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce"></div><div class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce delay-75"></div><div class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce delay-150"></div></div></div>`;
+            messages.appendChild(loadingDiv);
+            messages.scrollTop = messages.scrollHeight;
+
+            try {
+                const response = await ai.models.generateContent({
+                    model: 'gemini-3-flash-preview',
+                    contents: text,
+                    config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.7, maxOutputTokens: 200 }
+                });
+                loadingDiv.remove();
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'flex justify-start';
+                aiDiv.innerHTML = `<div class="max-w-[85%] px-5 py-3 rounded-2xl text-[13px] leading-relaxed shadow-sm bg-stone-100 text-stone-800 border border-stone-200/50">${response.text}</div>`;
+                messages.appendChild(aiDiv);
+            } catch (err) {
+                loadingDiv.remove();
+                console.error(err);
+                const errDiv = document.createElement('div');
+                errDiv.className = 'flex justify-start';
+                errDiv.innerHTML = `<div class="max-w-[85%] px-5 py-3 rounded-2xl text-[13px] bg-red-50 text-red-800 border border-red-100">AI Associate is currently offline. Please try again.</div>`;
+                messages.appendChild(errDiv);
+            }
+            messages.scrollTop = messages.scrollHeight;
+        };
+
+        // --- Bootstrap ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initCanvas();
+            renderUI();
+            
+            // Allow Enter key to send message
+            document.getElementById('chat-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleSendMessage();
+            });
+        });
+    </script>
 </body>
 </html>
