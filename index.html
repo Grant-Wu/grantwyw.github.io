@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -7,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         html {
             font-size: 18px;
@@ -22,6 +23,9 @@
         }
         h1, h2, h3, .font-heading {
             font-family: 'Space Grotesk', sans-serif;
+        }
+        .font-serif-tc {
+            font-family: 'Noto Serif TC', serif;
         }
         canvas {
             touch-action: none;
@@ -82,14 +86,15 @@
     </nav>
 
     <main class="relative z-10 pt-12">
-        <section id="hero" class="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[50vh] flex items-center">
-            <canvas id="hero-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-60"></canvas>
-            <div class="max-w-6xl relative z-10 w-full">
+        <section id="hero" class="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[70vh] flex items-center bg-white">
+            <canvas id="hero-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-80"></canvas>
+            
+            <div class="max-w-6xl relative z-10 w-full pointer-events-auto">
                 <div class="mb-4 opacity-0 animate-fade-in">
                     <div class="inline-block px-3 py-0.5 bg-orange-50 text-orange-800 text-[9px] font-bold uppercase tracking-[0.4em] mb-2 rounded-full border border-orange-100">
                         Assistant Professor
                     </div>
-                    <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-stone-900 font-heading leading-[1.05] mb-2">
+                    <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-stone-900 font-heading leading-[1.05] mb-2">
                         吳元維 <br />
                         <span class="text-amber-800/80 font-light text-2xl md:text-4xl tracking-tight">Yuan-Wei Wu</span>
                     </h1>
@@ -108,59 +113,53 @@
             </div>
         </section>
 
-        <!-- Main Content with 110% Font Size -->
         <div style="font-size: 1.1rem;">
-            <section id="about" class="relative bg-stone-50/50 py-10 px-6 md:px-24 border-y border-stone-100/60">
-                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-4">
-                        <div class="group">
-                            <p class="text-base font-bold text-stone-900">中央警察大學 交通學系</p>
-                            <p class="text-sm text-stone-500">助理教授</p>
-                        </div>
-                        <div class="pt-2 border-t border-stone-200 group">
-                            <p class="text-base font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
-                            <p class="text-sm text-stone-500 italic">Ph.D., Civil Engineering, NTU</p>
-                        </div>
-                        <div class="pt-2 flex flex-wrap gap-x-6 gap-y-2" id="expertise-container"></div>
-                    </div>
-                    <div class="bg-white/90 p-8 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden">
-                        <p class="text-lg font-light text-stone-800 leading-relaxed italic">
-                            「交通安全並非設計的偶然，而是精準工程與實證當責的結果。」
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="research-interests" class="relative py-12 px-6 md:px-24 bg-white">
-                <div class="max-w-5xl mx-auto">
-                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-8 border-b-2 border-amber-50 inline-block">Research Interest <span class="text-stone-300 ml-3">研究興趣</span></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="interests-container"></div>
-                </div>
-            </section>
-
-            <section id="research-projects" class="relative py-12 px-6 md:px-24 bg-stone-50/30">
-                <div class="max-w-5xl mx-auto">
-                    <h2 class="text-3xl font-bold font-heading mb-8 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span class="text-stone-300 ml-3">研究計畫</span></h2>
-                    <div class="space-y-3" id="projects-container"></div>
-                </div>
-            </section>
-
-            <section id="publications" class="relative py-12 px-6 md:px-24 bg-white">
-                <div class="max-w-5xl mx-auto">
-                    <div class="mb-12">
-                        <h2 class="text-3xl font-bold text-stone-950 font-heading mb-8 border-l-4 border-amber-600 pl-4">Journal Papers <span class="text-stone-200 ml-3">期刊論文</span></h2>
-                        <div class="space-y-8" id="journals-container"></div>
-                    </div>
-                    <div class="pt-10 border-t border-stone-100">
-                        <h2 class="text-2xl font-bold text-stone-950 font-heading mb-8">Conference Papers <span class="text-stone-300 ml-3">研討會論文</span></h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8" id="conferences-container"></div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="service" class="relative py-16 px-6 md:px-24 bg-stone-50/60">
+            <section id="about" class="relative bg-stone-50/50 py-16 px-6 md:px-24 border-y border-stone-100/60">
                 <div class="max-w-6xl mx-auto">
-                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 text-center">Academic Service <span class="text-stone-300 ml-3">服務項目</span></h2>
+                    <div class="space-y-6 max-w-2xl">
+                        <div class="group">
+                            <p class="text-lg font-bold text-stone-900">中央警察大學 交通學系</p>
+                            <p class="text-base text-stone-500">助理教授</p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-200 group">
+                            <p class="text-lg font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
+                            <p class="text-base text-stone-500 italic">Ph.D., Civil Engineering, NTU</p>
+                        </div>
+                        <div class="pt-2 flex flex-wrap gap-x-6 gap-y-3" id="expertise-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="research-interests" class="relative py-16 px-6 md:px-24 bg-white">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 border-b-2 border-amber-50 inline-block">Research Interest <span class="text-stone-300 ml-3">研究興趣</span></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="interests-container"></div>
+                </div>
+            </section>
+
+            <section id="research-projects" class="relative py-16 px-6 md:px-24 bg-stone-50/30">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span class="text-stone-300 ml-3">研究計畫</span></h2>
+                    <div class="space-y-4" id="projects-container"></div>
+                </div>
+            </section>
+
+            <section id="publications" class="relative py-16 px-6 md:px-24 bg-white">
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-16">
+                        <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 border-l-4 border-amber-600 pl-4">Journal Papers <span class="text-stone-200 ml-3">期刊論文</span></h2>
+                        <div class="space-y-10" id="journals-container"></div>
+                    </div>
+                    <div class="pt-12 border-t border-stone-100">
+                        <h2 class="text-2xl font-bold text-stone-950 font-heading mb-10">Conference Papers <span class="text-stone-300 ml-3">研討會論文</span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10" id="conferences-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="service" class="relative py-20 px-6 md:px-24 bg-stone-50/60">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span class="text-stone-300 ml-3">服務項目</span></h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="bg-white p-8 rounded-3xl border border-stone-200/50 shadow-sm flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             <h3 class="text-lg font-bold text-stone-900 mb-6 pb-2 border-b border-stone-50">Journal Review 審查</h3>
@@ -178,19 +177,20 @@
                 </div>
             </section>
 
-            <footer id="contact" class="relative py-12 px-6 md:px-24 bg-stone-900 text-stone-100">
+            <!-- Updated Footer: Changed from black (stone-900) to deep stone-200/50 for a unified theme -->
+            <footer id="contact" class="relative py-16 px-6 md:px-24 bg-stone-200/50 border-t border-stone-300/60 text-stone-800">
                 <div class="max-w-6xl mx-auto">
-                    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
                         <div>
-                            <h3 class="text-2xl font-bold mb-2 font-heading">吳元維 <span class="text-stone-500 font-light text-xl ml-2">Yuan-Wei Wu</span></h3>
-                            <p class="text-[13px] text-stone-400 mb-6">中央警察大學 交通學系</p>
-                            <a href="mailto:grantwyw@mail.cpu.edu.tw" class="text-xl font-bold text-amber-500 hover:text-amber-400 transition-all underline decoration-stone-700 underline-offset-8">
+                            <h3 class="text-3xl font-bold mb-4 font-heading text-stone-900">吳元維 <span class="text-stone-500 font-light text-xl ml-2">Yuan-Wei Wu</span></h3>
+                            <p class="text-sm text-stone-500 mb-8">中央警察大學 交通學系助理教授</p>
+                            <a href="mailto:grantwyw@mail.cpu.edu.tw" class="text-2xl font-bold text-amber-700 hover:text-amber-800 transition-all underline decoration-stone-300 underline-offset-8">
                                 grantwyw@mail.cpu.edu.tw
                             </a>
                         </div>
                     </div>
-                    <div class="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center text-stone-600 text-[10px] uppercase tracking-[0.4em]">
-                        <span>© 2024 Dr. Yuan-Wei Wu | 中央警察大學</span>
+                    <div class="pt-8 border-t border-stone-300 flex flex-col md:flex-row justify-between items-center text-stone-400 text-[11px] uppercase tracking-[0.4em]">
+                        <span>© 2025 Dr. Yuan-Wei Wu | 中央警察大學交通學系</span>
                     </div>
                 </div>
             </footer>
@@ -251,9 +251,9 @@
             government: ["桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"]
         };
 
-        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Be academic and precise. Expertise: Traffic Safety, AI.`;
+        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Be academic and precise.`;
 
-        // --- Render Logic (Prioritize this to prevent empty sections if AI fails) ---
+        // --- Render UI ---
         function renderUI() {
             const safeSet = (id, html) => {
                 const el = document.getElementById(id);
@@ -265,29 +265,29 @@
             `).join(''));
 
             safeSet('interests-container', RESEARCH_INTERESTS.map((interest, idx) => `
-                <div class="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl hover:border-amber-300 transition-all hover:bg-white">
+                <div class="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl hover:border-amber-300 transition-all hover:bg-white shadow-sm">
                     <span class="w-10 h-10 flex items-center justify-center bg-white border border-stone-100 rounded-lg text-amber-700 font-mono text-sm font-bold">0${idx + 1}</span>
                     <span class="text-base font-bold text-stone-800">${interest}</span>
                 </div>
             `).join(''));
 
             safeSet('projects-container', RESEARCH_PROJECTS.map(p => `
-                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-lg hover:bg-white transition-all">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-xl hover:bg-white transition-all">
                     <span class="md:w-32 text-[12px] font-mono text-stone-400 font-bold uppercase shrink-0">${p.period}</span>
                     <div class="flex-1">
-                        <h3 class="text-base font-bold text-stone-800">${p.title}</h3>
+                        <h3 class="text-base font-bold text-stone-800 leading-snug">${p.title}</h3>
                         <div class="flex gap-4 text-[11px] uppercase text-stone-400 mt-1"><span class="text-amber-600 font-semibold">${p.org}</span>${p.role ? `<span>| ${p.role}</span>` : ''}</div>
                     </div>
                 </div>
             `).join(''));
 
             safeSet('journals-container', PUBLICATIONS.map(pub => `
-                <div class="py-2 border-b border-stone-50 last:border-0">
+                <div class="py-4 border-b border-stone-50 last:border-0 group">
                     <div class="flex gap-3 items-center mb-1">
                         <span class="px-2 py-0.5 bg-orange-100 text-orange-800 text-[10px] font-bold rounded-full">${pub.year}</span>
                         <span class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">${pub.journal}</span>
                     </div>
-                    <a href="${pub.link || '#'}" target="_blank" class="hover:text-amber-800 transition-colors"><h5 class="text-xl font-bold text-stone-900 leading-snug">${pub.title}</h5></a>
+                    <a href="${pub.link || '#'}" target="_blank" class="hover:text-amber-800 transition-colors"><h5 class="text-xl font-bold text-stone-900 leading-snug mb-1">${pub.title}</h5></a>
                     <p class="text-sm text-stone-500 font-medium">${pub.authors}</p>
                 </div>
             `).join(''));
@@ -295,8 +295,8 @@
             safeSet('conferences-container', CONFERENCES.map(conf => `
                 <div class="border-l-2 border-stone-100 pl-6 pb-2 hover:border-amber-300 transition-colors">
                     <span class="text-[11px] font-bold text-amber-600 uppercase">${conf.year}</span>
-                    <h5 class="text-base font-bold text-stone-800 leading-snug">${conf.title}</h5>
-                    <p class="text-[11px] text-stone-500 italic">${conf.authors}</p>
+                    <h5 class="text-base font-bold text-stone-800 leading-snug mb-1">${conf.title}</h5>
+                    <p class="text-[11px] text-stone-500 italic font-medium">${conf.authors}</p>
                 </div>
             `).join(''));
 
@@ -306,32 +306,33 @@
             safeSet('service-government', sList(SERVICE.government));
         }
 
-        // --- Canvas Animation ---
+        // --- Optimized Canvas Animation ---
         function initCanvas() {
             const canvas = document.getElementById('hero-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let particles = [];
-            const mouse = { x: -2000, y: -2000, radius: 250 };
+            const mouse = { x: -2000, y: -2000, radius: 280 };
 
             function resize() {
-                const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width;
-                canvas.height = rect.height;
+                const section = document.getElementById('hero');
+                canvas.width = section.clientWidth;
+                canvas.height = section.clientHeight;
                 initParticles();
             }
 
             function initParticles() {
                 particles = [];
-                for (let i = 0; i < 80; i++) {
+                const count = Math.floor((canvas.width * canvas.height) / 10000);
+                for (let i = 0; i < Math.min(count, 120); i++) {
                     particles.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
                         vx: (Math.random() - 0.5) * 0.4,
                         vy: (Math.random() - 0.5) * 0.4,
-                        baseVx: (Math.random() - 0.5) * 0.4,
-                        baseVy: (Math.random() - 0.5) * 0.4,
-                        size: Math.random() * 1.5 + 0.5
+                        baseVx: (Math.random() - 0.5) * 0.3,
+                        baseVy: (Math.random() - 0.5) * 0.3,
+                        size: Math.random() * 2 + 0.5
                     });
                 }
             }
@@ -339,7 +340,6 @@
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const rect = canvas.getBoundingClientRect();
-                // Handle scrolling: rect.left/top are viewport relative
                 const mx = mouse.x - rect.left;
                 const my = mouse.y - rect.top;
 
@@ -351,31 +351,36 @@
                     if (dist < mouse.radius) {
                         const force = (mouse.radius - dist) / mouse.radius;
                         const angle = Math.atan2(dy, dx);
-                        p.vx -= Math.cos(angle) * force * 0.3;
-                        p.vy -= Math.sin(angle) * force * 0.3;
+                        p.vx -= Math.cos(angle) * force * 0.5;
+                        p.vy -= Math.sin(angle) * force * 0.5;
+                        
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(245, 158, 11, ${(1 - dist / mouse.radius) * 0.15})`;
+                        ctx.strokeStyle = `rgba(217, 119, 6, ${(1 - dist / mouse.radius) * 0.15})`;
+                        ctx.lineWidth = 0.5;
                         ctx.moveTo(p.x, p.y); ctx.lineTo(mx, my); ctx.stroke();
                     } else {
-                        p.vx += (p.baseVx - p.vx) * 0.05;
-                        p.vy += (p.baseVy - p.vy) * 0.05;
+                        p.vx += (p.baseVx - p.vx) * 0.03;
+                        p.vy += (p.baseVy - p.vy) * 0.03;
                     }
 
                     p.x += p.vx; p.y += p.vy;
+                    p.vx *= 0.99; p.vy *= 0.99;
+
                     if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
                     if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
 
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = dist < mouse.radius ? `rgba(180, 83, 9, 0.4)` : `rgba(120, 113, 108, 0.15)`;
+                    ctx.fillStyle = dist < mouse.radius ? `rgba(180, 83, 9, 0.5)` : `rgba(120, 113, 108, 0.15)`;
                     ctx.fill();
 
                     for (let j = i + 1; j < particles.length; j++) {
                         const p2 = particles[j];
                         const d = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
-                        if (d < 150) {
+                        if (d < 160) {
                             ctx.beginPath();
-                            ctx.strokeStyle = `rgba(120, 113, 108, ${(1 - d / 150) * 0.1})`;
+                            ctx.strokeStyle = `rgba(120, 113, 108, ${(1 - d / 160) * 0.1})`;
+                            ctx.lineWidth = 0.3;
                             ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                         }
                     }
@@ -391,22 +396,15 @@
             resize(); draw();
         }
 
-        // --- Chat Helper ---
         window.toggleChat = (open) => {
-            const win = document.getElementById('chat-window');
-            const toggle = document.getElementById('chat-toggle');
-            if (win) win.style.display = open ? 'flex' : 'none';
-            if (toggle) toggle.style.display = open ? 'none' : 'flex';
+            document.getElementById('chat-window').style.display = open ? 'flex' : 'none';
+            document.getElementById('chat-toggle').style.display = open ? 'none' : 'flex';
         };
 
-        // --- App Lifecycle ---
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Render data first
             renderUI();
-            // 2. Start animation
             initCanvas();
-
-            // 3. AI logic (Wrapped in try-catch to prevent crashing the whole page)
+            
             try {
                 const getApiKey = () => {
                     try { return typeof process !== 'undefined' ? process.env.API_KEY : ''; } catch { return ''; }
@@ -414,19 +412,17 @@
                 const key = getApiKey();
                 const ai = key ? new GoogleGenAI({ apiKey: key }) : null;
 
-                const sendBtn = document.getElementById('send-btn');
-                const chatInput = document.getElementById('chat-input');
-                const messages = document.getElementById('chat-messages');
-
                 const handleSend = async () => {
-                    const text = chatInput.value.trim();
+                    const input = document.getElementById('chat-input');
+                    const messages = document.getElementById('chat-messages');
+                    const text = input.value.trim();
                     if (!text || !ai) return;
 
                     const uBox = document.createElement('div');
                     uBox.className = 'flex justify-end';
                     uBox.innerHTML = `<div class="bg-amber-700 text-white p-3 rounded-2xl text-[13px] font-medium max-w-[85%] shadow-sm">${text}</div>`;
                     messages.appendChild(uBox);
-                    chatInput.value = '';
+                    input.value = '';
                     messages.scrollTop = messages.scrollHeight;
 
                     const lBox = document.createElement('div');
@@ -446,23 +442,22 @@
                         aBox.innerHTML = `<div class="bg-stone-100 text-stone-800 p-3 rounded-2xl text-[13px] border border-stone-200/50 max-w-[85%] shadow-sm">${res.text}</div>`;
                         messages.appendChild(aBox);
                     } catch (e) {
-                        lBox.innerHTML = `<div class="text-[10px] text-red-400">Connection error. Check API Key.</div>`;
+                        lBox.innerHTML = `<div class="text-[10px] text-red-400">Connection error.</div>`;
                     }
                     messages.scrollTop = messages.scrollHeight;
                 };
 
-                if (sendBtn) sendBtn.onclick = handleSend;
-                if (chatInput) chatInput.onkeydown = (e) => e.key === 'Enter' && handleSend();
+                document.getElementById('send-btn').onclick = handleSend;
+                document.getElementById('chat-input').onkeydown = (e) => e.key === 'Enter' && handleSend();
                 
                 if (!ai) {
                     const info = document.createElement('div');
-                    info.className = 'text-center p-4 text-[10px] text-stone-300 uppercase tracking-widest';
-                    info.innerText = "AI Offline: API Key Missing";
-                    messages.appendChild(info);
+                    info.className = 'text-center p-8 text-[10px] text-stone-300 uppercase tracking-widest leading-relaxed';
+                    info.innerText = "AI Offline: Key Not Configured";
+                    document.getElementById('chat-messages').appendChild(info);
                 }
-
-            } catch (error) {
-                console.warn("AI Module Failed to load:", error);
+            } catch (err) {
+                console.warn("AI logic skipped:", err);
             }
         });
     </script>

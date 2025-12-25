@@ -42,8 +42,8 @@ const App: React.FC = () => {
       </nav>
 
       <main className="relative z-10 pt-12">
-        {/* Hero Section - Canvas confined here */}
-        <section className="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden">
+        {/* Hero Section */}
+        <section id="hero" className="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[70vh] flex items-center">
           <HeroCanvas />
           <div className="max-w-6xl relative z-10 pointer-events-auto">
             <div className="mb-4 opacity-0 animate-[fadeIn_0.8s_ease-out_forwards]">
@@ -71,22 +71,19 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Content Wrapper for 110% Font Size (Hero section 以外的所有字體加大 10%) */}
         <div className="text-[1.1rem]">
-          
-          {/* Academic Background */}
-          <section id="about" className="relative bg-stone-50/50 py-10 px-6 md:px-24 border-y border-stone-100/60">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="space-y-4">
+          <section id="about" className="relative bg-stone-50/50 py-16 px-6 md:px-24 border-y border-stone-100/60">
+            <div className="max-w-6xl mx-auto">
+              <div className="space-y-6 max-w-2xl">
                 <div className="group">
-                  <p className="text-base font-bold text-stone-900">{AFFILIATION}</p>
-                  <p className="text-sm text-stone-500">中央警察大學 助理教授</p>
+                  <p className="text-lg font-bold text-stone-900">{AFFILIATION}</p>
+                  <p className="text-base text-stone-500">中央警察大學 助理教授</p>
                 </div>
-                <div className="pt-2 border-t border-stone-200 group">
-                  <p className="text-base font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
-                  <p className="text-sm text-stone-500 italic">Ph.D., Civil Engineering, NTU</p>
+                <div className="pt-4 border-t border-stone-200 group">
+                  <p className="text-lg font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
+                  <p className="text-base text-stone-500 italic">Ph.D., Civil Engineering, NTU</p>
                 </div>
-                <div className="pt-2 flex flex-wrap gap-x-6 gap-y-2">
+                <div className="pt-2 flex flex-wrap gap-x-6 gap-y-3">
                   {EXPERTISE.map((item, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm text-stone-600">
                       <div className="w-1.5 h-1.5 bg-amber-600 rounded-full"></div>
@@ -95,21 +92,16 @@ const App: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <div className="bg-white/90 p-8 rounded-2xl border border-orange-100 shadow-sm relative overflow-hidden">
-                <p className="text-lg font-light text-stone-800 leading-relaxed italic">
-                  「交通安全並非設計的偶然，而是精準工程與實證當責的結果。」
-                </p>
-              </div>
             </div>
           </section>
 
           {/* Research Interests */}
-          <section id="research-interests" className="relative py-12 px-6 md:px-24 bg-white">
+          <section id="research-interests" className="relative py-16 px-6 md:px-24 bg-white">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8 border-b-2 border-amber-50 inline-block">Research Interest <span className="text-stone-300 ml-3">研究興趣</span></h2>
+              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-10 border-b-2 border-amber-50 inline-block">Research Interest <span className="text-stone-300 ml-3">研究興趣</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {RESEARCH_INTERESTS.map((interest, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl group hover:border-amber-300 transition-all hover:bg-white">
+                  <div key={idx} className="flex items-center gap-4 p-5 bg-stone-50/50 border border-stone-100 rounded-xl group hover:border-amber-300 transition-all hover:bg-white shadow-sm">
                     <span className="w-10 h-10 flex items-center justify-center bg-white border border-stone-100 rounded-lg text-amber-700 font-mono text-sm font-bold group-hover:bg-amber-700 group-hover:text-white transition-all">0{idx + 1}</span>
                     <span className="text-base font-bold text-stone-800 leading-tight">{interest}</span>
                   </div>
@@ -119,12 +111,12 @@ const App: React.FC = () => {
           </section>
 
           {/* Research Projects */}
-          <section id="research-projects" className="relative py-12 px-6 md:px-24 bg-stone-50/30">
+          <section id="research-projects" className="relative py-16 px-6 md:px-24 bg-stone-50/30">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold font-heading mb-8 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span className="text-stone-300 ml-3">研究計畫</span></h2>
-              <div className="space-y-3">
+              <h2 className="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span className="text-stone-300 ml-3">研究計畫</span></h2>
+              <div className="space-y-4">
                 {RESEARCH_PROJECTS.map((project, idx) => (
-                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 hover:bg-white transition-all p-4 rounded-lg group">
+                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 hover:bg-white transition-all p-4 rounded-xl group">
                     <span className="md:w-32 text-[12px] font-mono text-stone-400 shrink-0 font-bold uppercase">{project.period}</span>
                     <div className="flex-1">
                       <h3 className="text-base font-bold text-stone-800 group-hover:text-amber-800 transition-colors leading-snug">{project.title}</h3>
@@ -140,11 +132,11 @@ const App: React.FC = () => {
           </section>
 
           {/* Publications */}
-          <section id="publications" className="relative py-12 px-6 md:px-24 bg-white">
+          <section id="publications" className="relative py-16 px-6 md:px-24 bg-white">
             <div className="max-w-5xl mx-auto">
-              <div className="mb-12">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8 border-l-4 border-amber-600 pl-4">Journal Papers <span className="text-stone-200 ml-3">期刊論文</span></h2>
-                <div className="space-y-8">
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-10 border-l-4 border-amber-600 pl-4">Journal Papers <span className="text-stone-200 ml-3">期刊論文</span></h2>
+                <div className="space-y-10">
                   {PUBLICATIONS.map((pub, i) => (
                     <div key={i} className="group py-2 border-b border-stone-50 last:border-0">
                       <div className="flex gap-3 items-center mb-1">
@@ -164,9 +156,9 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-10 border-t border-stone-100">
-                <h2 className="text-2xl font-bold text-stone-950 font-heading mb-8">Conference Papers <span className="text-stone-300 ml-3">研討會論文</span></h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              <div className="pt-12 border-t border-stone-100">
+                <h2 className="text-2xl font-bold text-stone-950 font-heading mb-10">Conference Papers <span className="text-stone-300 ml-3">研討會論文</span></h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                   {CONFERENCES.map((conf, i) => (
                     <div key={i} className="border-l-2 border-stone-100 pl-6 pb-2 hover:border-amber-300 transition-colors">
                       <div className="flex justify-between items-start mb-1">
@@ -182,15 +174,15 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Service Section - Side-by-side objects, removed bullet icons from titles */}
-          <section id="service" className="relative py-16 px-6 md:px-24 bg-stone-50/60">
+          {/* Academic Service */}
+          <section id="service" className="relative py-20 px-6 md:px-24 bg-stone-50/60">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-10 text-center">Academic Service <span className="text-stone-300 ml-3">服務項目</span></h2>
+              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span className="text-stone-300 ml-3">服務項目</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
-                  { title: "Journal Review 審查", items: SERVICE.journals, color: "amber" },
-                  { title: "Administration 行政", items: SERVICE.university, color: "orange" },
-                  { title: "Advisory 政府", items: SERVICE.government, color: "stone" }
+                  { title: "Journal Review 審查", items: SERVICE.journals },
+                  { title: "Administration 行政", items: SERVICE.university },
+                  { title: "Advisory 政府", items: SERVICE.government }
                 ].map((box, idx) => (
                   <div key={idx} className="bg-white p-8 rounded-3xl border border-stone-200/50 shadow-sm flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <h3 className="text-lg font-bold text-stone-900 mb-6 pb-2 border-b border-stone-50">{box.title}</h3>
@@ -210,26 +202,20 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Footer */}
-          <footer id="contact" className="relative py-12 px-6 md:px-24 bg-stone-900 text-stone-100">
+          {/* Updated Footer to match other sections but slightly darker */}
+          <footer id="contact" className="relative py-16 px-6 md:px-24 bg-stone-200/50 border-t border-stone-300/60 text-stone-800">
             <div className="max-w-6xl mx-auto">
-              <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+              <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
                 <div>
-                  <h3 className="text-2xl font-bold mb-2 font-heading">吳元維 <span className="text-stone-500 font-light text-xl ml-2">Yuan-Wei Wu</span></h3>
-                  <p className="text-[13px] text-stone-400 mb-6">{AFFILIATION}</p>
-                  <a href="mailto:grantwyw@mail.cpu.edu.tw" className="text-xl font-bold text-amber-500 hover:text-amber-400 transition-all underline decoration-stone-700 underline-offset-8">
+                  <h3 className="text-3xl font-bold mb-4 font-heading text-stone-900">吳元維 <span className="text-stone-500 font-light text-xl ml-2">Yuan-Wei Wu</span></h3>
+                  <p className="text-sm text-stone-500 mb-8">{AFFILIATION} 助理教授</p>
+                  <a href="mailto:grantwyw@mail.cpu.edu.tw" className="text-2xl font-bold text-amber-700 hover:text-amber-800 transition-all underline decoration-stone-300 underline-offset-8">
                     grantwyw@mail.cpu.edu.tw
                   </a>
                 </div>
-                <div className="flex gap-8 text-[11px] font-bold uppercase tracking-widest text-stone-500">
-                  <a href="#" className="hover:text-amber-400 transition-colors">Scholar</a>
-                  <a href="#" className="hover:text-amber-400 transition-colors">ResearchGate</a>
-                  <a href="#" className="hover:text-amber-400 transition-colors">ORCID</a>
-                </div>
               </div>
-              <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center text-stone-600 text-[10px] uppercase tracking-[0.4em]">
-                <span>© {new Date().getFullYear()} Dr. Yuan-Wei Wu | 中央警察大學</span>
-                <span className="mt-4 md:mt-0">Precision Investigative Science Unit</span>
+              <div className="pt-8 border-t border-stone-300 flex flex-col md:flex-row justify-between items-center text-stone-400 text-[11px] uppercase tracking-[0.4em]">
+                <span>© {new Date().getFullYear()} Dr. Yuan-Wei Wu | 中央警察大學交通學系</span>
               </div>
             </div>
           </footer>
