@@ -10,6 +10,7 @@ import {
   AFFILIATION_EN, 
   RESEARCH_PROJECTS, 
   RESEARCH_INTERESTS,
+  TEACHING_DATA,
   SERVICE 
 } from './constants';
 
@@ -18,14 +19,23 @@ const App: React.FC = () => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 100; // 導覽列高度補償
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
     <div className="relative min-h-screen bg-[#FDFCF8] text-stone-900 overflow-x-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-orange-50/50">
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/90 backdrop-blur-xl border-b border-orange-50/50">
         <div className="flex flex-col">
           <div className="text-base font-bold tracking-tighter uppercase font-heading text-stone-900">
             Safety<span className="text-amber-700">Lab</span>
@@ -34,16 +44,18 @@ const App: React.FC = () => {
             Yuan-Wei Wu
           </div>
         </div>
-        <div className="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+        <!-- 順序調整：INTERESTS, TEACHING, PUBLICATIONS, PROJECTS -->
+        <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-stone-500">
           <a href="#research-interests" onClick={(e) => scrollToSection(e, 'research-interests')} className="hover:text-amber-700 transition-colors">INTERESTS</a>
-          <a href="#research-projects" onClick={(e) => scrollToSection(e, 'research-projects')} className="hover:text-amber-700 transition-colors">PROJECTS</a>
+          <a href="#teaching" onClick={(e) => scrollToSection(e, 'teaching')} className="hover:text-amber-700 transition-colors">TEACHING</a>
           <a href="#publications" onClick={(e) => scrollToSection(e, 'publications')} className="hover:text-amber-700 transition-colors">PUBLICATIONS</a>
+          <a href="#research-projects" onClick={(e) => scrollToSection(e, 'research-projects')} className="hover:text-amber-700 transition-colors">PROJECTS</a>
         </div>
       </nav>
 
       <main className="relative z-10 pt-12">
-        {/* Hero Section */}
-        <section id="hero" className="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[70vh] flex items-center">
+        {/* Hero Section - 底色稍微加深至 300/50 */}
+        <section id="hero" className="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[75vh] flex items-center bg-stone-300/50">
           <HeroCanvas />
           <div className="max-w-6xl relative z-10 pointer-events-auto">
             <div className="mb-4 opacity-0 animate-[fadeIn_0.8s_ease-out_forwards]">
@@ -60,24 +72,25 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <h2 className="text-lg md:text-2xl font-bold leading-tight mb-4 tracking-tighter text-stone-300 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] uppercase">
+            <h2 className="text-lg md:text-2xl font-bold leading-tight mb-4 tracking-tighter text-stone-400 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] uppercase">
               Engineering <span className="text-stone-900">Empirical</span> <br />
               Accountability in <span className="text-amber-700">Traffic</span>
             </h2>
             
             <p className="text-base text-stone-500 max-w-lg leading-relaxed opacity-0 animate-[fadeIn_0.8s_ease-out_0.4s_forwards]">
-              透過 <span className="text-amber-900 font-semibold border-b border-amber-50">AI</span> 與 <span className="text-amber-900 font-semibold border-b border-amber-50">資料科學</span>，重構交通安全分析的精準度。
+              透過 <span className="text-amber-900 font-semibold border-b border-amber-50/50">AI</span> 與 <span className="text-amber-900 font-semibold border-b border-amber-50/50">資料科學</span>，重構交通安全分析的精準度。
             </p>
           </div>
         </section>
 
         <div className="text-[1.1rem]">
+          {/* About Section */}
           <section id="about" className="relative bg-stone-50/50 py-16 px-6 md:px-24 border-y border-stone-100/60">
             <div className="max-w-6xl mx-auto">
               <div className="space-y-6 max-w-2xl">
                 <div className="group">
                   <p className="text-lg font-bold text-stone-900">{AFFILIATION}</p>
-                  <p className="text-base text-stone-500">中央警察大學 助理教授</p>
+                  <p className="text-base text-stone-500">助理教授</p>
                 </div>
                 <div className="pt-4 border-t border-stone-200 group">
                   <p className="text-lg font-bold text-stone-900">國立臺灣大學 土木工程學系 博士</p>
@@ -95,8 +108,8 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Research Interests */}
-          <section id="research-interests" className="relative py-16 px-6 md:px-24 bg-white">
+          {/* 區塊 1: 研究興趣 */}
+          <section id="research-interests" className="relative py-20 px-6 md:px-24 bg-white scroll-mt-24">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-3xl font-bold text-stone-950 font-heading mb-10 border-b-2 border-amber-50 inline-block">Research Interest <span className="text-stone-300 ml-3">研究興趣</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -110,29 +123,52 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Research Projects */}
-          <section id="research-projects" className="relative py-16 px-6 md:px-24 bg-stone-50/30">
+          {/* 區塊 2: 教學 */}
+          <section id="teaching" className="relative py-20 px-6 md:px-24 bg-stone-50/30 scroll-mt-24">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span className="text-stone-300 ml-3">研究計畫</span></h2>
-              <div className="space-y-4">
-                {RESEARCH_PROJECTS.map((project, idx) => (
-                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 hover:bg-white transition-all p-4 rounded-xl group">
-                    <span className="md:w-32 text-[12px] font-mono text-stone-400 shrink-0 font-bold uppercase">{project.period}</span>
-                    <div className="flex-1">
-                      <h3 className="text-base font-bold text-stone-800 group-hover:text-amber-800 transition-colors leading-snug">{project.title}</h3>
-                      <div className="flex gap-4 text-[11px] uppercase tracking-wider font-semibold text-stone-400 mt-1">
-                        <span className="text-amber-600/70">{project.org}</span>
-                        {'role' in project && <span>| {project.role}</span>}
+              <h2 className="text-3xl font-bold text-stone-950 font-heading mb-14 border-b-2 border-stone-100 inline-block">Teaching <span className="text-stone-300 ml-3">教學</span></h2>
+              <div className="space-y-20">
+                {/* 2025 Current Courses */}
+                <div>
+                  <h3 className="text-xl font-bold text-stone-900 mb-8 flex items-center gap-3">
+                    <span className="w-2 h-6 bg-amber-600 rounded-full"></span>
+                    {TEACHING_DATA.current.title}
+                  </h3>
+                  <div className="space-y-12 pl-5 border-l border-stone-100">
+                    <div>
+                      <h4 className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.2em] mb-6">Undergraduate 大學部</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {TEACHING_DATA.current.undergraduate.map((course, i) => (
+                          <div key={i} className="p-4 bg-white border border-stone-100 rounded-2xl flex justify-between items-center hover:bg-white hover:shadow-sm transition-all group">
+                            <span className="text-sm font-bold text-stone-800">{course.name}</span>
+                            <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter ${
+                              course.type.includes('必') ? 'bg-amber-100 text-amber-800' : 'bg-stone-200 text-stone-500'
+                            }`}>
+                              {course.type}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold text-amber-600 uppercase tracking-[0.2em] mb-6">Graduate 研究所</h4>
+                      <div className="flex flex-wrap gap-4">
+                        {TEACHING_DATA.current.graduate.map((course, i) => (
+                          <div key={i} className="px-8 py-5 bg-amber-50/60 border border-amber-100/60 rounded-3xl text-sm font-bold text-amber-900 shadow-sm hover:bg-amber-100/50 hover:border-amber-200 transition-all flex items-center gap-3">
+                            <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+                            {course.name}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Publications */}
-          <section id="publications" className="relative py-16 px-6 md:px-24 bg-white">
+          {/* 區塊 3: 論文發表 (Journal & Conference) */}
+          <section id="publications" className="relative py-20 px-6 md:px-24 bg-white scroll-mt-24">
             <div className="max-w-5xl mx-auto">
               <div className="mb-16">
                 <h2 className="text-3xl font-bold text-stone-950 font-heading mb-10 border-l-4 border-amber-600 pl-4">Journal Papers <span className="text-stone-200 ml-3">期刊論文</span></h2>
@@ -156,7 +192,7 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-12 border-t border-stone-100">
+              <div id="conference-section" className="pt-12 border-t border-stone-100">
                 <h2 className="text-2xl font-bold text-stone-950 font-heading mb-10">Conference Papers <span className="text-stone-300 ml-3">研討會論文</span></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                   {CONFERENCES.map((conf, i) => (
@@ -174,8 +210,29 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Academic Service */}
-          <section id="service" className="relative py-20 px-6 md:px-24 bg-stone-50/60">
+          {/* 區塊 4: 研究計畫 (依照要求移到研討會論文之後) */}
+          <section id="research-projects" className="relative py-20 px-6 md:px-24 bg-stone-50/30 scroll-mt-24">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span className="text-stone-300 ml-3">研究計畫</span></h2>
+              <div className="space-y-4">
+                {RESEARCH_PROJECTS.map((project, idx) => (
+                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 hover:bg-white transition-all p-4 rounded-xl group">
+                    <span className="md:w-32 text-[12px] font-mono text-stone-400 shrink-0 font-bold uppercase">{project.period}</span>
+                    <div className="flex-1">
+                      <h3 className="text-base font-bold text-stone-800 group-hover:text-amber-800 transition-colors leading-snug">{project.title}</h3>
+                      <div className="flex gap-4 text-[11px] uppercase tracking-wider font-semibold text-stone-400 mt-1">
+                        <span className="text-amber-600/70">{project.org}</span>
+                        {'role' in project && <span>| {project.role}</span>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 區塊 5: 學術服務 */}
+          <section id="service" className="relative py-20 px-6 md:px-24 bg-white scroll-mt-24">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span className="text-stone-300 ml-3">學術服務</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -202,7 +259,7 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Updated Footer to match other sections but slightly darker */}
+          {/* Footer */}
           <footer id="contact" className="relative py-16 px-6 md:px-24 bg-stone-200/50 border-t border-stone-300/60 text-stone-800">
             <div className="max-w-6xl mx-auto">
               <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">

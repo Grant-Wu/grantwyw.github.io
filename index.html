@@ -13,7 +13,8 @@
         html {
             font-size: 18px;
             scroll-behavior: smooth;
-            scroll-padding-top: 80px; 
+            /* 增加 scroll-padding-top 確保滾動後標題不會被導覽列遮住 */
+            scroll-padding-top: 100px; 
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -66,10 +67,9 @@
 </script>
 </head>
 <body class="selection:bg-orange-100 selection:text-orange-900">
-    <!-- Dummy root to prevent mounting errors -->
     <div id="root" style="display:none"></div>
 
-    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-orange-50/50">
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-2.5 md:px-12 flex justify-between items-center bg-white/90 backdrop-blur-xl border-b border-orange-50/50">
         <div class="flex flex-col">
             <div class="text-base font-bold tracking-tighter uppercase font-heading text-stone-900">
                 Safety<span class="text-amber-700">Lab</span>
@@ -78,15 +78,18 @@
                 Yuan-Wei Wu
             </div>
         </div>
-        <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+        <!-- 導覽按鍵順序調整 -->
+        <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-stone-500">
             <a href="#research-interests" class="hover:text-amber-700 transition-colors">INTERESTS</a>
-            <a href="#research-projects" class="hover:text-amber-700 transition-colors">PROJECTS</a>
+            <a href="#teaching" class="hover:text-amber-700 transition-colors">TEACHING</a>
             <a href="#publications" class="hover:text-amber-700 transition-colors">PUBLICATIONS</a>
+            <a href="#research-projects" class="hover:text-amber-700 transition-colors">PROJECTS</a>
         </div>
     </nav>
 
     <main class="relative z-10 pt-12">
-        <section id="hero" class="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[70vh] flex items-center bg-white">
+        <!-- Hero Section - 底色加深至 300/50 -->
+        <section id="hero" class="relative px-6 md:px-24 pt-16 pb-16 overflow-hidden min-h-[75vh] flex items-center bg-stone-300/50">
             <canvas id="hero-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-80"></canvas>
             
             <div class="max-w-6xl relative z-10 w-full pointer-events-auto">
@@ -103,12 +106,12 @@
                         <p class="text-stone-400 text-[10px] font-light uppercase tracking-wider">Department of Traffic Science, Central Police University</p>
                     </div>
                 </div>
-                <h2 class="text-lg md:text-2xl font-bold leading-tight mb-4 tracking-tighter text-stone-300 opacity-0 animate-fade-in delay-1 uppercase">
+                <h2 class="text-lg md:text-2xl font-bold leading-tight mb-4 tracking-tighter text-stone-400 opacity-0 animate-fade-in delay-1 uppercase">
                     Engineering <span class="text-stone-900">Empirical</span> <br />
                     Accountability in <span class="text-amber-700">Traffic</span>
                 </h2>
                 <p class="text-base text-stone-500 max-w-lg leading-relaxed opacity-0 animate-fade-in delay-2">
-                    透過 <span class="text-amber-900 font-semibold border-b border-amber-50">AI</span> 與 <span class="text-amber-900 font-semibold border-b border-amber-50">資料科學</span>，重構交通安全分析的精準度。
+                    透過 <span class="text-amber-900 font-semibold border-b border-amber-50/50">AI</span> 與 <span class="text-amber-900 font-semibold border-b border-amber-50/50">資料科學</span>，重構交通安全分析的精準度。
                 </p>
             </div>
         </section>
@@ -130,21 +133,24 @@
                 </div>
             </section>
 
-            <section id="research-interests" class="relative py-16 px-6 md:px-24 bg-white">
+            <!-- 段落 1: 研究興趣 -->
+            <section id="research-interests" class="relative py-20 px-6 md:px-24 bg-white">
                 <div class="max-w-5xl mx-auto">
                     <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 border-b-2 border-amber-50 inline-block">Research Interest <span class="text-stone-300 ml-3">研究興趣</span></h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="interests-container"></div>
                 </div>
             </section>
 
-            <section id="research-projects" class="relative py-16 px-6 md:px-24 bg-stone-50/30">
+            <!-- 段落 2: 教學 -->
+            <section id="teaching" class="relative py-20 px-6 md:px-24 bg-stone-50/30">
                 <div class="max-w-5xl mx-auto">
-                    <h2 class="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span class="text-stone-300 ml-3">研究計畫</span></h2>
-                    <div class="space-y-4" id="projects-container"></div>
+                    <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 border-b-2 border-stone-100 inline-block">Teaching <span class="text-stone-300 ml-3">教學</span></h2>
+                    <div id="teaching-container" class="space-y-12"></div>
                 </div>
             </section>
 
-            <section id="publications" class="relative py-16 px-6 md:px-24 bg-white">
+            <!-- 段落 3: 論文發表 (Journal Papers 的起點) -->
+            <section id="publications" class="relative py-20 px-6 md:px-24 bg-white">
                 <div class="max-w-5xl mx-auto">
                     <div class="mb-16">
                         <h2 class="text-3xl font-bold text-stone-950 font-heading mb-10 border-l-4 border-amber-600 pl-4">Journal Papers <span class="text-stone-200 ml-3">期刊論文</span></h2>
@@ -157,7 +163,16 @@
                 </div>
             </section>
 
-            <section id="service" class="relative py-20 px-6 md:px-24 bg-stone-50/60">
+            <!-- 段落 4: 研究計畫 (依照要求移到研討會論文後、學術服務前) -->
+            <section id="research-projects" class="relative py-20 px-6 md:px-24 bg-stone-50/30">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold font-heading mb-10 text-stone-900 border-b-2 border-stone-200 inline-block">Research Projects <span class="text-stone-300 ml-3">研究計畫</span></h2>
+                    <div class="space-y-4" id="projects-container"></div>
+                </div>
+            </section>
+
+            <!-- 段落 5: 學術服務 -->
+            <section id="service" class="relative py-20 px-6 md:px-24 bg-white">
                 <div class="max-w-6xl mx-auto">
                     <h2 class="text-3xl font-bold text-stone-950 font-heading mb-12 text-center">Academic Service <span class="text-stone-300 ml-3">學術服務</span></h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -177,7 +192,6 @@
                 </div>
             </section>
 
-            <!-- Updated Footer: Changed from black (stone-900) to deep stone-200/50 for a unified theme -->
             <footer id="contact" class="relative py-16 px-6 md:px-24 bg-stone-200/50 border-t border-stone-300/60 text-stone-800">
                 <div class="max-w-6xl mx-auto">
                     <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
@@ -197,41 +211,47 @@
         </div>
     </main>
 
-    <div class="fixed bottom-10 right-10 z-50">
-        <div id="chat-window" class="hidden w-80 h-[32rem] bg-white border border-orange-100 rounded-3xl flex-col shadow-2xl overflow-hidden">
-            <div class="p-5 border-b border-orange-50 flex justify-between items-center bg-orange-50/20">
-                <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900">AI Associate</span>
-                <button onclick="toggleChat(false)" class="text-stone-400 hover:text-amber-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                </button>
-            </div>
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-5"></div>
-            <div class="p-5 bg-white border-t border-stone-100">
-                <div class="relative">
-                    <input id="chat-input" type="text" placeholder="Ask me anything..." class="w-full bg-stone-50 border border-stone-200 rounded-2xl pl-5 pr-12 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:bg-white transition-all">
-                    <button id="send-btn" class="absolute right-3 top-3 text-amber-600 hover:text-amber-800 transition-colors p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <button id="chat-toggle" onclick="toggleChat(true)" class="w-16 h-16 bg-amber-700 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
-        </button>
-    </div>
-
     <script type="module">
         import { GoogleGenAI } from "@google/genai";
 
         // --- Data ---
         const EXPERTISE = ["Traffic Policing 交通警察實務", "Road Safety & Crash Investigation 交通安全與事故調查", "AI & Data Science 應用人工智慧與資料科學", "Transportation Engineering 運輸工程", "Mathematical Planning 數學規劃"];
         const RESEARCH_INTERESTS = ["交通執法成效分析", "交通衝突之在地化探討", "交通事故調查與重建技術", "交通安全政策與專業能力發展"];
+        const TEACHING = {
+          current: {
+            title: "2025 學年開設課程",
+            undergraduate: [
+              { name: "交通執法專題", type: "系必" },
+              { name: "交通事故處理", type: "校訂必修" },
+              { name: "智慧型運輸系統概論", type: "系選" },
+              { name: "道路工程與衝擊評估", type: "系選" },
+              { name: "交通警察實務", type: "系選" }
+            ],
+            graduate: [
+              { name: "交通安全分析" },
+              { name: "交通專題研究" }
+            ],
+            professional: [
+              { name: "砂石車及遊覽車管理", group: "警佐班" },
+              { name: "交通警察業務", group: "特考班一般生" },
+              { name: "交通警察勤業務概論", group: "特考班警職組" }
+            ]
+          },
+          past: {
+            title: "曾開設課程",
+            undergraduate: [
+              { name: "肇事重建與原因分析", type: "系必" },
+              { name: "作業研究", type: "系必" }
+            ]
+          }
+        };
+
         const RESEARCH_PROJECTS = [
             { title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction", org: "國家科學及技術委員會", period: "2025.08 ~ 2026.07" },
-            { title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫", role: "協同主持人", org: "交通部運輸研究所", period: "民國 114 年迄今" },
-            { title: "道安專業人力培訓暨知識平台策略內容研析", org: "交通部運輸研究所", period: "民國 114 年迄今" },
-            { title: "道安改善專業能力建構", org: "交通部運輸研究所", period: "民國 113 年" },
-            { title: "道路交通安全資料整合與分析平台建置學術研究", org: "交通部", period: "民國 108 年" }
+            { title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫", role: "協同主持人", org: "交通部運輸研究所", period: "2025 ~ 迄今" },
+            { title: "道安專業人力培訓暨知識平台策略內容研析", org: "交通部運輸研究所", period: "2025 ~ 迄今" },
+            { title: "道安改善專業能力建構", org: "交通部運輸研究所", period: "2024" },
+            { title: "道路交通安全資料整合與分析平台建置學術研究", org: "交通部", period: "2019" }
         ];
         const PUBLICATIONS = [
             { year: '2024', journal: '交通學報', title: '道路交通安全從業人員專業培訓需求分析之初探', authors: '吳元維*、楊馥榕', link: 'https://ts.cpu.edu.tw/p/406-1020-44159,r647.php' },
@@ -251,8 +271,6 @@
             government: ["桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"]
         };
 
-        const SYSTEM_PROMPT = `You are the AI Research Associate for Dr. Yuan-Wei, Wu, an Assistant Professor at Central Police University. Be academic and precise.`;
-
         // --- Render UI ---
         function renderUI() {
             const safeSet = (id, html) => {
@@ -271,15 +289,58 @@
                 </div>
             `).join(''));
 
-            safeSet('projects-container', RESEARCH_PROJECTS.map(p => `
-                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-xl hover:bg-white transition-all">
-                    <span class="md:w-32 text-[12px] font-mono text-stone-400 font-bold uppercase shrink-0">${p.period}</span>
-                    <div class="flex-1">
-                        <h3 class="text-base font-bold text-stone-800 leading-snug">${p.title}</h3>
-                        <div class="flex gap-4 text-[11px] uppercase text-stone-400 mt-1"><span class="text-amber-600 font-semibold">${p.org}</span>${p.role ? `<span>| ${p.role}</span>` : ''}</div>
+            const teachingHtml = `
+              <div class="space-y-20">
+                <div>
+                  <h3 class="text-xl font-bold text-stone-900 mb-8 flex items-center gap-3"><span class="w-2 h-6 bg-amber-600 rounded-full"></span>${TEACHING.current.title}</h3>
+                  <div class="space-y-12 pl-5 border-l border-stone-100">
+                    <div>
+                      <h4 class="text-[11px] font-bold text-amber-600 uppercase tracking-[0.2em] mb-6">Undergraduate 大學部</h4>
+                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        ${TEACHING.current.undergraduate.map(c => `
+                          <div class="p-4 bg-white border border-stone-100 rounded-2xl flex justify-between items-center group">
+                            <span class="text-sm font-bold text-stone-800">${c.name}</span>
+                            <span class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter ${c.type.includes('必') ? 'bg-amber-100 text-amber-800' : 'bg-stone-200 text-stone-500'}">${c.type}</span>
+                          </div>
+                        `).join('')}
+                      </div>
                     </div>
+                    <div>
+                      <h4 class="text-[11px] font-bold text-amber-600 uppercase tracking-[0.2em] mb-6">Graduate 研究所</h4>
+                      <div class="flex flex-wrap gap-4">
+                        ${TEACHING.current.graduate.map(c => `<div class="px-8 py-5 bg-amber-50/60 border border-amber-100/60 rounded-3xl text-sm font-bold text-amber-900 shadow-sm flex items-center gap-3"><div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>${c.name}</div>`).join('')}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="text-[11px] font-bold text-amber-600 uppercase tracking-[0.2em] mb-6">Continuing Education 推廣教育訓練中心</h4>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${TEACHING.current.professional.map(c => `
+                          <div class="p-5 border-l-4 border-amber-500 bg-white rounded-r-2xl border border-l-0 border-stone-100 shadow-sm">
+                            <p class="text-[10px] text-stone-400 font-bold uppercase mb-1 tracking-widest">${c.group}</p>
+                            <h5 class="text-base font-bold text-stone-800">${c.name}</h5>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            `).join(''));
+                <div class="pt-10 border-t border-stone-100">
+                  <h3 class="text-xl font-bold text-stone-400 mb-8 flex items-center gap-3"><span class="w-2 h-6 bg-stone-200 rounded-full"></span>${TEACHING.past.title}</h3>
+                  <div class="pl-5 border-l border-stone-100">
+                    <h4 class="text-[11px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-6">Undergraduate 大學部</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      ${TEACHING.past.undergraduate.map(c => `
+                        <div class="p-4 bg-white/50 border border-stone-100 rounded-2xl flex justify-between items-center opacity-70 grayscale-[0.5] hover:grayscale-0 hover:opacity-100 transition-all">
+                          <span class="text-sm font-bold text-stone-600">${c.name}</span>
+                          <span class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter bg-stone-100 text-stone-400">${c.type}</span>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            safeSet('teaching-container', teachingHtml);
 
             safeSet('journals-container', PUBLICATIONS.map(pub => `
                 <div class="py-4 border-b border-stone-50 last:border-0 group">
@@ -300,13 +361,22 @@
                 </div>
             `).join(''));
 
+            safeSet('projects-container', RESEARCH_PROJECTS.map(p => `
+                <div class="flex flex-col md:flex-row md:items-center gap-4 border-b border-stone-100 pb-4 p-4 rounded-xl hover:bg-white transition-all">
+                    <span class="md:w-32 text-[12px] font-mono text-stone-400 font-bold uppercase shrink-0">${p.period}</span>
+                    <div class="flex-1">
+                        <h3 class="text-base font-bold text-stone-800 leading-snug">${p.title}</h3>
+                        <div class="flex gap-4 text-[11px] uppercase text-stone-400 mt-1"><span class="text-amber-600 font-semibold">${p.org}</span>${p.role ? `<span>| ${p.role}</span>` : ''}</div>
+                    </div>
+                </div>
+            `).join(''));
+
             const sList = (items) => items.map(item => `<li class="text-[13px] text-stone-600 flex items-start gap-3"><span class="text-amber-500 mt-1.5 shrink-0"><svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg></span>${item}</li>`).join('');
             safeSet('service-journals', sList(SERVICE.journals));
             safeSet('service-university', sList(SERVICE.university));
             safeSet('service-government', sList(SERVICE.government));
         }
 
-        // --- Optimized Canvas Animation ---
         function initCanvas() {
             const canvas = document.getElementById('hero-canvas');
             if (!canvas) return;
@@ -325,13 +395,15 @@
                 particles = [];
                 const count = Math.floor((canvas.width * canvas.height) / 10000);
                 for (let i = 0; i < Math.min(count, 120); i++) {
+                    const vx = (Math.random() - 0.5) * 0.4;
+                    const vy = (Math.random() - 0.5) * 0.4;
                     particles.push({
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        vx: (Math.random() - 0.5) * 0.4,
-                        vy: (Math.random() - 0.5) * 0.4,
-                        baseVx: (Math.random() - 0.5) * 0.3,
-                        baseVy: (Math.random() - 0.5) * 0.3,
+                        vx: vx,
+                        vy: vy,
+                        baseVx: vx * 0.8,
+                        baseVy: vy * 0.8,
                         size: Math.random() * 2 + 0.5
                     });
                 }
@@ -355,7 +427,7 @@
                         p.vy -= Math.sin(angle) * force * 0.5;
                         
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(217, 119, 6, ${(1 - dist / mouse.radius) * 0.15})`;
+                        ctx.strokeStyle = `rgba(245, 158, 11, ${(1 - dist / mouse.radius) * 0.15})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(p.x, p.y); ctx.lineTo(mx, my); ctx.stroke();
                     } else {
@@ -396,69 +468,29 @@
             resize(); draw();
         }
 
-        window.toggleChat = (open) => {
-            document.getElementById('chat-window').style.display = open ? 'flex' : 'none';
-            document.getElementById('chat-toggle').style.display = open ? 'none' : 'flex';
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
             renderUI();
             initCanvas();
             
-            try {
-                const getApiKey = () => {
-                    try { return typeof process !== 'undefined' ? process.env.API_KEY : ''; } catch { return ''; }
-                };
-                const key = getApiKey();
-                const ai = key ? new GoogleGenAI({ apiKey: key }) : null;
-
-                const handleSend = async () => {
-                    const input = document.getElementById('chat-input');
-                    const messages = document.getElementById('chat-messages');
-                    const text = input.value.trim();
-                    if (!text || !ai) return;
-
-                    const uBox = document.createElement('div');
-                    uBox.className = 'flex justify-end';
-                    uBox.innerHTML = `<div class="bg-amber-700 text-white p-3 rounded-2xl text-[13px] font-medium max-w-[85%] shadow-sm">${text}</div>`;
-                    messages.appendChild(uBox);
-                    input.value = '';
-                    messages.scrollTop = messages.scrollHeight;
-
-                    const lBox = document.createElement('div');
-                    lBox.className = 'flex justify-start';
-                    lBox.innerHTML = `<div class="bg-stone-50 p-3 rounded-2xl border border-stone-100 text-[13px] text-stone-400">Thinking...</div>`;
-                    messages.appendChild(lBox);
-
-                    try {
-                        const res = await ai.models.generateContent({
-                            model: 'gemini-3-flash-preview',
-                            contents: text,
-                            config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.7, maxOutputTokens: 200 }
+            // 修正導覽點擊滾動
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                        const offset = 100;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = element.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
                         });
-                        lBox.remove();
-                        const aBox = document.createElement('div');
-                        aBox.className = 'flex justify-start';
-                        aBox.innerHTML = `<div class="bg-stone-100 text-stone-800 p-3 rounded-2xl text-[13px] border border-stone-200/50 max-w-[85%] shadow-sm">${res.text}</div>`;
-                        messages.appendChild(aBox);
-                    } catch (e) {
-                        lBox.innerHTML = `<div class="text-[10px] text-red-400">Connection error.</div>`;
                     }
-                    messages.scrollTop = messages.scrollHeight;
-                };
-
-                document.getElementById('send-btn').onclick = handleSend;
-                document.getElementById('chat-input').onkeydown = (e) => e.key === 'Enter' && handleSend();
-                
-                if (!ai) {
-                    const info = document.createElement('div');
-                    info.className = 'text-center p-8 text-[10px] text-stone-300 uppercase tracking-widest leading-relaxed';
-                    info.innerText = "AI Offline: Key Not Configured";
-                    document.getElementById('chat-messages').appendChild(info);
-                }
-            } catch (err) {
-                console.warn("AI logic skipped:", err);
-            }
+                });
+            });
         });
     </script>
 </body>

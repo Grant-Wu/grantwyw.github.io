@@ -19,6 +19,35 @@ export const RESEARCH_INTERESTS = [
   "交通安全政策與專業能力發展"
 ];
 
+export const TEACHING_DATA = {
+  current: {
+    title: "2025 學年開設課程",
+    undergraduate: [
+      { name: "交通執法專題", type: "系必" },
+      { name: "交通事故處理", type: "校訂必修" },
+      { name: "智慧型運輸系統概論", type: "系選" },
+      { name: "道路工程與衝擊評估", type: "系選" },
+      { name: "交通警察實務", type: "系選" }
+    ],
+    graduate: [
+      { name: "交通安全分析" },
+      { name: "交通專題研究" }
+    ],
+    professional: [
+      { name: "砂石車及遊覽車管理", group: "警佐班" },
+      { name: "交通警察業務", group: "特考班一般生" },
+      { name: "交通警察勤業務概論", group: "特考班警職組" }
+    ]
+  },
+  past: {
+    title: "曾開設課程",
+    undergraduate: [
+      { name: "肇事重建與原因分析", type: "系必" },
+      { name: "作業研究", type: "系必" }
+    ]
+  }
+};
+
 export const RESEARCH_PROJECTS = [
   {
     title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
@@ -29,22 +58,22 @@ export const RESEARCH_PROJECTS = [
     title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫",
     role: "協同主持人",
     org: "交通部運輸研究所",
-    period: "民國 114 年迄今"
+    period: "2025 ~ 迄今"
   },
   {
     title: "道安專業人力培訓暨知識平台策略內容研析",
     org: "交通部運輸研究所",
-    period: "民國 114 年迄今"
+    period: "2025 ~ 迄今"
   },
   {
     title: "道安改善專業能力建構",
     org: "交通部運輸研究所",
-    period: "民國 113 年"
+    period: "2024"
   },
   {
     title: "道路交通安全資料整合與分析平台建置學術研究",
     org: "交通部",
-    period: "民國 108 年"
+    period: "2019"
   }
 ];
 
@@ -77,14 +106,14 @@ export interface Publication {
 
 export const PUBLICATIONS: Publication[] = [
   {
-    year: '2024 (民113)',
+    year: '2024',
     journal: '交通學報，第二十四卷',
     title: '道路交通安全從業人員專業培訓需求分析之初探',
     authors: '吳元維*、楊馥榕',
     link: 'https://ts.cpu.edu.tw/p/406-1020-44159,r647.php'
   },
   {
-    year: '2023 (民112)',
+    year: '2023',
     journal: '交通學報，第二十三卷',
     title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析',
     authors: '盧冠仁、吳元維*',
@@ -108,19 +137,19 @@ export const PUBLICATIONS: Publication[] = [
 
 export const CONFERENCES = [
   {
-    year: '2025 (民114)',
+    year: '2025',
     event: '道路交通安全與執法研討會',
     title: '應用遙測技術於交通事故現場重建之探討',
     authors: '游薛武、吳元維*、李旻晃、潘啟文'
   },
   {
-    year: '2024 (民113)',
+    year: '2024',
     event: '道路交通安全與執法研討會',
     title: '道路交通安全從業人員專業培訓需求分析之初探',
     authors: '吳元維*、周文生、楊馥榕、曾群明、王冠堯、葉文健、黃士軒'
   },
   {
-    year: '2023 (民112)',
+    year: '2023',
     event: '道路交通安全與執法研討會',
     title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析',
     authors: '盧冠仁、吳元維*'
