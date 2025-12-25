@@ -1,7 +1,7 @@
 
 import React from 'react';
-import HeroCanvas from './components/HeroCanvas.tsx';
-import ChatWidget from './components/ChatWidget.tsx';
+import HeroCanvas from './components/HeroCanvas';
+import ChatWidget from './components/ChatWidget';
 import { 
   PUBLICATIONS, 
   CONFERENCES, 
@@ -10,9 +10,9 @@ import {
   AFFILIATION_EN, 
   RESEARCH_PROJECTS, 
   RESEARCH_INTERESTS,
-  TEACHING_DATA,
+  TEACHING_DATA, 
   SERVICE 
-} from './constants.tsx';
+} from './constants';
 
 const App: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -95,6 +95,8 @@ const App: React.FC = () => {
         </section>
 
         <div className="px-6 md:px-24 py-12 space-y-16 bg-white/50 backdrop-blur-3xl">
+          
+          {/* About Section */}
           <section id="about" className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Profile & Affiliation</h2>
@@ -124,195 +126,178 @@ const App: React.FC = () => {
              </div>
           </section>
 
+          {/* 1. Research Interests */}
           <section id="research-interests" className="max-w-5xl mx-auto scroll-mt-32">
             <div className="flex items-center gap-6 mb-8">
               <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Interests</h2>
-              <div className="flex-1 h-[1px] bg-stone-100"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {RESEARCH_INTERESTS.map((interest, idx) => (
-                <div key={idx} className="p-8 bg-white rounded-[2rem] shadow-sm border border-stone-100 flex gap-5 items-start group hover:bg-stone-50 transition-all">
-                  <span className="text-3xl font-bold text-amber-100 font-heading group-hover:text-amber-200">0{idx + 1}</span>
-                  <p className="text-lg font-bold text-stone-800 leading-snug pt-1 font-serif-tc">{interest}</p>
+                <div key={idx} className="p-4 bg-stone-50 border border-stone-100 rounded-xl hover:bg-amber-50 transition-colors">
+                  <p className="font-serif-tc font-medium text-stone-800">{interest}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section id="teaching-section" className="max-w-6xl mx-auto scroll-mt-32">
-            <div className="mb-10">
-              <h2 className="text-3xl font-bold text-stone-950 font-heading">Teaching</h2>
-              <p className="text-stone-400 text-[10px] uppercase tracking-[0.4em] font-bold mt-1">Academic Courses & Professional Training</p>
-            </div>
-            
-            <div className="w-full p-10 bg-white rounded-[3rem] shadow-sm border border-stone-100 relative overflow-hidden">
-               <h3 className="text-xl font-bold text-stone-900 mb-8 flex items-center gap-4">
-                 <span className="w-1.5 h-8 bg-amber-600 rounded-full"></span>
-                 {TEACHING_DATA.current.title}
-               </h3>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
-                  <div className="space-y-4">
-                     <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Undergraduate</h4>
-                     <div className="space-y-3">
-                       {TEACHING_DATA.current.undergraduate.map((c, i) => (
-                         <div key={i} className="flex justify-between items-center text-[22.5px] font-semibold p-2.5 hover:bg-stone-50 rounded-xl transition-colors">
-                           <span className="text-stone-700">{c.name}</span>
-                           <span className="text-[9px] bg-amber-50 px-3 py-1 rounded-full text-amber-700 border border-amber-100 ml-2 whitespace-nowrap">{c.type}</span>
-                         </div>
-                       ))}
-                     </div>
-                  </div>
-                  <div className="space-y-4">
-                     <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Graduate</h4>
-                     <div className="space-y-3">
-                       {TEACHING_DATA.current.graduate.map((c, i) => (
-                         <div key={i} className="flex items-center gap-4 text-[22.5px] font-semibold p-2.5 hover:bg-amber-50 rounded-xl transition-colors text-amber-900">
-                           <div className="w-2 h-2 bg-amber-500 rounded-full shrink-0"></div>
-                           {c.name}
-                         </div>
-                       ))}
-                     </div>
-                  </div>
-                  <div className="space-y-4 border-l border-stone-50 pl-6 h-full">
-                     <h4 className="text-[9px] font-bold text-stone-300 uppercase tracking-widest border-b border-stone-50 pb-2">Continuing Professional Ed.</h4>
-                     <div className="space-y-5 pt-2">
-                        {TEACHING_DATA.current.professional.map((c, i) => (
-                          <div key={i} className="group cursor-default">
-                            <p className="text-[9px] text-amber-600/80 font-bold uppercase mb-1 tracking-widest">{c.group}</p>
-                            <p className="text-[21px] font-bold leading-tight text-stone-700 group-hover:text-amber-900 transition-colors font-serif-tc">{c.name}</p>
-                          </div>
-                        ))}
-                     </div>
-                  </div>
-               </div>
-            </div>
-          </section>
-
-          <section id="publications-section" className="max-w-5xl mx-auto scroll-mt-32">
-            <div className="text-center mb-12">
-               <h2 className="text-3xl font-bold text-stone-950 font-heading mb-2">Selected Publications</h2>
-               <div className="h-1 w-16 bg-amber-600 mx-auto rounded-full"></div>
-            </div>
-
-            <div className="space-y-16">
+          {/* 2. Teaching */}
+          <section id="teaching-section" className="max-w-5xl mx-auto scroll-mt-32">
+            <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Teaching</h2>
+            <div className="space-y-12">
               <div>
-                <h3 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.4em] mb-8">I. Journal Papers 期刊論文</h3>
-                <div className="space-y-10">
-                  {PUBLICATIONS.map((pub, i) => (
-                    <div key={i} className="relative group">
-                      <div className="absolute -left-12 top-0 text-2xl font-bold text-stone-100 font-heading group-hover:text-amber-100 transition-colors">{pub.year}</div>
-                      <div className="space-y-2">
-                        <span className="text-[9px] font-bold text-stone-300 uppercase tracking-[0.2em]">{pub.journal}</span>
-                        {pub.link ? (
-                          <a href={pub.link} target="_blank" rel="noopener noreferrer" className="block group">
-                            <h5 className="text-xl font-bold text-stone-900 leading-snug group-hover:text-amber-800 transition-colors underline decoration-stone-100 decoration-2 underline-offset-4 font-serif-tc">{pub.title}</h5>
-                          </a>
-                        ) : (
-                          <h5 className="text-xl font-bold text-stone-900 leading-snug font-serif-tc">{pub.title}</h5>
-                        )}
-                        <p className="text-[13px] text-stone-500 font-medium">{pub.authors}</p>
+                <h3 className="text-xl font-bold text-amber-800 mb-6">{TEACHING_DATA.current.title}</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Undergraduate</h4>
+                    {TEACHING_DATA.current.undergraduate.map((course, idx) => (
+                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
+                        <span className="text-sm font-medium">{course.name}</span>
+                        <span className="text-[10px] px-2 py-0.5 bg-stone-100 text-stone-500 rounded uppercase">{course.type}</span>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div id="conference-papers" className="pt-12 border-t border-stone-100">
-                <h3 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.4em] mb-8">II. Conference Papers 研討會論文</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                  {CONFERENCES.map((conf, i) => (
-                    <div key={i} className="group space-y-3 p-6 hover:bg-white rounded-[2rem] transition-all hover:shadow-sm">
-                      <div className="flex justify-between items-center">
-                         <span className="text-lg font-bold text-amber-600 font-heading">{conf.year}</span>
-                         <span className="text-[8px] font-bold text-stone-300 uppercase tracking-tighter">{conf.event}</span>
-                      </div>
-                      <h5 className="text-base font-bold text-stone-800 leading-snug group-hover:text-amber-900 transition-colors font-serif-tc">{conf.title}</h5>
-                      <p className="text-xs text-stone-400">{conf.authors}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="projects-section" className="max-w-5xl mx-auto scroll-mt-32">
-             <div className="mb-10 flex items-center justify-between">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Projects</h2>
-                <div className="text-[9px] font-bold text-stone-300 uppercase tracking-widest">Grants & Projects</div>
-             </div>
-             <div className="grid gap-3">
-                {RESEARCH_PROJECTS.map((p, i) => (
-                  <div key={i} className="p-8 bg-white rounded-[2rem] border border-stone-100 shadow-sm flex flex-col md:flex-row gap-8 md:items-center group hover:border-amber-200 hover:shadow-lg transition-all">
-                    <div className="md:w-28 text-xs font-bold text-stone-300 uppercase tracking-widest">{p.period}</div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold text-stone-900 leading-snug mb-2 group-hover:text-amber-900 transition-colors font-serif-tc">{p.title}</h4>
-                      <div className="flex gap-4 text-[10px] font-bold uppercase text-amber-700/80">
-                         <span>{p.org}</span>
-                         {p.role && <span className="text-stone-300">| {p.role}</span>}
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-             </div>
-          </section>
-
-          <section id="service" className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100 space-y-6 group hover:shadow-lg transition-all">
-                <h3 className="text-[9px] font-bold text-amber-700 uppercase tracking-[0.5em] border-b border-stone-50 pb-4">Journal Review</h3>
-                <ul className="space-y-4">
-                  {SERVICE.journals.map((item, i) => (
-                    <li key={i} className="text-xs text-stone-500 leading-snug italic font-medium hover:text-stone-900 transition-colors">{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100 space-y-6 group hover:shadow-lg transition-all">
-                <h3 className="text-[9px] font-bold text-amber-700 uppercase tracking-[0.5em] border-b border-stone-50 pb-4">Administration</h3>
-                <ul className="space-y-4">
-                  {SERVICE.university.map((item, i) => (
-                    <li key={i} className="text-xs text-stone-600 leading-snug font-semibold border-l-2 border-transparent hover:border-amber-400 pl-3 transition-all">{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100 space-y-6 group hover:shadow-lg transition-all">
-                <h3 className="text-[9px] font-bold text-amber-700 uppercase tracking-[0.5em] border-b border-stone-50 pb-4">Advisory</h3>
-                <ul className="space-y-4">
-                  {SERVICE.government.map((item, i) => (
-                    <li key={i} className="text-xs text-stone-600 leading-snug font-semibold border-l-2 border-transparent hover:border-amber-400 pl-3 transition-all">{item}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <footer id="contact" className="max-w-6xl mx-auto pt-16 pb-8 border-t border-stone-200">
-            <div className="flex flex-col md:flex-row justify-between gap-12">
-              <div className="space-y-6">
-                <h3 className="text-3xl font-bold font-heading text-stone-950 font-serif-tc">吳元維 <span className="text-stone-300 text-xl font-light ml-3 font-heading">Yuan-Wei Wu</span></h3>
-                <div className="space-y-1">
-                  <p className="text-stone-500 font-medium text-xs">{AFFILIATION}</p>
-                  <a href="mailto:grantwyw@mail.cpu.edu.tw" className="text-xl font-bold text-amber-700 hover:text-amber-800 transition-all underline decoration-stone-200 underline-offset-4">
-                    grantwyw@mail.cpu.edu.tw
-                  </a>
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Graduate</h4>
+                    {TEACHING_DATA.current.graduate.map((course, idx) => (
+                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
+                        <span className="text-sm font-medium">{course.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Professional</h4>
+                    {TEACHING_DATA.current.professional.map((course, idx) => (
+                      <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-100">
+                        <span className="text-sm font-medium">{course.name}</span>
+                        <span className="text-[10px] text-stone-400">{course.group}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="text-stone-300 text-[9px] font-bold uppercase tracking-[0.5em] flex flex-col justify-end text-right">
-                <span>© 2025 SafetyLab Portfolio</span>
-                <span>Central Police University, Taiwan</span>
+            </div>
+          </section>
+
+          {/* 3. Publications */}
+          <section id="publications-section" className="max-w-5xl mx-auto scroll-mt-32">
+            <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Selected Publications</h2>
+            <div className="space-y-6">
+              {PUBLICATIONS.map((pub, idx) => (
+                <div key={idx} className="group p-6 bg-white border border-stone-100 rounded-2xl hover:border-amber-200 hover:shadow-md transition-all">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-md">{pub.year}</span>
+                        <span className="text-xs font-medium text-stone-400 uppercase tracking-widest">{pub.journal}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-stone-800 leading-tight group-hover:text-amber-900 transition-colors">
+                        {pub.title}
+                      </h3>
+                      <p className="text-sm text-stone-500 italic">{pub.authors}</p>
+                    </div>
+                    {pub.link && (
+                      <a href={pub.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-xs font-bold text-amber-700 hover:text-amber-900 transition-colors gap-1">
+                        VIEW PAPER
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 4. Projects */}
+          <section id="projects-section" className="max-w-5xl mx-auto scroll-mt-32">
+            <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Research Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {RESEARCH_PROJECTS.map((project, idx) => (
+                <div key={idx} className="p-8 bg-stone-900 text-stone-100 rounded-3xl border border-white/5 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                     <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 14h-2v-2h2v2m3.3-6c-.3.4-.6.8-1 1.1l-1.1 1c-.3.3-.4.5-.4.9h-2c0-1 .3-1.5.7-2l1.2-1.1c.3-.3.5-.6.5-1 0-.6-.4-1-1-1s-1 .4-1 1H8c0-1.7 1.3-3 3-3s3 1.3 3 3c0 .7-.3 1.3-.7 1.8z"/></svg>
+                  </div>
+                  <span className="text-[10px] font-bold text-amber-500/80 uppercase tracking-widest mb-4 block">{project.period}</span>
+                  <h3 className="text-lg font-bold mb-4 leading-tight">{project.title}</h3>
+                  <div className="space-y-1">
+                    <p className="text-xs text-stone-400 uppercase tracking-wide">{project.org}</p>
+                    {project.role && <p className="text-xs font-bold text-amber-600">{project.role}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 5. Professional Service */}
+          <section id="service-section" className="max-w-5xl mx-auto scroll-mt-32">
+            <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Professional Service</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">Journal Reviews</h4>
+                <ul className="space-y-3">
+                  {SERVICE.journals.map((j, idx) => (
+                    <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{j}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">University Service</h4>
+                <ul className="space-y-3">
+                  {SERVICE.university.map((s, idx) => (
+                    <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{s}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">Government Service</h4>
+                <ul className="space-y-3">
+                  {SERVICE.government.map((s, idx) => (
+                    <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{s}</li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </footer>
+          </section>
+
         </div>
       </main>
 
-      <ChatWidget />
+      <footer className="px-6 md:px-24 py-20 bg-stone-100 border-t border-stone-200">
+         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+            <div className="max-w-sm space-y-6">
+               <div className="text-2xl font-bold tracking-tighter uppercase font-heading text-stone-900">
+                 Safety<span className="text-amber-700">Lab</span>
+               </div>
+               <p className="text-stone-500 text-sm leading-relaxed">
+                 Integrating engineering practice with empirical data analysis to reconstruct efficient and safe traffic systems.
+               </p>
+            </div>
+            <div className="grid grid-cols-2 gap-16">
+               <div className="space-y-4">
+                  <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">Navigation</h4>
+                  <ul className="space-y-2 text-xs text-stone-500 font-medium">
+                     <li><a href="#hero" className="hover:text-amber-700 transition-colors">Home</a></li>
+                     <li><a href="#about" className="hover:text-amber-700 transition-colors">About</a></li>
+                     <li><a href="#publications-section" className="hover:text-amber-700 transition-colors">Publications</a></li>
+                  </ul>
+               </div>
+               <div className="space-y-4">
+                  <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">Contact</h4>
+                  <p className="text-xs text-stone-500 leading-loose">
+                    中央警察大學 交通學系<br />
+                    桃園市龜山區大崗里樹人路56號
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div className="max-w-6xl mx-auto mt-20 pt-8 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[10px] font-bold text-stone-400 tracking-[0.2em] uppercase">© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED.</p>
+            <div className="flex gap-6 text-[10px] font-bold text-stone-400 tracking-widest">
+               <span>DESIGNED FOR ACADEMIC EXCELLENCE</span>
+            </div>
+         </div>
+      </footer>
 
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+      <ChatWidget />
     </div>
   );
 };
