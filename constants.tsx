@@ -1,5 +1,4 @@
-
-import { Project } from './types';
+import { Project } from './types.ts';
 
 export const AFFILIATION = "中央警察大學 交通學系 助理教授";
 export const AFFILIATION_EN = "Assistant Professor, Department of Traffic Science, Central Police University";

@@ -57,11 +57,12 @@
                 display.style.display = 'block';
                 display.innerHTML += `
                     <div style="margin-bottom: 8px; border-bottom: 1px solid #fecaca; padding-bottom: 4px;">
-                        <strong style="color:#b91c1c">[Error]</strong> ${message}<br/>
+                        <strong style="color:#b91c1c">[System Error]</strong> ${message}<br/>
                         <small style="color:#666">Line: ${lineno} in ${source}</small>
                     </div>`;
             }
             console.error("Critical Error:", message, "at", source, lineno);
+            // Don't return true, allow default handler to run so console sees it too
             return false;
         };
 
@@ -79,12 +80,12 @@
                 clearInterval(checkAppReady);
             }
             
-            // Diagnostics for slow initialization
+            // Diagnostics for slow initialization (10 seconds)
             if (checkCount > 50) {
                 const display = document.getElementById('error-display');
                 if (display && display.style.display === 'none') {
                     display.style.display = 'block';
-                    display.innerHTML += `<p style="color:#854d0e">系統啟動較慢，請檢查開發者工具 (F12) 的 Console。常見原因：檔案 404 或語法錯誤。</p>`;
+                    display.innerHTML += `<p style="color:#854d0e">系統啟動逾時。請檢查瀏覽器 Console 是否有 404 錯誤 (通常是 import 路徑缺少副檔名) 或語法錯誤。</p>`;
                 }
             }
         }, 200);
