@@ -666,12 +666,12 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Research Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {RESEARCH_PROJECTS.map((project, idx) => (
-                <div key={idx} className="p-8 bg-stone-900 text-stone-100 rounded-3xl border border-white/5 relative overflow-hidden group">
-                  <span className="text-[10px] font-bold text-amber-500/80 uppercase tracking-widest mb-4 block">{project.period}</span>
-                  <h3 className="text-lg font-bold mb-4 leading-tight">{project.title}</h3>
+                <div key={idx} className="p-8 bg-stone-100 rounded-3xl border border-stone-200 relative overflow-hidden group hover:bg-white hover:shadow-lg hover:border-amber-100 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-amber-700 uppercase tracking-widest mb-4 block">{project.period}</span>
+                  <h3 className="text-lg font-bold mb-4 leading-tight text-stone-900 group-hover:text-amber-800 transition-colors">{project.title}</h3>
                   <div className="space-y-1">
-                    <p className="text-xs text-stone-400 uppercase tracking-wide">{project.org}</p>
-                    {project.role && <p className="text-xs font-bold text-amber-600">{project.role}</p>}
+                    <p className="text-xs text-stone-500 uppercase tracking-wide">{project.org}</p>
+                    {project.role && <p className="text-xs font-bold text-amber-700">{project.role}</p>}
                   </div>
                 </div>
               ))}
