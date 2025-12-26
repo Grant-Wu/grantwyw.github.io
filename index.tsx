@@ -58,6 +58,13 @@ export const RESEARCH_INTERESTS = [
   "交通安全政策與專業能力發展"
 ];
 
+export const PRACTICE_EXPERIENCE = [
+  "臺北市政府警察局交通警察大隊",
+  "桃園市政府警察局桃園分局",
+  "桃園市政府警察局刑事警察大隊",
+  "桃園市政府警察局交通警察大隊"
+];
+
 export const TEACHING_DATA = {
   current: {
     title: "2025 學年開設課程",
@@ -570,6 +577,18 @@ const App: React.FC = () => {
                      <p className="text-xl font-bold mb-1 font-serif-tc">{AFFILIATION}</p>
                      <p className="text-amber-200/80 text-xs font-heading">Assistant Professor</p>
                   </div>
+               </div>
+
+               <div className="pt-6">
+                 <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase mb-4">Practice Experience</h2>
+                 <div className="grid gap-2">
+                   {PRACTICE_EXPERIENCE.map((exp, idx) => (
+                     <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100 hover:border-amber-200 transition-colors shadow-sm">
+                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
+                       <span className="text-sm font-medium text-stone-700 font-serif-tc">{exp}</span>
+                     </div>
+                   ))}
+                 </div>
                </div>
              </div>
              <div className="space-y-6">
