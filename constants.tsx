@@ -1,3 +1,4 @@
+
 import { Project } from './types.ts';
 
 export const AFFILIATION = "中央警察大學 交通學系 助理教授";
@@ -94,10 +95,8 @@ export const SERVICE = {
 };
 
 export const PRACTICE_EXPERIENCE = [
-  "臺北市政府警察局交通警察大隊",
-  "桃園市政府警察局桃園分局",
-  "桃園市政府警察局刑事警察大隊",
-  "桃園市政府警察局交通警察大隊"
+  "新北市政府警察局 交通警察大隊 分隊長",
+  "內政部警政署 交通組 警務正"
 ];
 
 export const PROJECTS: Project[] = []; // Legacy field
