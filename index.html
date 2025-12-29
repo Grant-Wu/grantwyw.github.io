@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel Standalone -->
+    <!-- Babel Standalone: 用於瀏覽器直接解析 TSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -52,35 +52,35 @@
     </style>
 
     <script>
-        // 初始化環境變數
+        // 初始化環境變數，解決 API Key 引用報錯
         window.process = { env: { API_KEY: "" } };
         
-        // 全域 Loader 控制
+        // 全域 Loader 控制邏輯
         window.hideAppLoader = function() {
             const loader = document.getElementById('loader');
             if (loader) {
                 loader.classList.add('loader-hidden');
-                console.log("App: Initialization UI revealed.");
+                console.log("UI: Loader hidden successfully.");
             }
         };
 
-        // 監聽未捕獲的錯誤
-        window.addEventListener('error', function(e) {
-            console.error('Global Error Captured:', e.message);
-            // 發生錯誤時也隱藏載入器，以免使用者卡死在轉圈畫面
-            window.hideAppLoader();
-        });
+        // 監控全局錯誤，如果 Babel 或 React 掛掉，至少能看到報錯訊息
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error('Fatal Error:', message, 'at', source, ':', lineno);
+            window.hideAppLoader(); // 發生錯誤時強制解鎖畫面，避免死轉圈
+        };
 
-        // 終極安全機制：6秒後強制解鎖
+        // 安全機制：8秒後若還在轉圈，自動消失
         setTimeout(() => {
             const loader = document.getElementById('loader');
             if (loader && !loader.classList.contains('loader-hidden')) {
-                console.warn("Forcing loader removal after timeout.");
+                console.warn("React initialization timeout. Forcing UI reveal.");
                 window.hideAppLoader();
             }
-        }, 6000);
+        }, 8000);
     </script>
 
+    <!-- 統一後的 Import Map：移除所有重複項，確保 React 版本一致 -->
     <script type="importmap">
 {
   "imports": {
@@ -102,7 +102,7 @@
     
     <div id="root"></div>
 
-    <!-- 修正：確保路徑相對於當前頁面 -->
+    <!-- 修正入口腳本引用方式：在 GitHub Pages 中 ./ 寫法最為穩健 -->
     <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
