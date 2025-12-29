@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel Standalone: 用於瀏覽器直接解析 TSX -->
+    <!-- Babel Standalone -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -52,26 +52,33 @@
     </style>
 
     <script>
-        // 初始化環境變數，解決 API Key 與環境變數報錯
+        // Initialize environment variables
         window.process = { env: { API_KEY: "" } };
         
-        // 全域 Loader 控制邏輯
+        // Global loader toggle
         window.hideAppLoader = function() {
             const loader = document.getElementById('loader');
             if (loader) {
                 loader.classList.add('loader-hidden');
+                console.log("Loader hidden via hideAppLoader");
             }
         };
 
-        // 若發生嚴重錯誤（腳本載入失敗等），強制解鎖畫面
-        window.onerror = function() {
+        // Capture early errors
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Runtime Error:', msg, '\nURL:', url, '\nLine:', lineNo);
             window.hideAppLoader();
+            return false;
         };
 
-        // 終極防線：5秒後若還在轉圈，自動消失，確保內容可以被看見
+        // Safety timeout: if React fails to mount, reveal the page after 6 seconds
         setTimeout(() => {
-            window.hideAppLoader();
-        }, 5000);
+            const loader = document.getElementById('loader');
+            if (loader && !loader.classList.contains('loader-hidden')) {
+                console.warn("React initialization is taking longer than expected. Forcing UI visible.");
+                window.hideAppLoader();
+            }
+        }, 6000);
     </script>
 
     <script type="importmap">
@@ -95,7 +102,7 @@
     
     <div id="root"></div>
 
-    <!-- 修正入口腳本：使用相對路徑以相容 GitHub Pages -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
+    <!-- Entry point: Relative path without leading dot for better Babel fetch compatibility -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
 </body>
 </html>
