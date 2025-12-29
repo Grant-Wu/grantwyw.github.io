@@ -44,43 +44,47 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        #error-display { display: none; }
     </style>
 
     <script>
+        // 確保環境變數在最前面初始化
         window.process = { env: { API_KEY: "" } };
         
+        // 全域錯誤監聽
         window.onerror = function(message, source, lineno, colno, error) {
             const display = document.getElementById('error-display');
             if (display) {
                 display.style.display = 'block';
                 display.innerHTML += `
-                    <div style="margin-bottom: 8px; border-bottom: 1px solid #fecaca; padding-bottom: 4px;">
-                        <strong style="color:#b91c1c">[System Error]</strong> ${message}<br/>
-                        <small style="color:#666">Line: ${lineno}</small>
+                    <div style="margin-bottom: 12px; border-bottom: 1px solid #fecaca; padding-bottom: 8px;">
+                        <strong style="color:#b91c1c">[運作錯誤]</strong> ${message}<br/>
+                        <small style="color:#666; font-size: 10px;">${source} (Line: ${lineno})</small>
                     </div>`;
             }
             console.error("Critical Error:", message, error);
+            // 如果出錯了，嘗試隱藏加載動畫以便看到錯誤訊息
+            const loader = document.getElementById('loader');
+            if (loader) loader.style.display = 'none';
             return false;
         };
 
+        // 監測 React App 是否成功掛載
         let checkCount = 0;
         const checkAppReady = setInterval(() => {
             checkCount++;
             const root = document.getElementById('root');
-            if (root && root.children.length > 0) {
+            // 只要 root 裡面有東西或是超過 10 秒就停止
+            if ((root && root.children.length > 0) || checkCount > 50) {
                 const loader = document.getElementById('loader');
                 if (loader) {
                     loader.style.opacity = '0';
                     setTimeout(() => loader.remove(), 500);
                 }
                 clearInterval(checkAppReady);
-            }
-            
-            if (checkCount > 50) {
-                const display = document.getElementById('error-display');
-                if (display && display.style.display === 'none') {
-                    display.style.display = 'block';
-                    display.innerHTML += `<p style="color:#854d0e">Loading timeout. Please check console for details.</p>`;
+                
+                if (checkCount > 50 && (!root || root.children.length === 0)) {
+                    console.warn("App loading timeout - forcing display.");
                 }
             }
         }, 200);
@@ -92,8 +96,8 @@
     "react": "https://esm.sh/react@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "@google/genai": "https://esm.sh/@google/genai@1.34.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
@@ -105,9 +109,13 @@
     </div>
     
     <div id="root"></div>
-    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);"></div>
+    
+    <!-- 錯誤顯示區域：預設隱藏，僅在出錯時顯示 -->
+    <div id="error-display" style="position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);">
+        <h3 style="margin:0 0 10px 0; color:#b91c1c; font-weight: bold;">系統啟動異常偵測</h3>
+    </div>
 
-    <!-- Main Entry Bundle -->
+    <!-- 主入口點：使用 data-type="module" 確保 Babel 處理 ES Modules -->
     <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
