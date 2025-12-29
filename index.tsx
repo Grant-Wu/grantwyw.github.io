@@ -2,15 +2,12 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 
-/**
- * React 應用初始化
- */
 const startApp = () => {
+  console.log("React Initializing...");
   const container = document.getElementById('root');
   
   if (!container) {
-    console.error("Critical: Root element not found.");
-    if (typeof (window as any).hideAppLoader === 'function') (window as any).hideAppLoader();
+    console.error("DOM Error: #root element not found.");
     return;
   }
 
@@ -18,21 +15,24 @@ const startApp = () => {
     const root = createRoot(container);
     root.render(<App />);
     
-    // 渲染任務發出後，呼叫 HTML 預定義的隱藏函式
-    // 使用 setTimeout 確保初次渲染的 DOM 已經準備好在畫面上
+    // 成功渲染後，隱藏載入器
+    // 稍微延遲以確保初次佈局已完成
     setTimeout(() => {
       if (typeof (window as any).hideAppLoader === 'function') {
         (window as any).hideAppLoader();
       }
-    }, 200);
-
+    }, 150);
   } catch (err) {
-    console.error("React Mounting Failed:", err);
+    console.error("Mounting Error:", err);
     if (typeof (window as any).hideAppLoader === 'function') {
       (window as any).hideAppLoader();
     }
   }
 };
 
-// 執行啟動
-startApp();
+// 確保執行環境就緒
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
