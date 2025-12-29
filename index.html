@@ -33,7 +33,7 @@
             justify-content: center;
             background: #FDFCF8;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
         }
         .spinner {
             width: 40px;
@@ -46,6 +46,7 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .loader-hidden {
             opacity: 0 !important;
+            visibility: hidden !important;
             pointer-events: none;
         }
     </style>
@@ -54,25 +55,22 @@
         // 初始化環境變數
         window.process = { env: { API_KEY: "" } };
         
-        // 全局錯誤處理
+        // 全局錯誤處理：若腳本崩潰，強制移除 Loader
         window.onerror = function(message, source, lineno, colno, error) {
             console.error("Critical System Error:", message);
-            // 發生錯誤時強制移除 Loader，避免網頁被轉圈遮擋
-            const loader = document.getElementById('loader');
-            if (loader) loader.classList.add('loader-hidden');
+            hideLoader();
             return false;
         };
 
-        // 頁面加載超時安全機制
-        window.addEventListener('load', () => {
-            // 如果頁面資源都加載完了（不論 React 是否渲染完成），3秒後強制移除 Loader
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                if (loader && !loader.classList.contains('loader-hidden')) {
-                    loader.classList.add('loader-hidden');
-                }
-            }, 3000);
-        });
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.classList.add('loader-hidden');
+            }
+        }
+
+        // 終極安全機制：不論加載是否成功，5秒後強制關閉 Loader，確保內容可見
+        setTimeout(hideLoader, 5000);
     </script>
 
     <script type="importmap">
@@ -96,7 +94,7 @@
     
     <div id="root"></div>
 
-    <!-- 入口點腳本：路徑需保持簡潔以利 GitHub Pages 解析 -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
+    <!-- 入口點腳本：路徑需保持簡潔 -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
 </body>
 </html>
