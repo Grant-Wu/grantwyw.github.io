@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeroCanvas from './components/HeroCanvas.tsx';
+import ChatWidget from './components/ChatWidget.tsx';
 import { 
   PUBLICATIONS, 
   CONFERENCES,
@@ -14,6 +15,15 @@ import {
 } from './constants.tsx';
 
 const App: React.FC = () => {
+  // 當組件掛載完成時移除 Loader
+  useEffect(() => {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.classList.add('loader-hidden');
+      setTimeout(() => loader.remove(), 600);
+    }
+  }, []);
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     let targetId = id;
@@ -319,6 +329,8 @@ const App: React.FC = () => {
          </div>
       </footer>
       
+      <ChatWidget />
+
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
