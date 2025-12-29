@@ -1,16 +1,16 @@
 import React from 'react';
 import HeroCanvas from './components/HeroCanvas.tsx';
-import ChatWidget from './components/ChatWidget.tsx';
 import { 
   PUBLICATIONS, 
-  CONFERENCES, 
+  CONFERENCES,
   EXPERTISE, 
   AFFILIATION, 
   AFFILIATION_EN, 
   RESEARCH_PROJECTS, 
   RESEARCH_INTERESTS,
   TEACHING_DATA, 
-  SERVICE 
+  SERVICE,
+  PRACTICE_EXPERIENCE
 } from './constants.tsx';
 
 const App: React.FC = () => {
@@ -19,6 +19,7 @@ const App: React.FC = () => {
     let targetId = id;
     if (id === 'teaching') targetId = 'teaching-section';
     if (id === 'publications') targetId = 'publications-section';
+    if (id === 'conferences') targetId = 'conferences-section';
     if (id === 'research-projects') targetId = 'projects-section';
 
     const element = document.getElementById(targetId);
@@ -38,7 +39,6 @@ const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-[#FDFCF8] text-stone-900 selection:bg-amber-100 selection:text-amber-900">
-      {/* 磨砂玻璃導覽列 */}
       <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 flex justify-between items-center bg-white/70 backdrop-blur-xl border-b border-stone-200/40">
         <div className="flex flex-col">
           <div className="text-lg font-bold tracking-tighter uppercase font-heading text-stone-900">
@@ -69,7 +69,6 @@ const App: React.FC = () => {
       </nav>
 
       <main>
-        {/* Hero Section */}
         <section id="hero" className="relative px-6 md:px-24 pt-32 pb-20 overflow-hidden min-h-[75vh] flex items-center bg-gradient-to-br from-stone-100/80 via-white to-orange-50/30">
           <HeroCanvas />
           <div className="max-w-6xl relative z-10 w-full">
@@ -95,7 +94,6 @@ const App: React.FC = () => {
 
         <div className="px-6 md:px-24 py-12 space-y-16 bg-white/50 backdrop-blur-3xl">
           
-          {/* About Section */}
           <section id="about" className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Profile & Affiliation</h2>
@@ -112,6 +110,18 @@ const App: React.FC = () => {
                      <p className="text-amber-200/80 text-xs font-heading">Assistant Professor</p>
                   </div>
                </div>
+
+               <div className="pt-6">
+                 <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase mb-4">Practice Experience</h2>
+                 <div className="grid gap-2">
+                   {PRACTICE_EXPERIENCE.map((exp, idx) => (
+                     <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100 hover:border-amber-200 transition-colors shadow-sm">
+                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
+                       <span className="text-sm font-medium text-stone-700 font-serif-tc">{exp}</span>
+                     </div>
+                   ))}
+                 </div>
+               </div>
              </div>
              <div className="space-y-6">
                <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Expertise Fields</h2>
@@ -125,7 +135,6 @@ const App: React.FC = () => {
              </div>
           </section>
 
-          {/* 1. Research Interests */}
           <section id="research-interests" className="max-w-5xl mx-auto scroll-mt-32">
             <div className="flex items-center gap-6 mb-8">
               <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Interests</h2>
@@ -139,7 +148,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 2. Teaching */}
           <section id="teaching-section" className="max-w-5xl mx-auto scroll-mt-32">
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Teaching</h2>
             <div className="space-y-12">
@@ -177,10 +185,10 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 3. Publications */}
           <section id="publications-section" className="max-w-5xl mx-auto scroll-mt-32">
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Selected Publications</h2>
             <div className="space-y-6">
+              <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">Journal Papers</h3>
               {PUBLICATIONS.map((pub, idx) => (
                 <div key={idx} className="group p-6 bg-white border border-stone-100 rounded-2xl hover:border-amber-200 hover:shadow-md transition-all">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -206,24 +214,44 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 4. Projects */}
+          <section id="conferences-section" className="max-w-5xl mx-auto scroll-mt-32">
+            <div className="space-y-6">
+              <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">Conference Papers</h3>
+              <div className="grid grid-cols-1 gap-4">
+                {CONFERENCES.map((conf, idx) => (
+                  <div key={idx} className="group p-6 bg-stone-50/50 border border-stone-100 rounded-2xl hover:bg-white hover:border-amber-200 hover:shadow-sm transition-all">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold px-2 py-0.5 bg-stone-200 text-stone-600 rounded">{conf.year}</span>
+                        <span className="text-[10px] font-bold text-amber-800/60 uppercase tracking-tight">{conf.event}</span>
+                      </div>
+                      <h3 className="text-base font-bold text-stone-800 leading-snug group-hover:text-amber-900">
+                        {conf.title}
+                      </h3>
+                      <p className="text-xs text-stone-400 italic">{conf.authors}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <section id="projects-section" className="max-w-5xl mx-auto scroll-mt-32">
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Research Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {RESEARCH_PROJECTS.map((project, idx) => (
-                <div key={idx} className="p-8 bg-stone-900 text-stone-100 rounded-3xl border border-white/5 relative overflow-hidden group">
-                  <span className="text-[10px] font-bold text-amber-500/80 uppercase tracking-widest mb-4 block">{project.period}</span>
-                  <h3 className="text-lg font-bold mb-4 leading-tight">{project.title}</h3>
+                <div key={idx} className="p-8 bg-stone-100 rounded-3xl border border-stone-200 relative overflow-hidden group hover:bg-white hover:shadow-lg hover:border-amber-100 transition-all duration-300">
+                  <span className="text-[10px] font-bold text-amber-700 uppercase tracking-widest mb-4 block">{project.period}</span>
+                  <h3 className="text-lg font-bold mb-4 leading-tight text-stone-900 group-hover:text-amber-800 transition-colors">{project.title}</h3>
                   <div className="space-y-1">
-                    <p className="text-xs text-stone-400 uppercase tracking-wide">{project.org}</p>
-                    {project.role && <p className="text-xs font-bold text-amber-600">{project.role}</p>}
+                    <p className="text-xs text-stone-500 uppercase tracking-wide">{project.org}</p>
+                    {project.role && <p className="text-xs font-bold text-amber-700">{project.role}</p>}
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* 5. Professional Service */}
           <section id="service-section" className="max-w-5xl mx-auto scroll-mt-32">
             <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Professional Service</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -280,7 +308,8 @@ const App: React.FC = () => {
                   <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">Contact</h4>
                   <p className="text-xs text-stone-500 leading-loose">
                     中央警察大學 交通學系<br />
-                    桃園市龜山區大崗里樹人路56號
+                    桃園市龜山區大崗里樹人路56號<br />
+                    <a href="mailto:grantwyw@mail.cpu.edu.tw" className="hover:text-amber-700 transition-colors">grantwyw@mail.cpu.edu.tw</a>
                   </p>
                </div>
             </div>
@@ -289,8 +318,6 @@ const App: React.FC = () => {
             <p className="text-[10px] font-bold text-stone-400 tracking-[0.2em] uppercase">© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED.</p>
          </div>
       </footer>
-
-      <ChatWidget />
       
       <style>{`
         @keyframes fadeIn {

@@ -35,7 +35,7 @@ export const TEACHING_DATA = {
     professional: [
       { name: "砂石車及遊覽車管理", group: "警佐班" },
       { name: "交通警察業務", group: "特考班一般生" },
-      { name: "交通警察勤業務概論", group: "特考班警職組" }
+      { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
     ]
   },
   past: {
@@ -92,6 +92,13 @@ export const SERVICE = {
     "桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"
   ]
 };
+
+export const PRACTICE_EXPERIENCE = [
+  "臺北市政府警察局交通警察大隊",
+  "桃園市政府警察局桃園分局",
+  "桃園市政府警察局刑事警察大隊",
+  "桃園市政府警察局交通警察大隊"
+];
 
 export const PROJECTS: Project[] = []; // Legacy field
 
