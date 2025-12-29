@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
-    <!-- Babel Standalone -->
+    <!-- Babel Standalone: 用於瀏覽器直接解析 TSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
@@ -52,25 +52,26 @@
     </style>
 
     <script>
-        // 初始化環境變數
+        // 初始化環境變數，解決 API Key 與環境變數報錯
         window.process = { env: { API_KEY: "" } };
         
-        // 全局錯誤處理：若腳本崩潰，強制移除 Loader
-        window.onerror = function(message, source, lineno, colno, error) {
-            console.error("Critical System Error:", message);
-            hideLoader();
-            return false;
-        };
-
-        function hideLoader() {
+        // 全域 Loader 控制邏輯
+        window.hideAppLoader = function() {
             const loader = document.getElementById('loader');
             if (loader) {
                 loader.classList.add('loader-hidden');
             }
-        }
+        };
 
-        // 終極安全機制：不論加載是否成功，5秒後強制關閉 Loader，確保內容可見
-        setTimeout(hideLoader, 5000);
+        // 若發生嚴重錯誤（腳本載入失敗等），強制解鎖畫面
+        window.onerror = function() {
+            window.hideAppLoader();
+        };
+
+        // 終極防線：5秒後若還在轉圈，自動消失，確保內容可以被看見
+        setTimeout(() => {
+            window.hideAppLoader();
+        }, 5000);
     </script>
 
     <script type="importmap">
@@ -94,7 +95,7 @@
     
     <div id="root"></div>
 
-    <!-- 入口點腳本：路徑需保持簡潔 -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
+    <!-- 修正入口腳本：使用相對路徑以相容 GitHub Pages -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
