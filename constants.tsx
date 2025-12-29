@@ -35,7 +35,7 @@ export const TEACHING_DATA = {
     professional: [
       { name: "砂石車及遊覽車管理", group: "警佐班" },
       { name: "交通警察業務", group: "特考班一般生" },
-      { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
+      { name: "交通警察勤業務概論", group: "特考班警職組" }
     ]
   },
   past: {
