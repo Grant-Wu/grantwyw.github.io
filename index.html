@@ -51,24 +51,25 @@
     </style>
 
     <script>
+        // 初始化環境變數，解決靜態環境中 process 未定義的問題
         window.process = { env: { API_KEY: "" } };
         
+        // 全局錯誤處理：若發生腳本錯誤，嘗試關閉 Loader 避免畫面被卡死
         window.onerror = function(message, source, lineno, colno, error) {
-            const display = document.getElementById('error-display');
-            if (display) {
-                display.style.display = 'block';
-                display.innerHTML += `
-                    <div style="margin-bottom: 8px; border-bottom: 1px solid #fecaca; padding-bottom: 4px;">
-                        <strong style="color:#b91c1c">[System Error]</strong> ${message}<br/>
-                        <small style="color:#666">Line: ${lineno}</small>
-                    </div>`;
-            }
-            // 發生錯誤時也嘗試移除 Loader 避免畫面被卡死
+            console.error("Critical Error:", message, error);
             const loader = document.getElementById('loader');
             if (loader) loader.classList.add('loader-hidden');
-            console.error("Critical Error:", message, error);
             return false;
         };
+
+        // 安全機制：若 8 秒後 React 尚未成功掛載，強制關閉 Loader
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if (loader && !loader.classList.contains('loader-hidden')) {
+                console.warn("Safety Timeout: Loader force-hidden.");
+                loader.classList.add('loader-hidden');
+            }
+        }, 8000);
     </script>
 
     <script type="importmap">
@@ -93,7 +94,7 @@
     <div id="root"></div>
     <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);"></div>
 
-    <!-- Main Entry Bundle -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
+    <!-- Main Entry Bundle: 使用相對路徑確保 GitHub Pages 子路徑下能正確存取 -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
 </body>
 </html>
