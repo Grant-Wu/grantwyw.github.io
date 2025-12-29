@@ -33,7 +33,7 @@
             justify-content: center;
             background: #FDFCF8;
             z-index: 9999;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.5s ease-out;
         }
         .spinner {
             width: 40px;
@@ -51,25 +51,28 @@
     </style>
 
     <script>
-        // 初始化環境變數，解決靜態環境中 process 未定義的問題
+        // 初始化環境變數
         window.process = { env: { API_KEY: "" } };
         
-        // 全局錯誤處理：若發生腳本錯誤，嘗試關閉 Loader 避免畫面被卡死
+        // 全局錯誤處理
         window.onerror = function(message, source, lineno, colno, error) {
-            console.error("Critical Error:", message, error);
+            console.error("Critical System Error:", message);
+            // 發生錯誤時強制移除 Loader，避免網頁被轉圈遮擋
             const loader = document.getElementById('loader');
             if (loader) loader.classList.add('loader-hidden');
             return false;
         };
 
-        // 安全機制：若 8 秒後 React 尚未成功掛載，強制關閉 Loader
-        setTimeout(() => {
-            const loader = document.getElementById('loader');
-            if (loader && !loader.classList.contains('loader-hidden')) {
-                console.warn("Safety Timeout: Loader force-hidden.");
-                loader.classList.add('loader-hidden');
-            }
-        }, 8000);
+        // 頁面加載超時安全機制
+        window.addEventListener('load', () => {
+            // 如果頁面資源都加載完了（不論 React 是否渲染完成），3秒後強制移除 Loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                if (loader && !loader.classList.contains('loader-hidden')) {
+                    loader.classList.add('loader-hidden');
+                }
+            }, 3000);
+        });
     </script>
 
     <script type="importmap">
@@ -92,9 +95,8 @@
     </div>
     
     <div id="root"></div>
-    <div id="error-display" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-height: 40vh; overflow-y: auto; background:#fff1f2; border:2px solid #fecaca; padding:20px; border-radius:16px; z-index:10000; font-family:monospace; font-size:12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);"></div>
 
-    <!-- Main Entry Bundle: 使用相對路徑確保 GitHub Pages 子路徑下能正確存取 -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
+    <!-- 入口點腳本：路徑需保持簡潔以利 GitHub Pages 解析 -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>
