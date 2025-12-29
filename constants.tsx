@@ -1,4 +1,3 @@
-
 import { Project } from './types.ts';
 
 export const AFFILIATION = "中央警察大學 交通學系 助理教授";
@@ -36,7 +35,7 @@ export const TEACHING_DATA = {
     professional: [
       { name: "砂石車及遊覽車管理", group: "警佐班" },
       { name: "交通警察業務", group: "特考班一般生" },
-      { name: "交通警察勤業務概論", group: "特考班警職組" }
+      { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
     ]
   },
   past: {
@@ -95,8 +94,10 @@ export const SERVICE = {
 };
 
 export const PRACTICE_EXPERIENCE = [
-  "新北市政府警察局 交通警察大隊 分隊長",
-  "內政部警政署 交通組 警務正"
+  "臺北市政府警察局交通警察大隊",
+  "桃園市政府警察局桃園分局",
+  "桃園市政府警察局刑事警察大隊",
+  "桃園市政府警察局交通警察大隊"
 ];
 
 export const PROJECTS: Project[] = []; // Legacy field
