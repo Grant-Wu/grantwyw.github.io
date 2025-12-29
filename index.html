@@ -52,30 +52,30 @@
     </style>
 
     <script>
-        // Initialize environment variables
+        // 初始化環境變數
         window.process = { env: { API_KEY: "" } };
         
-        // Global loader toggle
+        // 全域 Loader 控制
         window.hideAppLoader = function() {
             const loader = document.getElementById('loader');
             if (loader) {
                 loader.classList.add('loader-hidden');
-                console.log("Loader hidden via hideAppLoader");
+                console.log("App: Initialization UI revealed.");
             }
         };
 
-        // Capture early errors
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            console.error('Runtime Error:', msg, '\nURL:', url, '\nLine:', lineNo);
+        // 監聽未捕獲的錯誤
+        window.addEventListener('error', function(e) {
+            console.error('Global Error Captured:', e.message);
+            // 發生錯誤時也隱藏載入器，以免使用者卡死在轉圈畫面
             window.hideAppLoader();
-            return false;
-        };
+        });
 
-        // Safety timeout: if React fails to mount, reveal the page after 6 seconds
+        // 終極安全機制：6秒後強制解鎖
         setTimeout(() => {
             const loader = document.getElementById('loader');
             if (loader && !loader.classList.contains('loader-hidden')) {
-                console.warn("React initialization is taking longer than expected. Forcing UI visible.");
+                console.warn("Forcing loader removal after timeout.");
                 window.hideAppLoader();
             }
         }, 6000);
@@ -102,7 +102,7 @@
     
     <div id="root"></div>
 
-    <!-- Entry point: Relative path without leading dot for better Babel fetch compatibility -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="index.tsx"></script>
+    <!-- 修正：確保路徑相對於當前頁面 -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
 </body>
 </html>

@@ -2,33 +2,38 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 
-const init = () => {
-  console.log("Initializing React application...");
+const mountApp = () => {
   const container = document.getElementById('root');
   
   if (!container) {
-    console.error("Application Error: #root element not found in DOM.");
-    if (typeof (window as any).hideAppLoader === 'function') (window as any).hideAppLoader();
+    console.error("DOM Error: #root not found.");
     return;
   }
 
   try {
     const root = createRoot(container);
-    // Rendering without StrictMode initially to ensure clean initialization in ESM environments
+    // 渲染 App
     root.render(<App />);
+    console.log("React: Render sequence initiated.");
     
-    // Trigger loader removal immediately after initial render command
-    if (typeof (window as any).hideAppLoader === 'function') {
-      (window as any).hideAppLoader();
-    }
-    console.log("React application mounted successfully.");
+    // 延遲一點點隱藏 loader，確保初次渲染的畫面已產生
+    setTimeout(() => {
+      if (typeof (window as any).hideAppLoader === 'function') {
+        (window as any).hideAppLoader();
+      }
+    }, 100);
+
   } catch (err) {
-    console.error("Failed to mount React application:", err);
+    console.error("React: Mounting failure", err);
     if (typeof (window as any).hideAppLoader === 'function') {
       (window as any).hideAppLoader();
     }
   }
 };
 
-// Start initialization
-init();
+// 確保在 DOM 完全加載後執行
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', mountApp);
+} else {
+  mountApp();
+}
