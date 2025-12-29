@@ -1,0 +1,1 @@
+// Logic inlined to index.html
