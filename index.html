@@ -49,6 +49,12 @@
             visibility: hidden !important;
             pointer-events: none;
         }
+
+        /* Dedicated mask class for horizontal fading */
+        .mask-horizontal {
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
     </style>
 
     <script>
@@ -757,7 +763,7 @@
                         <img 
                           src={imgSrc} 
                           alt="Dr. Yuan-Wei Wu" 
-                          className="w-full h-full object-cover object-[center_top] [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)] drop-shadow-2xl opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-1000 ease-out"
+                          className="w-full h-full object-cover object-[center_top] drop-shadow-2xl opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-1000 ease-out mask-horizontal"
                           onError={handleImgError}
                         />
                       ) : (
