@@ -633,8 +633,24 @@
       const [lang, setLang] = useState('zh'); // 'zh' or 'en'
       const t = DATA[lang];
 
-      // Image handling state for GitHub Pages reliability
-      const [imgSrc, setImgSrc] = useState('./profile.png');
+      // Enhanced Image handling for various formats and casing
+      // We define a priority list of filenames to try
+      const imageCandidates = [
+        './profile.png',
+        './profile.jpg',
+        './profile.jpeg',
+        './profile.webp',
+        './Profile.png',
+        './Profile.jpg',
+        './Profile.jpeg',
+        './avatar.png',
+        './avatar.jpg',
+        './image.png',
+        './image.jpg'
+      ];
+
+      const [imgSrc, setImgSrc] = useState(imageCandidates[0]);
+      const [candidateIndex, setCandidateIndex] = useState(0);
       const [imgErr, setImgErr] = useState(false);
 
       useEffect(() => {
@@ -651,12 +667,13 @@
       };
 
       const handleImgError = () => {
-        // Fallback strategy: Try different extensions/casings commonly missed
-        if (imgSrc === './profile.png') setImgSrc('./Profile.png');
-        else if (imgSrc === './Profile.png') setImgSrc('./profile.jpg');
-        else if (imgSrc === './profile.jpg') setImgSrc('./Profile.jpg');
-        else if (imgSrc === './Profile.jpg') setImgSrc('./profile.jpeg');
-        else setImgErr(true);
+        const nextIndex = candidateIndex + 1;
+        if (nextIndex < imageCandidates.length) {
+           setCandidateIndex(nextIndex);
+           setImgSrc(imageCandidates[nextIndex]);
+        } else {
+           setImgErr(true);
+        }
       };
 
       const scrollToSection = (e, id) => {
