@@ -77,177 +77,371 @@
     
     <div id="root"></div>
 
-    <!-- 
-      重要修正：
-      1. 將所有邏輯內嵌於此，避免外部檔案載入失敗 (404/MIME 錯誤)。
-      2. 加入 data-type="module" 確保 Babel 保留 import 語句。
-    -->
     <script type="text/babel" data-type="module" data-presets="react,typescript">
     import React, { useEffect, useRef, useState } from 'react';
     import { createRoot } from 'react-dom/client';
 
     // -----------------------------------------------------------------------------
-    // CONSTANTS & TYPES
+    // DATA & TRANSLATIONS
     // -----------------------------------------------------------------------------
 
-    const AFFILIATION = "中央警察大學 交通學系 助理教授";
-    const AFFILIATION_EN = "Assistant Professor, Department of Traffic Science, Central Police University";
-
-    const EXPERTISE = [
-      "Traffic Policing 交通警察實務",
-      "Road Safety & Crash Investigation 交通安全與事故調查",
-      "AI & Data Science 應用人工智慧與資料科學",
-      "Transportation Engineering 運輸工程",
-      "Mathematical Planning 數學規劃"
-    ];
-
-    const RESEARCH_INTERESTS = [
-      "交通執法成效分析",
-      "交通衝突之在地化探討",
-      "交通事故調查與重建技術",
-      "交通安全政策與專業能力發展"
-    ];
-
-    const TEACHING_DATA = {
-      current: {
-        title: "2025 學年開設課程",
-        undergraduate: [
-          { name: "交通執法專題", type: "系必" },
-          { name: "交通事故處理", type: "校訂必修" },
-          { name: "智慧型運輸系統概論", type: "系選" },
-          { name: "道路工程與衝擊評估", type: "系選" },
-          { name: "交通警察實務", type: "系選" }
-        ],
-        graduate: [
-          { name: "交通安全分析" },
-          { name: "交通專題研究" }
-        ],
-        professional: [
-          { name: "砂石車及遊覽車管理", group: "警佐班" },
-          { name: "交通警察業務", group: "特考班一般生" },
-          { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
-        ]
+    const DATA = {
+      zh: {
+        meta: {
+          title: "吳元維",
+          subtitle: "Yuan-Wei Wu",
+          affiliation: "中央警察大學 交通學系 助理教授",
+          affiliationEn: "Assistant Professor, Department of Traffic Science, Central Police University",
+          heroText: (
+            <>
+              結合 <span className="text-stone-950 font-bold border-b-2 border-amber-200">工程實務</span> 與 <span className="text-stone-950 font-bold border-b-2 border-amber-200">實證數據分析</span>，<br />
+              致力於透過 AI 技術重構更具效率與安全性的交通調查與執法體系。
+            </>
+          )
+        },
+        nav: {
+          interests: "INTERESTS",
+          teaching: "TEACHING",
+          publications: "PUBLICATIONS",
+          projects: "PROJECTS",
+          langZh: "中",
+          langEn: "EN"
+        },
+        profile: {
+          title: "Profile & Affiliation",
+          phdTitle: "國立臺灣大學 土木工程學系 博士",
+          phdSub: "Ph.D. in Civil Engineering, National Taiwan University",
+          roleTitle: "中央警察大學 交通學系 助理教授",
+          roleSub: "Assistant Professor",
+          expTitle: "Experience",
+          expList: [
+            "國立臺灣科技大學營建工程系 兼任助理教授",
+            "桃園市政府警察局交通警察大隊",
+            "桃園市政府警察局刑事警察大隊",
+            "桃園市政府警察局桃園分局",
+            "臺北市政府警察局交通警察大隊"
+          ]
+        },
+        expertise: {
+          title: "Expertise Fields",
+          list: [
+            "Traffic Policing 交通警察實務",
+            "Road Safety & Crash Investigation 交通安全與事故調查",
+            "AI & Data Science 應用人工智慧與資料科學",
+            "Transportation Engineering 運輸工程",
+            "Mathematical Planning 數學規劃"
+          ]
+        },
+        interests: {
+          title: "Research Interests",
+          list: [
+            "交通執法成效分析",
+            "交通衝突之在地化探討",
+            "交通事故調查與重建技術",
+            "交通安全政策與專業能力發展"
+          ]
+        },
+        teaching: {
+          title: "Teaching",
+          sectionTitle: "2025 學年開設課程",
+          undergraduate: "Undergraduate",
+          graduate: "Graduate",
+          professional: "Professional",
+          courses: {
+            undergraduate: [
+              { name: "交通執法專題", type: "系必" },
+              { name: "交通事故處理", type: "校訂必修" },
+              { name: "智慧型運輸系統概論", type: "系選" },
+              { name: "道路工程與衝擊評估", type: "系選" },
+              { name: "交通警察實務", type: "系選" }
+            ],
+            graduate: [
+              { name: "交通安全分析" },
+              { name: "交通專題研究" }
+            ],
+            professional: [
+              { name: "砂石車及遊覽車管理", group: "警佐班" },
+              { name: "交通警察業務", group: "特考班一般生" },
+              { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
+            ]
+          }
+        },
+        publications: {
+          title: "Selected Publications",
+          journalTitle: "Journal Papers",
+          confTitle: "Conference Papers",
+          viewPaper: "VIEW PAPER"
+        },
+        projects: {
+          title: "Research Projects",
+          list: [
+            {
+              title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
+              org: "國家科學及技術委員會 (NSTC Projects)",
+              period: "2025.08 ~ 2026.07"
+            },
+            {
+              title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫",
+              role: "協同主持人",
+              org: "交通部運輸研究所",
+              period: "2025 ~ 迄今"
+            },
+            {
+              title: "道安專業人力培訓暨知識平台策略內容研析",
+              org: "交通部運輸研究所",
+              period: "2025 ~ 迄今"
+            },
+            {
+              title: "道安改善專業能力建構",
+              org: "交通部運輸研究所",
+              period: "2024"
+            },
+            {
+              title: "道路交通安全資料整合與分析平台建置學術研究",
+              org: "交通部",
+              period: "2019"
+            }
+          ]
+        },
+        service: {
+          title: "Professional Service",
+          journal: "Journal Reviews",
+          uni: "University Service",
+          gov: "Government Service",
+          uniList: [
+            "鑑識科學委員會委員 (2025 迄今)",
+            "交通學報編輯委員 (2025 迄今)",
+            "智慧科技執法研究中心 - 智慧交通組執行秘書 (2025 迄今)",
+            "警察科技學院 - 助理教授 (2024.08 ~ 2025.07)"
+          ],
+          govList: [
+            "桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"
+          ]
+        },
+        footer: {
+          desc: "結合工程實務與實證數據分析，重構高效安全的交通系統。",
+          nav: "Navigation",
+          contact: "Contact",
+          address: (
+            <>
+              中央警察大學 交通學系<br />
+              桃園市龜山區大崗里樹人路56號
+            </>
+          ),
+          rights: "© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED."
+        }
       },
-      past: {
-        title: "曾開設課程",
-        undergraduate: [
-          { name: "肇事重建與原因分析", type: "系必" },
-          { name: "作業研究", type: "系必" }
-        ]
+      en: {
+        meta: {
+          title: "Yuan-Wei Wu",
+          subtitle: "Ph.D.",
+          affiliation: "Assistant Professor",
+          affiliationEn: "Department of Traffic Science, Central Police University",
+          heroText: (
+            <>
+              Integrating <span className="text-stone-950 font-bold border-b-2 border-amber-200">Engineering Practice</span> with <span className="text-stone-950 font-bold border-b-2 border-amber-200">Empirical Data Analysis</span>,<br />
+              dedicated to reconstructing efficient and safer traffic investigation and enforcement systems through AI.
+            </>
+          )
+        },
+        nav: {
+          interests: "INTERESTS",
+          teaching: "TEACHING",
+          publications: "PUBLICATIONS",
+          projects: "PROJECTS",
+          langZh: "中",
+          langEn: "EN"
+        },
+        profile: {
+          title: "Profile & Affiliation",
+          phdTitle: "Ph.D. in Civil Engineering",
+          phdSub: "National Taiwan University",
+          roleTitle: "Assistant Professor",
+          roleSub: "Department of Traffic Science, Central Police University",
+          expTitle: "Experience",
+          expList: [
+            "Adjunct Assistant Professor, Dept. of Civil and Construction Engineering, NTUST",
+            "Traffic Police Corps, Taoyuan City Police Department",
+            "Criminal Investigation Corps, Taoyuan City Police Department",
+            "Taoyuan Precinct, Taoyuan City Police Department",
+            "Traffic Police Corps, Taipei City Police Department"
+          ]
+        },
+        expertise: {
+          title: "Expertise Fields",
+          list: [
+            "Traffic Policing",
+            "Road Safety & Crash Investigation",
+            "AI & Data Science",
+            "Transportation Engineering",
+            "Mathematical Planning"
+          ]
+        },
+        interests: {
+          title: "Research Interests",
+          list: [
+            "Traffic Enforcement Effectiveness Analysis",
+            "Localization Study of Traffic Conflicts",
+            "Traffic Crash Investigation & Reconstruction",
+            "Road Safety Policy & Professional Development"
+          ]
+        },
+        teaching: {
+          title: "Teaching",
+          sectionTitle: "2025 Academic Year Courses",
+          undergraduate: "Undergraduate",
+          graduate: "Graduate",
+          professional: "Professional",
+          courses: {
+            undergraduate: [
+              { name: "Seminar on Traffic Enforcement", type: "Required" },
+              { name: "Traffic Crash Investigation", type: "Required" },
+              { name: "Intro. to Intelligent Transportation Systems", type: "Elective" },
+              { name: "Road Engineering & Impact Assessment", type: "Elective" },
+              { name: "Traffic Policing Practice", type: "Elective" }
+            ],
+            graduate: [
+              { name: "Traffic Safety Analysis" },
+              { name: "Special Topics in Traffic" }
+            ],
+            professional: [
+              { name: "Gravel & Tour Bus Management", group: "Officer Class" },
+              { name: "Traffic Police Operations", group: "Special Exam Class" },
+              { name: "Traffic Control & Operations", group: "Police Officer Group" }
+            ]
+          }
+        },
+        publications: {
+          title: "Selected Publications",
+          journalTitle: "Journal Papers",
+          confTitle: "Conference Papers",
+          viewPaper: "VIEW PAPER"
+        },
+        projects: {
+          title: "Research Projects",
+          list: [
+            {
+              title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
+              org: "National Science and Technology Council (NSTC)",
+              period: "2025.08 ~ 2026.07"
+            },
+            {
+              title: "Regional Transportation Development Center Service Upgrade 3.0 Plan - Northern Region Road Safety Plan",
+              role: "Co-Principal Investigator",
+              org: "Institute of Transportation, MOTC",
+              period: "2025 ~ Present"
+            },
+            {
+              title: "Analysis of Strategy for Road Safety Professional Training and Knowledge Platform",
+              org: "Institute of Transportation, MOTC",
+              period: "2025 ~ Present"
+            },
+            {
+              title: "Capacity Building for Road Safety Improvement",
+              org: "Institute of Transportation, MOTC",
+              period: "2024"
+            },
+            {
+              title: "Academic Research on the Establishment of Road Traffic Safety Data Integration and Analysis Platform",
+              org: "Ministry of Transportation and Communications",
+              period: "2019"
+            }
+          ]
+        },
+        service: {
+          title: "Professional Service",
+          journal: "Journal Reviews",
+          uni: "University Service",
+          gov: "Government Service",
+          uniList: [
+            "Member, Forensic Science Committee (2025 - Present)",
+            "Editorial Board Member, Journal of Traffic Science (2025 - Present)",
+            "Executive Secretary, Intelligent Traffic Group, Smart Tech Enforcement Research Center (2025 - Present)",
+            "Assistant Professor, College of Police Science and Technology (2024.08 - 2025.07)"
+          ],
+          govList: [
+            "Review Committee Member, Traffic Maintenance Plan, Taoyuan City Government (2025 - Present)"
+          ]
+        },
+        footer: {
+          desc: "Integrating engineering practice with empirical data analysis to reconstruct efficient and safe traffic systems.",
+          nav: "Navigation",
+          contact: "Contact",
+          address: (
+            <>
+              Dept. of Traffic Science, Central Police University<br />
+              No. 56, Shuren Rd., Guishan Dist., Taoyuan City
+            </>
+          ),
+          rights: "© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED."
+        }
       }
     };
 
-    const RESEARCH_PROJECTS = [
-      {
-        title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
-        org: "國家科學及技術委員會 (NSTC Projects)",
-        period: "2025.08 ~ 2026.07"
-      },
-      {
-        title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫",
-        role: "協同主持人",
-        org: "交通部運輸研究所",
-        period: "2025 ~ 迄今"
-      },
-      {
-        title: "道安專業人力培訓暨知識平台策略內容研析",
-        org: "交通部運輸研究所",
-        period: "2025 ~ 迄今"
-      },
-      {
-        title: "道安改善專業能力建構",
-        org: "交通部運輸研究所",
-        period: "2024"
-      },
-      {
-        title: "道路交通安全資料整合與分析平台建置學術研究",
-        org: "交通部",
-        period: "2019"
-      }
-    ];
-
-    const SERVICE = {
-      journals: [
+    // Shared Data (No translation needed)
+    const SHARED_DATA = {
+      serviceJournals: [
         "Accident Analysis and Prevention (SSCI)",
         "Engineering Application of Artificial Intelligence (SCI)",
         "Scientific Reports (SCI)"
       ],
-      university: [
-        "鑑識科學委員會委員 (2025 迄今)",
-        "交通學報編輯委員 (2025 迄今)",
-        "智慧科技執法研究中心 - 智慧交通組執行秘書 (2025 迄今)",
-        "警察科技學院 - 助理教授 (2024.08 ~ 2025.07)"
+      publications: [
+        {
+          year: '2024',
+          journal: 'Journal of Traffic Science, Vol. 24',
+          title: '道路交通安全從業人員專業培訓需求分析之初探 (Preliminary Analysis of Professional Training Needs for Road Safety Practitioners)',
+          authors: 'Wu, Y.W.*, Yang, F.R.',
+          link: 'https://ts.cpu.edu.tw/p/406-1020-44159,r647.php'
+        },
+        {
+          year: '2023',
+          journal: 'Journal of Traffic Science, Vol. 23',
+          title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析 (Effectiveness Analysis of Precision Enforcement Using ML Models)',
+          authors: 'Lu, K.R., Wu, Y.W.*',
+          link: 'https://ts.cpu.edu.tw/p/406-1020-42081,r647.php'
+        },
+        {
+          year: '2022',
+          journal: 'Accident Analysis and Prevention (SSCI)',
+          title: 'Temporal stability of associations between crash characteristics: A multiple correspondence analysis.',
+          authors: 'Hsu, T.P., Wu, Y.W.*, Chen, A.Y.',
+          link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457522000264'
+        },
+        {
+          year: '2021',
+          journal: 'Accident Analysis and Prevention (SSCI)',
+          title: 'Mid-term prediction of at-fault crash driver frequency using fusion deep learning with city-level traffic violation data.',
+          authors: 'Wu, Y.W.*, Hsu, T.P.',
+          link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457520317309'
+        }
       ],
-      government: [
-        "桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"
+      conferences: [
+        {
+          year: '2025',
+          event: 'Road Safety and Enforcement Conference',
+          title: '應用遙測技術於交通事故現場重建之探討 (Application of Remote Sensing in Crash Reconstruction)',
+          authors: 'Yu, X.W., Wu, Y.W.*, Li, M.H., Pan, C.W.'
+        },
+        {
+          year: '2024',
+          event: 'Road Safety and Enforcement Conference',
+          title: '道路交通安全從業人員專業培訓需求分析之初探 (Analysis of Road Safety Training Needs)',
+          authors: 'Wu, Y.W.*, et al.'
+        },
+        {
+          year: '2023',
+          event: 'Road Safety and Enforcement Conference',
+          title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析 (Precision Enforcement Analysis)',
+          authors: 'Lu, K.R., Wu, Y.W.*'
+        },
+        {
+          year: '2019',
+          event: '13th EASTS Conference (Colombo, Sri Lanka)',
+          title: 'Mining characteristics of speeding and red light running violations using association rules.',
+          authors: 'Wu, Y.W.*, Hsu, T.P.'
+        }
       ]
     };
-
-    const PRACTICE_EXPERIENCE = [
-      "國立臺灣科技大學營建工程系 兼任助理教授",
-      "桃園市政府警察局交通警察大隊",
-      "桃園市政府警察局刑事警察大隊",
-      "桃園市政府警察局桃園分局",
-      "臺北市政府警察局交通警察大隊"
-    ];
-
-    const PUBLICATIONS = [
-      {
-        year: '2024',
-        journal: '交通學報，第二十四卷',
-        title: '道路交通安全從業人員專業培訓需求分析之初探',
-        authors: '吳元維*、楊馥榕',
-        link: 'https://ts.cpu.edu.tw/p/406-1020-44159,r647.php'
-      },
-      {
-        year: '2023',
-        journal: '交通學報，第二十三卷',
-        title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析',
-        authors: '盧冠仁、吳元維*',
-        link: 'https://ts.cpu.edu.tw/p/406-1020-42081,r647.php'
-      },
-      {
-        year: '2022',
-        journal: 'Accident Analysis and Prevention (SSCI)',
-        title: 'Temporal stability of associations between crash characteristics: A multiple correspondence analysis.',
-        authors: 'Hsu, T.P., Wu, Y.W.*, Chen, A.Y.',
-        link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457522000264'
-      },
-      {
-        year: '2021',
-        journal: 'Accident Analysis and Prevention (SSCI)',
-        title: 'Mid-term prediction of at-fault crash driver frequency using fusion deep learning with city-level traffic violation data.',
-        authors: 'Wu, Y.W.*, Hsu, T.P.',
-        link: 'https://www.sciencedirect.com/science/article/abs/pii/S0001457520317309'
-      }
-    ];
-
-    const CONFERENCES = [
-      {
-        year: '2025',
-        event: '道路交通安全與執法研討會',
-        title: '應用遙測技術於交通事故現場重建之探討',
-        authors: '游薛武、吳元維*、李旻晃、潘啟文'
-      },
-      {
-        year: '2024',
-        event: '道路交通安全與執法研討會',
-        title: '道路交通安全從業人員專業培訓需求分析之初探',
-        authors: '吳元維*、周文生、楊馥榕、曾群明、王冠堯、葉文健、黃士軒'
-      },
-      {
-        year: '2023',
-        event: '道路交通安全與執法研討會',
-        title: '基於多元線性回歸模型及可解釋機器學習模型之精準執法成效分析',
-        authors: '盧冠仁、吳元維*'
-      },
-      {
-        year: '2019',
-        event: '13th EASTS Conference (Colombo, Sri Lanka)',
-        title: 'Mining characteristics of speeding and red light running violations using association rules.',
-        authors: 'Wu, Y.W.*, Hsu, T.P.'
-      }
-    ];
 
     // -----------------------------------------------------------------------------
     // COMPONENTS
@@ -391,6 +585,9 @@
     // -----------------------------------------------------------------------------
 
     const App = () => {
+      const [lang, setLang] = useState('zh'); // 'zh' or 'en'
+      const t = DATA[lang];
+
       useEffect(() => {
         const loader = document.getElementById('loader');
         if (loader) {
@@ -398,6 +595,11 @@
           setTimeout(() => loader.remove(), 600);
         }
       }, []);
+
+      const toggleLang = (newLang) => {
+        setLang(newLang);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
 
       const scrollToSection = (e, id) => {
         e.preventDefault();
@@ -423,7 +625,7 @@
       };
 
       return (
-        <div className="relative min-h-screen bg-[#FDFCF8] text-stone-900 selection:bg-amber-100 selection:text-amber-900">
+        <div className={`relative min-h-screen bg-[#FDFCF8] text-stone-900 selection:bg-amber-100 selection:text-amber-900 font-sans ${lang === 'en' ? 'tracking-wide' : ''}`}>
           <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 flex justify-between items-center bg-white/70 backdrop-blur-xl border-b border-stone-200/40">
             <div className="flex flex-col">
               <div className="text-lg font-bold tracking-tighter uppercase font-heading text-stone-900">
@@ -433,23 +635,43 @@
                 Yuan-Wei Wu
               </div>
             </div>
-            <div className="hidden md:flex gap-10 text-[10px] font-bold uppercase tracking-widest text-stone-500">
-              <a href="#interests" onClick={(e) => scrollToSection(e, 'research-interests')} className="hover:text-amber-700 transition-all relative group py-2">
-                INTERESTS
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
-              </a>
-              <a href="#teaching" onClick={(e) => scrollToSection(e, 'teaching')} className="hover:text-amber-700 transition-all relative group py-2">
-                TEACHING
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
-              </a>
-              <a href="#publications" onClick={(e) => scrollToSection(e, 'publications')} className="hover:text-amber-700 transition-all relative group py-2">
-                PUBLICATIONS
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
-              </a>
-              <a href="#projects" onClick={(e) => scrollToSection(e, 'research-projects')} className="hover:text-amber-700 transition-all relative group py-2">
-                PROJECTS
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
-              </a>
+            
+            <div className="flex items-center gap-6 md:gap-10">
+                <div className="hidden md:flex gap-10 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                  <a href="#interests" onClick={(e) => scrollToSection(e, 'research-interests')} className="hover:text-amber-700 transition-all relative group py-2">
+                    {t.nav.interests}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
+                  </a>
+                  <a href="#teaching" onClick={(e) => scrollToSection(e, 'teaching')} className="hover:text-amber-700 transition-all relative group py-2">
+                    {t.nav.teaching}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
+                  </a>
+                  <a href="#publications" onClick={(e) => scrollToSection(e, 'publications')} className="hover:text-amber-700 transition-all relative group py-2">
+                    {t.nav.publications}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
+                  </a>
+                  <a href="#projects" onClick={(e) => scrollToSection(e, 'research-projects')} className="hover:text-amber-700 transition-all relative group py-2">
+                    {t.nav.projects}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
+                  </a>
+                </div>
+
+                {/* Language Switcher */}
+                <div className="flex items-center text-[11px] font-bold tracking-widest gap-2 text-stone-300 select-none">
+                    <span 
+                        onClick={() => toggleLang('en')} 
+                        className={`cursor-pointer transition-colors ${lang === 'en' ? 'text-amber-800' : 'hover:text-stone-500'}`}
+                    >
+                        {t.nav.langEn}
+                    </span>
+                    <span className="text-stone-200">|</span>
+                    <span 
+                        onClick={() => toggleLang('zh')} 
+                        className={`cursor-pointer transition-colors ${lang === 'zh' ? 'text-amber-800' : 'hover:text-stone-500'}`}
+                    >
+                        {t.nav.langZh}
+                    </span>
+                </div>
             </div>
           </nav>
 
@@ -459,19 +681,18 @@
               <div className="max-w-6xl relative z-10 w-full">
                 <div className="animate-[fadeIn_1s_ease-out_forwards]">
                   <h1 className="text-4xl md:text-7xl font-bold tracking-tighter text-stone-900 font-heading leading-[0.9] mb-6">
-                    吳元維 <br />
-                    <span className="text-amber-800/80 font-light text-xl md:text-4xl tracking-tight">Yuan-Wei Wu</span>
+                    {t.meta.title} <br />
+                    <span className="text-amber-800/80 font-light text-xl md:text-4xl tracking-tight">{t.meta.subtitle}</span>
                   </h1>
                   <div className="flex flex-col border-l-8 border-amber-600 pl-8 py-2">
-                    <p className="text-stone-800 text-lg font-medium tracking-wide font-serif-tc">{AFFILIATION}</p>
-                    <p className="text-stone-400 text-[10px] font-light uppercase tracking-widest mt-1 font-heading">{AFFILIATION_EN}</p>
+                    <p className={`text-stone-800 text-lg font-medium tracking-wide ${lang === 'zh' ? 'font-serif-tc' : 'font-heading'}`}>{t.meta.affiliation}</p>
+                    <p className="text-stone-400 text-[10px] font-light uppercase tracking-widest mt-1 font-heading">{t.meta.affiliationEn}</p>
                   </div>
                 </div>
                 
                 <div className="mt-12 animate-[fadeIn_1s_ease-out_0.3s_forwards] opacity-0">
                   <p className="text-lg text-stone-500 max-w-2xl leading-relaxed">
-                    結合 <span className="text-stone-950 font-bold border-b-2 border-amber-200">工程實務</span> 與 <span className="text-stone-950 font-bold border-b-2 border-amber-200">實證數據分析</span>，<br />
-                    致力於透過 AI 技術重構更具效率與安全性的交通調查與執法體系。
+                    {t.meta.heroText}
                   </p>
                 </div>
               </div>
@@ -481,37 +702,37 @@
               
               <section id="about" className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                  <div className="space-y-6">
-                   <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Profile & Affiliation</h2>
+                   <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">{t.profile.title}</h2>
                    <div className="space-y-4">
                       <div className="p-8 bg-white rounded-[2.5rem] shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-stone-100 hover:shadow-lg transition-all group">
-                         <p className="text-xl font-bold text-stone-950 mb-1 font-serif-tc">國立臺灣大學 土木工程學系 博士</p>
-                         <p className="text-stone-400 text-xs italic font-heading group-hover:text-amber-600 transition-colors">Ph.D. in Civil Engineering, National Taiwan University</p>
+                         <p className={`text-xl font-bold text-stone-950 mb-1 ${lang === 'zh' ? 'font-serif-tc' : 'font-heading'}`}>{t.profile.phdTitle}</p>
+                         <p className="text-stone-400 text-xs italic font-heading group-hover:text-amber-600 transition-colors">{t.profile.phdSub}</p>
                       </div>
                       <div className="p-8 bg-amber-900 rounded-[2.5rem] shadow-lg text-white group relative overflow-hidden">
                          <div className="absolute -right-6 -bottom-6 opacity-10 group-hover:scale-110 transition-transform">
                             <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7L12 12L23 7L12 2M1 12L12 17L23 12M1 17L12 22L23 17"/></svg>
                          </div>
-                         <p className="text-xl font-bold mb-1 font-serif-tc">{AFFILIATION}</p>
-                         <p className="text-amber-200/80 text-xs font-heading">Assistant Professor</p>
+                         <p className={`text-xl font-bold mb-1 ${lang === 'zh' ? 'font-serif-tc' : 'font-heading'}`}>{t.profile.roleTitle}</p>
+                         <p className="text-amber-200/80 text-xs font-heading">{t.profile.roleSub}</p>
                       </div>
                    </div>
 
                    <div className="pt-6">
-                     <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase mb-4">Experience</h2>
+                     <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase mb-4">{t.profile.expTitle}</h2>
                      <div className="grid gap-2">
-                       {PRACTICE_EXPERIENCE.map((exp, idx) => (
+                       {t.profile.expList.map((exp, idx) => (
                          <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100 hover:border-amber-200 transition-colors shadow-sm">
-                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
-                           <span className="text-sm font-medium text-stone-700 font-serif-tc">{exp}</span>
+                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50 flex-shrink-0"></span>
+                           <span className={`text-sm font-medium text-stone-700 ${lang === 'zh' ? 'font-serif-tc' : ''}`}>{exp}</span>
                          </div>
                        ))}
                      </div>
                    </div>
                  </div>
                  <div className="space-y-6">
-                   <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">Expertise Fields</h2>
+                   <h2 className="text-[10px] font-bold tracking-[0.5em] text-amber-700 uppercase">{t.expertise.title}</h2>
                    <div className="flex flex-wrap gap-3">
-                     {EXPERTISE.map((item, idx) => (
+                     {t.expertise.list.map((item, idx) => (
                        <div key={idx} className="px-7 py-4 bg-white/80 border border-stone-200 rounded-[2rem] text-[19.5px] font-semibold text-stone-700 hover:border-amber-400 hover:text-amber-800 transition-all shadow-sm">
                          {item}
                        </div>
@@ -522,26 +743,26 @@
 
               <section id="research-interests" className="max-w-5xl mx-auto scroll-mt-32">
                 <div className="flex items-center gap-6 mb-8">
-                  <h2 className="text-3xl font-bold text-stone-950 font-heading">Research Interests</h2>
+                  <h2 className="text-3xl font-bold text-stone-950 font-heading">{t.interests.title}</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {RESEARCH_INTERESTS.map((interest, idx) => (
+                  {t.interests.list.map((interest, idx) => (
                     <div key={idx} className="p-4 bg-stone-50 border border-stone-100 rounded-xl hover:bg-amber-50 transition-colors">
-                      <p className="font-serif-tc font-medium text-stone-800">{interest}</p>
+                      <p className={`font-medium text-stone-800 ${lang === 'zh' ? 'font-serif-tc' : ''}`}>{interest}</p>
                     </div>
                   ))}
                 </div>
               </section>
 
               <section id="teaching-section" className="max-w-5xl mx-auto scroll-mt-32">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Teaching</h2>
+                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">{t.teaching.title}</h2>
                 <div className="space-y-12">
                   <div className="p-8 bg-white border border-stone-100 rounded-[3rem] shadow-sm">
-                    <h3 className="text-xl font-bold text-amber-800 mb-8 border-b border-amber-50 pb-4">{TEACHING_DATA.current.title}</h3>
+                    <h3 className="text-xl font-bold text-amber-800 mb-8 border-b border-amber-50 pb-4">{t.teaching.sectionTitle}</h3>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                       <div className="space-y-4">
-                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Undergraduate</h4>
-                        {TEACHING_DATA.current.undergraduate.map((course, idx) => (
+                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">{t.teaching.undergraduate}</h4>
+                        {t.teaching.courses.undergraduate.map((course, idx) => (
                           <div key={idx} className="flex justify-between items-center py-2.5 border-b border-stone-50">
                             <span className="text-base font-bold text-stone-700">{course.name}</span>
                             <span className="text-[9px] px-2 py-0.5 bg-stone-100 text-stone-500 rounded uppercase">{course.type}</span>
@@ -549,16 +770,16 @@
                         ))}
                       </div>
                       <div className="space-y-4">
-                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Graduate</h4>
-                        {TEACHING_DATA.current.graduate.map((course, idx) => (
+                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">{t.teaching.graduate}</h4>
+                        {t.teaching.courses.graduate.map((course, idx) => (
                           <div key={idx} className="flex justify-between items-center py-2.5 border-b border-stone-50">
                             <span className="text-base font-bold text-stone-700">{course.name}</span>
                           </div>
                         ))}
                       </div>
                       <div className="space-y-4">
-                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">Professional</h4>
-                        {TEACHING_DATA.current.professional.map((course, idx) => (
+                        <h4 className="text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">{t.teaching.professional}</h4>
+                        {t.teaching.courses.professional.map((course, idx) => (
                           <div key={idx} className="flex flex-col py-2 border-b border-stone-50">
                             <span className="text-base font-bold text-stone-700">{course.name}</span>
                             <span className="text-[9px] text-amber-600 font-bold uppercase mt-1 tracking-widest">{course.group}</span>
@@ -571,10 +792,10 @@
               </section>
 
               <section id="publications-section" className="max-w-5xl mx-auto scroll-mt-32">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Selected Publications</h2>
+                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">{t.publications.title}</h2>
                 <div className="space-y-6">
-                  <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">Journal Papers</h3>
-                  {PUBLICATIONS.map((pub, idx) => (
+                  <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">{t.publications.journalTitle}</h3>
+                  {SHARED_DATA.publications.map((pub, idx) => (
                     <div key={idx} className="group p-6 bg-white border border-stone-100 rounded-2xl hover:border-amber-200 hover:shadow-md transition-all">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="space-y-2">
@@ -588,8 +809,8 @@
                           <p className="text-sm text-stone-500 italic">{pub.authors}</p>
                         </div>
                         {pub.link && (
-                          <a href={pub.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-xs font-bold text-amber-700 hover:text-amber-900 transition-colors gap-1">
-                            VIEW PAPER
+                          <a href={pub.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-xs font-bold text-amber-700 hover:text-amber-900 transition-colors gap-1 flex-shrink-0">
+                            {t.publications.viewPaper}
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                           </a>
                         )}
@@ -601,9 +822,9 @@
 
               <section id="conferences-section" className="max-w-5xl mx-auto scroll-mt-32">
                 <div className="space-y-6">
-                  <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">Conference Papers</h3>
+                  <h3 className="text-[10px] font-bold tracking-[0.3em] text-amber-700 uppercase mb-4">{t.publications.confTitle}</h3>
                   <div className="grid grid-cols-1 gap-4">
-                    {CONFERENCES.map((conf, idx) => (
+                    {SHARED_DATA.conferences.map((conf, idx) => (
                       <div key={idx} className="group p-6 bg-stone-50/50 border border-stone-100 rounded-2xl hover:bg-white hover:border-amber-200 hover:shadow-sm transition-all">
                         <div className="space-y-2">
                           <div className="flex items-center gap-3">
@@ -622,9 +843,9 @@
               </section>
 
               <section id="projects-section" className="max-w-5xl mx-auto scroll-mt-32">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Research Projects</h2>
+                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">{t.projects.title}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {RESEARCH_PROJECTS.map((project, idx) => (
+                  {t.projects.list.map((project, idx) => (
                     <div key={idx} className="p-8 bg-stone-100 rounded-3xl border border-stone-200 relative overflow-hidden group hover:bg-white hover:shadow-lg hover:border-amber-100 transition-all duration-300">
                       <span className="text-[10px] font-bold text-amber-700 uppercase tracking-widest mb-4 block">{project.period}</span>
                       <h3 className="text-lg font-bold mb-4 leading-tight text-stone-900 group-hover:text-amber-800 transition-colors">{project.title}</h3>
@@ -638,28 +859,28 @@
               </section>
 
               <section id="service-section" className="max-w-5xl mx-auto scroll-mt-32">
-                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">Professional Service</h2>
+                <h2 className="text-3xl font-bold text-stone-950 font-heading mb-8">{t.service.title}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div className="space-y-4">
-                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">Journal Reviews</h4>
+                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">{t.service.journal}</h4>
                     <ul className="space-y-3">
-                      {SERVICE.journals.map((j, idx) => (
+                      {SHARED_DATA.serviceJournals.map((j, idx) => (
                         <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{j}</li>
                       ))}
                     </ul>
                   </div>
                   <div className="space-y-4">
-                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">University Service</h4>
+                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">{t.service.uni}</h4>
                     <ul className="space-y-3">
-                      {SERVICE.university.map((s, idx) => (
+                      {t.service.uniList.map((s, idx) => (
                         <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{s}</li>
                       ))}
                     </ul>
                   </div>
                   <div className="space-y-4">
-                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">Government Service</h4>
+                    <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-[0.3em]">{t.service.gov}</h4>
                     <ul className="space-y-3">
-                      {SERVICE.government.map((s, idx) => (
+                      {t.service.govList.map((s, idx) => (
                         <li key={idx} className="text-sm text-stone-600 font-medium border-l-2 border-stone-100 pl-4">{s}</li>
                       ))}
                     </ul>
@@ -677,12 +898,12 @@
                      Safety<span className="text-amber-700">Lab</span>
                    </div>
                    <p className="text-stone-500 text-sm leading-relaxed">
-                     Integrating engineering practice with empirical data analysis to reconstruct efficient and safe traffic systems.
+                     {t.footer.desc}
                    </p>
                 </div>
                 <div className="grid grid-cols-2 gap-16">
                    <div className="space-y-4">
-                      <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">Navigation</h4>
+                      <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">{t.footer.nav}</h4>
                       <ul className="space-y-2 text-xs text-stone-500 font-medium">
                          <li><a href="#hero" className="hover:text-amber-700 transition-colors">Home</a></li>
                          <li><a href="#about" className="hover:text-amber-700 transition-colors">About</a></li>
@@ -690,17 +911,16 @@
                       </ul>
                    </div>
                    <div className="space-y-4">
-                      <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">Contact</h4>
+                      <h4 className="text-[10px] font-bold text-stone-900 uppercase tracking-widest">{t.footer.contact}</h4>
                       <p className="text-xs text-stone-500 leading-loose">
-                        中央警察大學 交通學系<br />
-                        桃園市龜山區大崗里樹人路56號<br />
+                        {t.footer.address}<br />
                         <a href="mailto:grantwyw@mail.cpu.edu.tw" className="hover:text-amber-700 transition-colors">grantwyw@mail.cpu.edu.tw</a>
                       </p>
                    </div>
                 </div>
              </div>
              <div className="max-w-6xl mx-auto mt-20 pt-8 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-[10px] font-bold text-stone-400 tracking-[0.2em] uppercase">© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED.</p>
+                <p className="text-[10px] font-bold text-stone-400 tracking-[0.2em] uppercase">{t.footer.rights}</p>
              </div>
           </footer>
 
