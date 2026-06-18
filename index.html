@@ -59,23 +59,41 @@
 
     <script>
         window.process = { env: { API_KEY: "" } };
-        window.hideAppLoader = function() {
-            const loader = document.getElementById('loader');
+        window.__appErrors = [];
+        window.addEventListener('error', function (e) {
+            var msg = '';
+            if (e && e.message) { msg = e.message; }
+            if (e && e.filename) { msg += '  @ ' + e.filename; }
+            if (e && e.target && e.target.src) { msg = 'Failed to load: ' + e.target.src; }
+            if (msg) { window.__appErrors.push(msg); }
+        }, true);
+        window.addEventListener('unhandledrejection', function (e) {
+            var r = e && e.reason ? (e.reason.message || String(e.reason)) : 'unknown';
+            window.__appErrors.push('Promise rejected: ' + r);
+        });
+        window.hideAppLoader = function () {
+            var loader = document.getElementById('loader');
             if (loader) loader.classList.add('loader-hidden');
         };
-        // Safety net: if the React app fails to mount within 12s (e.g. a CDN such
-        // as esm.sh / unpkg is slow or blocked on a mobile network), never leave
-        // the user stuck on the spinner — hide it and show a minimal fallback.
-        window.setTimeout(function() {
+        // Safety net: if the React app has not mounted after 9s (slow/blocked CDN,
+        // unsupported browser, transpile error, etc.), stop the infinite spinner
+        // and show what actually went wrong instead of leaving the user stuck.
+        window.setTimeout(function () {
             var root = document.getElementById('root');
-            if (root && root.childElementCount === 0) {
-                window.hideAppLoader();
-                root.innerHTML = '<div style="max-width:680px;margin:18vh auto;padding:0 24px;text-align:center;font-family:Inter,sans-serif;color:#57534E;">'
-                  + '<p style="font-size:15px;line-height:1.7;">頁面載入時間較長,可能是網路較慢。<br>請重新整理,或改用 Safari / Chrome 直接開啟(避免在 LINE、Facebook 等 App 內建瀏覽器中開啟)。</p>'
-                  + '<p style="font-size:13px;color:#A8A29E;margin-top:14px;">Page is taking too long to load. Please refresh, or open in Safari / Chrome directly.</p>'
-                  + '</div>';
+            if (!root || root.childElementCount > 0) return; // app mounted fine
+            window.hideAppLoader();
+            var detail = '';
+            if (window.__appErrors.length) {
+                var text = window.__appErrors.join('\n').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+                detail = '<pre style="text-align:left;white-space:pre-wrap;word-break:break-word;background:#F5F5F4;border:1px solid #E7E5E4;border-radius:8px;padding:12px;margin:14px auto 0;max-width:600px;font-size:11px;color:#78716C;line-height:1.5;">' + text + '</pre>';
             }
-        }, 12000);
+            root.innerHTML = '<div style="max-width:680px;margin:16vh auto;padding:0 24px;text-align:center;font-family:Inter,sans-serif;color:#57534E;">'
+                + '<p style="font-size:15px;line-height:1.7;">頁面載入時間過長或失敗,通常是網路較慢或外部資源被阻擋。<br>請點下方按鈕重新整理,或改用 Safari / Chrome 直接開啟(避免在 LINE、Facebook 等 App 內建瀏覽器中開啟)。</p>'
+                + '<p style="font-size:13px;color:#A8A29E;margin-top:8px;">Page failed to load. Please reload, or open directly in Safari / Chrome.</p>'
+                + detail
+                + '<button onclick="location.reload()" style="margin-top:18px;padding:10px 22px;border:none;border-radius:999px;background:#B45309;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">重新整理 / Reload</button>'
+                + '</div>';
+        }, 9000);
     </script>
 
     <script type="importmap">
@@ -97,8 +115,8 @@
     <div id="root"></div>
 
     <script type="text/babel" data-type="module" data-presets="react,typescript">
-    import React, { useEffect, useRef, useState } from 'https://esm.sh/react@19.0.0';
-    import { createRoot } from 'https://esm.sh/react-dom@19.0.0/client';
+    import React, { useEffect, useRef, useState } from 'react';
+    import { createRoot } from 'react-dom/client';
 
     // -----------------------------------------------------------------------------
     // DATA & TRANSLATIONS
