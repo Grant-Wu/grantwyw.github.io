@@ -63,6 +63,19 @@
             const loader = document.getElementById('loader');
             if (loader) loader.classList.add('loader-hidden');
         };
+        // Safety net: if the React app fails to mount within 12s (e.g. a CDN such
+        // as esm.sh / unpkg is slow or blocked on a mobile network), never leave
+        // the user stuck on the spinner — hide it and show a minimal fallback.
+        window.setTimeout(function() {
+            var root = document.getElementById('root');
+            if (root && root.childElementCount === 0) {
+                window.hideAppLoader();
+                root.innerHTML = '<div style="max-width:680px;margin:18vh auto;padding:0 24px;text-align:center;font-family:Inter,sans-serif;color:#57534E;">'
+                  + '<p style="font-size:15px;line-height:1.7;">頁面載入時間較長,可能是網路較慢。<br>請重新整理,或改用 Safari / Chrome 直接開啟(避免在 LINE、Facebook 等 App 內建瀏覽器中開啟)。</p>'
+                  + '<p style="font-size:13px;color:#A8A29E;margin-top:14px;">Page is taking too long to load. Please refresh, or open in Safari / Chrome directly.</p>'
+                  + '</div>';
+            }
+        }, 12000);
     </script>
 
     <script type="importmap">
@@ -84,8 +97,8 @@
     <div id="root"></div>
 
     <script type="text/babel" data-type="module" data-presets="react,typescript">
-    import React, { useEffect, useRef, useState } from 'react';
-    import { createRoot } from 'react-dom/client';
+    import React, { useEffect, useRef, useState } from 'https://esm.sh/react@19.0.0';
+    import { createRoot } from 'https://esm.sh/react-dom@19.0.0/client';
 
     // -----------------------------------------------------------------------------
     // DATA & TRANSLATIONS
@@ -636,8 +649,8 @@
       // Enhanced Image handling for various formats and casing
       // We define a priority list of filenames to try
       const imageCandidates = [
-        './profile.png',
         './profile.jpg',
+        './profile.png',
         './profile.jpeg',
         './profile.webp',
         './Profile.png',
@@ -780,6 +793,8 @@
                         <img 
                           src={imgSrc} 
                           alt="Dr. Yuan-Wei Wu" 
+                          decoding="async"
+                          fetchpriority="high"
                           className="w-full h-full object-cover object-[center_top] drop-shadow-2xl opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-1000 ease-out mask-horizontal"
                           onError={handleImgError}
                         />
