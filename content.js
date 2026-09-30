@@ -340,6 +340,12 @@ window.SITE_CONTENT = {
       ],
       /* ★★★ 研討會論文 Conference Papers(中英共用一份) ★★★ */ conferences: [
         {
+          year: '2026',
+          event: '2026台灣地理資訊學會年會暨學術研討會(2026 TGIS)',
+          title: '應用無人機攝影測量技術於交通事故重建之探討 (A study on the Application of UAV Photogrammetry to Traffic Accident Reconstruction)',
+          authors: 'Yu, X.W., Wu, Y.W.*'
+        },
+        {
           year: '2025',
           event: 'Road Safety and Enforcement Conference',
           title: '應用遙測技術於交通事故現場重建之探討 (Application of Remote Sensing in Crash Reconstruction)',
