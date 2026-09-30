@@ -245,6 +245,11 @@ window.SITE_CONTENT = {
           title: "Research Projects",
           list: [
             {
+              title: "A Multi-Scale Spatio-Temporal Framework for Analyzing Traffic Enforcement and Road Safety: From Spatial Statistics to Reaction-Diffusion Dynamics and Microscopic Simulation",
+              org: "國家科學及技術委員會 (NSTC Projects)",
+              period: "2026.08 ~ 2029.07"
+            },
+             {
               title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
               org: "National Science and Technology Council (NSTC)",
               period: "2025.08 ~ 2026.07"
