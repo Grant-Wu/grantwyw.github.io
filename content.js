@@ -155,7 +155,8 @@ window.SITE_CONTENT = {
             "鑑識科學委員會委員 (2025 迄今)",
             "交通學報編輯委員 (2025 迄今)",
             "智慧科技執法研究中心 - 智慧交通組執行秘書 (2025 迄今)",
-            "警察科技學院 - 助理教授 (2024.08 ~ 2025.07)"
+            "警察科技學院課程會委員 (2026 迄今)",
+            "警察科技學院助理教授 (2024.08 ~ 2025.07)"
           ],
           govList: [
             "桃園市政府交通局交通維持計畫審查委員 (2025 迄今)"
@@ -166,7 +167,7 @@ window.SITE_CONTENT = {
           nav: "Navigation",
           contact: "Contact",
           address: '中央警察大學 交通學系<br /> 桃園市龜山區大崗里樹人路56號',
-          rights: "© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED."
+          rights: "© 2026 YUAN-WEI WU. ALL RIGHTS RESERVED."
         }
       },
       en: {
@@ -267,6 +268,11 @@ window.SITE_CONTENT = {
               period: "2025.08 ~ 2026.07"
             },
             {
+              title: "National Road Traffic Safety Program (2024–2027)",
+              org: "Ministry of Transportation and Communications (MOTC)",
+              period: "2026 ~ 2027"
+            },
+            {
               title: "Regional Transportation Development Center Service Upgrade 3.0 Plan - Northern Region Road Safety Plan",
               role: "Co-Principal Investigator",
               org: "Institute of Transportation, MOTC",
@@ -298,6 +304,7 @@ window.SITE_CONTENT = {
             "Member, Forensic Science Committee (2025 - Present)",
             "Editorial Board Member, Journal of Traffic Science (2025 - Present)",
             "Executive Secretary, Intelligent Traffic Group, Smart Tech Enforcement Research Center (2025 - Present)",
+            "Curriculum Committee Member, College of Police Science and Technology (2026 - Present)",
             "Assistant Professor, College of Police Science and Technology (2024.08 - 2025.07)"
           ],
           govList: [
@@ -309,7 +316,7 @@ window.SITE_CONTENT = {
           nav: "Navigation",
           contact: "Contact",
           address: 'Dept. of Traffic Science, Central Police University<br /> No. 56, Shuren Rd., Guishan Dist., Taoyuan City',
-          rights: "© 2025 YUAN-WEI WU. ALL RIGHTS RESERVED."
+          rights: "© 2026 YUAN-WEI WU. ALL RIGHTS RESERVED."
         }
       }
     },
