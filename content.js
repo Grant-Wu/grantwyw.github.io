@@ -81,8 +81,8 @@ window.SITE_CONTENT = {
               { name: "交通執法專題", type: "系必" },
               { name: "交通事故處理", type: "校訂必修" },
               { name: "道路工程與衝擊評估", type: "系選" },
-              { name: "交通警察學", type: "系必" }
-              { name: "交通警察實務", type: "系選" } 
+              { name: "交通警察學", type: "系必" },
+              { name: "交通警察實務", type: "系選" }, 
               { name: "程式語言", type: "系必" },
             ],
             graduate: [
