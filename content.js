@@ -268,7 +268,7 @@ window.SITE_CONTENT = {
               period: "2025.08 ~ 2026.07"
             },
             {
-              title: "National Road Traffic Safety Program (2024–2027)",
+              title: "National Road Traffic Safety Program (2028–2031)",
               org: "Ministry of Transportation and Communications (MOTC)",
               period: "2026 ~ 2027"
             },
