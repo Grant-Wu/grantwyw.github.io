@@ -221,7 +221,7 @@ window.SITE_CONTENT = {
         },
         /* ★★★ 教學 Teaching(中/英各一份) ★★★ */ teaching: {
           title: "Teaching",
-          sectionTitle: "2025 Academic Year Courses",
+          sectionTitle: "2025-2026 Courses",
           undergraduate: "Undergraduate",
           graduate: "Graduate",
           professional: "Professional",
