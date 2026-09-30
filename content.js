@@ -65,14 +65,14 @@ window.SITE_CONTENT = {
           title: "Research Interests",
           list: [
             "交通執法成效分析",
-            "交通衝突之在地化探討",
+            "交通行為與衝突之在地化探討",
             "交通事故調查與重建技術",
             "交通安全政策與專業能力發展"
           ]
         },
         /* ★★★ 教學 Teaching(中/英各一份) ★★★ */ teaching: {
           title: "Teaching",
-          sectionTitle: "2025 學年開設課程",
+          sectionTitle: "開設課程",
           undergraduate: "Undergraduate",
           graduate: "Graduate",
           professional: "Professional",
@@ -80,15 +80,18 @@ window.SITE_CONTENT = {
             undergraduate: [
               { name: "交通執法專題", type: "系必" },
               { name: "交通事故處理", type: "校訂必修" },
-              { name: "智慧型運輸系統概論", type: "系選" },
               { name: "道路工程與衝擊評估", type: "系選" },
-              { name: "交通警察實務", type: "系選" }
+              { name: "交通警察學", type: "系必" }
+              { name: "交通警察實務", type: "系選" } 
+              { name: "程式語言", type: "系必" },
             ],
             graduate: [
               { name: "交通安全分析" },
               { name: "交通專題研究" }
             ],
             professional: [
+              { name: "交通事故現場重建與原因分析", group: "警正班" },
+              { name: "道路交通事故蒐證與處理規範", group: "警佐班" },
               { name: "砂石車及遊覽車管理", group: "警佐班" },
               { name: "交通警察業務", group: "特考班一般生" },
               { name: "交通警察勤業務概論、交通管制", group: "特考班警職組" }
@@ -113,6 +116,12 @@ window.SITE_CONTENT = {
               title: "Integration of Advanced Measurement Techniques, 3D Modeling, and an Evidence Recognition Model for Traffic Crash Scene Reconstruction",
               org: "國家科學及技術委員會 (NSTC)",
               period: "2025.08 ~ 2026.07"
+            },
+            {
+              title: "國家道路交通安全綱要計畫（117-120年）委託專業服務案",
+              role: "協同主持人",
+              org: "交通部",
+              period: "2026 ~ 2027"
             },
             {
               title: "區域運輸發展研究中心服務升級 3.0 計畫 - 北區區域道安計畫",
@@ -153,7 +162,7 @@ window.SITE_CONTENT = {
           ]
         },
         footer: {
-          desc: "結合工程實務與實證數據分析，重構高效安全的交通系統。",
+          desc: "結合工程實務與實證數據分析，建構高效安全的交通系統。",
           nav: "Navigation",
           contact: "Contact",
           address: '中央警察大學 交通學系<br /> 桃園市龜山區大崗里樹人路56號',
@@ -205,7 +214,7 @@ window.SITE_CONTENT = {
           title: "Research Interests",
           list: [
             "Traffic Enforcement Effectiveness Analysis",
-            "Localization Study of Traffic Conflicts",
+            "Localization Study of Driving Behaviors and Traffic Conflicts",
             "Traffic Crash Investigation & Reconstruction",
             "Road Safety Policy & Professional Development"
           ]
@@ -220,7 +229,8 @@ window.SITE_CONTENT = {
             undergraduate: [
               { name: "Seminar on Traffic Enforcement", type: "Required" },
               { name: "Traffic Crash Investigation", type: "Required" },
-              { name: "Intro. to Intelligent Transportation Systems", type: "Elective" },
+              { name: "Traffic Policing Science", type: "Required" },
+              { name: "Programming Lamguage", type: "Required" },
               { name: "Road Engineering & Impact Assessment", type: "Elective" },
               { name: "Traffic Policing Practice", type: "Elective" }
             ],
@@ -229,9 +239,11 @@ window.SITE_CONTENT = {
               { name: "Special Topics in Traffic" }
             ],
             professional: [
-              { name: "Gravel & Tour Bus Management", group: "Officer Class" },
-              { name: "Traffic Police Operations", group: "Special Exam Class" },
-              { name: "Traffic Control & Operations", group: "Police Officer Group" }
+              { name: "Traffic Crash Scene Reconstruciton and Cause Analysis", group: "Police Commander Class" },
+              { name: "Gravel and Tour Bus Management", group: "Police Sergeant Class" },
+              { name: "Traffic Accident Evidence Investigation and Regulation", group: "Police Sergeant Class" },
+              { name: "Traffic Police Operations", group: "Police Special Exam Class" },
+              { name: "Traffic Control and Operations", group: "Police Special Exam Class" }
             ]
           }
         },
