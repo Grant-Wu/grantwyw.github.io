@@ -26,7 +26,7 @@ window.SITE_CONTENT = {
           subtitle: "Yuan-Wei Wu",
           affiliation: "中央警察大學 交通學系 助理教授",
           affiliationEn: "Assistant Professor, Department of Traffic Science, Central Police University",
-          heroText: '結合 <span class="text-stone-950 font-bold border-b-2 border-amber-200">工程實務</span> 與 <span class="text-stone-950 font-bold border-b-2 border-amber-200">實證數據分析</span>，<br /> 致力於透過 AI 技術重構更具效率與安全性的交通調查與執法體系。'
+          heroText: '結合 <span class="text-stone-950 font-bold border-b-2 border-amber-200">執法實務</span> 與 <span class="text-stone-950 font-bold border-b-2 border-amber-200">實證數據分析</span>，<br /> 致力於透過 AI 技術重構更具效率與安全性的交通調查與執法體系。'
         },
         nav: {
           interests: "INTERESTS",
@@ -176,7 +176,7 @@ window.SITE_CONTENT = {
           subtitle: "Ph.D.",
           affiliation: "Assistant Professor",
           affiliationEn: "Department of Traffic Science, Central Police University",
-          heroText: 'Integrating <span class="text-stone-950 font-bold border-b-2 border-amber-200">Engineering Practice</span> with <span class="text-stone-950 font-bold border-b-2 border-amber-200">Empirical Data Analysis</span>,<br /> dedicated to reconstructing efficient and safer traffic investigation and enforcement systems through AI.'
+          heroText: 'Integrating <span class="text-stone-950 font-bold border-b-2 border-amber-200">Traffic Policing Practice</span> with <span class="text-stone-950 font-bold border-b-2 border-amber-200">Empirical Data Analysis</span>,<br /> dedicated to reconstructing efficient and safer traffic investigation and enforcement systems through AI.'
         },
         nav: {
           interests: "INTERESTS",
